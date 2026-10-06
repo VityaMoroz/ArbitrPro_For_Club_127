@@ -99,7 +99,7 @@
     max-width: 70ch;
   }
 
-  /* ЭКРАН 1 — КРЮЧОК */
+  /* ЭКРАН 1 */
   .hook-num {
     font-family: 'Myriad Pro', sans-serif;
     font-size: clamp(64px, 10vw, 140px);
@@ -179,7 +179,7 @@
     margin-top: 2.5vh;
   }
 
-  /* ЭКРАН 3 — ДВЕ ЧАСТИ */
+  /* ЭКРАН 3 */
   .parts {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -236,7 +236,7 @@
     margin-top: 2vh;
   }
 
-  /* ЭКРАН 4 — ЛЕСТНИЦА */
+  /* ЭКРАН 4 */
   .money-ladder {
     display: flex;
     flex-direction: column;
@@ -284,7 +284,7 @@
     letter-spacing: -0.02em;
   }
 
-  /* ЭКРАН 5 — ТЕСТ */
+  /* ЭКРАН 5 */
   .test-big {
     font-family: 'Myriad Pro', sans-serif;
     font-size: clamp(56px, 8vw, 120px);
@@ -315,7 +315,7 @@
     background: rgba(190,172,140,0.08);
   }
 
-  /* ЭКРАН 6 — VIP */
+  /* ЭКРАН 6 */
   .vip-plate {
     display: inline-flex;
     align-items: center;
@@ -468,7 +468,7 @@
     opacity: 0.85;
   }
 
-  /* ЭКРАН 7 — КОНТАКТ */
+  /* ЭКРАН 7 */
   .contact-lead {
     font-family: 'Inter', sans-serif;
     font-size: clamp(13px, 1.05vw, 16px);
@@ -1017,7 +1017,7 @@
     transform: translateY(-1px);
   }
 
-  /* VIP-БЛОК В КАЛЬКУЛЯТОРЕ (одноколоночный, ровный) */
+  /* VIP-БЛОК В КАЛЬКУЛЯТОРЕ — ровный одноколоночный список */
   .vip-block {
     background: linear-gradient(135deg, rgba(190,172,140,0.18), rgba(190,172,140,0.05));
     border: 1px solid var(--gold);
@@ -1065,14 +1065,14 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 1.6vh;
+    gap: 1.4vh;
+    margin: 0;
   }
 
   .vip-list li {
-    display: grid;
-    grid-template-columns: 24px 1fr;
-    gap: 14px;
-    align-items: start;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
     font-family: 'Inter', sans-serif;
     font-size: clamp(13px, 1.05vw, 15px);
     line-height: 1.55;
@@ -1084,17 +1084,17 @@
     color: var(--gold);
     font-size: 1em;
     line-height: 1.55;
-    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .vip-list li p {
+    margin: 0;
+    flex: 1;
   }
 
   .vip-list li b {
     color: var(--cream);
     font-weight: 600;
-    margin-right: 4px;
-  }
-
-  .vip-list li span {
-    color: rgba(247,235,221,0.72);
   }
 
   .calc-close {
@@ -1307,12 +1307,12 @@
         <span class="vip-plate-small">VIP · 50+ дел/мес</span>
         <h3>Вы перешли в VIP</h3>
         <ul class="vip-list">
-          <li><b>5 дел на тест</b><span> — без оплаты судебных расходов</span></li>
-          <li><b>50% cashback фиксированно</b><span> — независимо от суммы реализации</span></li>
-          <li><b>Приоритетное ведение</b><span> — Ваши дела вне общей очереди</span></li>
-          <li><b>Персональный менеджер</b><span> — ведёт только Ваши дела</span></li>
-          <li><b>Индивидуальные условия</b><span> — ставка и порядок оплаты под Ваш поток</span></li>
-          <li><b>Ранний доступ</b><span> — новые продукты первыми</span></li>
+          <li><p><b>5 дел на тест</b> — без оплаты судебных расходов</p></li>
+          <li><p><b>50% cashback фиксированно</b> — независимо от суммы реализации</p></li>
+          <li><p><b>Приоритетное ведение</b> — Ваши дела вне общей очереди</p></li>
+          <li><p><b>Персональный менеджер</b> — ведёт только Ваши дела</p></li>
+          <li><p><b>Индивидуальные условия</b> — ставка и порядок оплаты под Ваш поток</p></li>
+          <li><p><b>Ранний доступ</b> — новые продукты первыми</p></li>
         </ul>
       </div>
 

@@ -928,6 +928,49 @@
 
   .calc-footer-note b { color: var(--gold); }
 
+  /* КНОПКИ НАВИГАЦИИ ПОД КАЛЬКУЛЯТОРОМ */
+  .calc-nav-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(190,172,140,0.15);
+  }
+
+  .calc-nav-btn {
+    flex: 1;
+    min-height: 54px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .calc-nav-btn--primary {
+    background: var(--gold);
+    color: var(--green-deep);
+    border-color: var(--gold);
+    box-shadow: 0 8px 24px rgba(190,172,140,0.28);
+  }
+
+  .calc-nav-btn--primary:active { transform: scale(0.97); background: #cdbb9a; }
+
+  .calc-nav-btn--ghost {
+    background: transparent;
+    color: var(--cream);
+    border-color: rgba(190,172,140,0.5);
+  }
+
+  .calc-nav-btn--ghost:active { transform: scale(0.97); background: rgba(190,172,140,0.10); }
+
+  /* VIP-БЛОК В КАЛЬКУЛЯТОРЕ — ровный одноколоночный список */
   .vip-block {
     background: linear-gradient(135deg, rgba(190,172,140,0.18), rgba(190,172,140,0.05));
     border: 1px solid var(--gold);
@@ -967,7 +1010,7 @@
     font-size: 18px;
     font-weight: 600;
     color: var(--cream);
-    margin-bottom: 14px;
+    margin-bottom: 18px;
     text-transform: uppercase;
   }
 
@@ -975,23 +1018,35 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
+    margin: 0;
   }
 
   .vip-list li {
     display: flex;
     gap: 10px;
     align-items: flex-start;
-    font-size: 12.5px;
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.55;
     color: rgba(247,235,221,0.9);
   }
 
   .vip-list li::before {
     content: '★';
     color: var(--gold);
+    font-size: 1em;
+    line-height: 1.55;
     flex-shrink: 0;
-    font-size: 1.1em;
+  }
+
+  .vip-list li p {
+    margin: 0;
+    flex: 1;
+  }
+
+  .vip-list li b {
+    color: var(--cream);
+    font-weight: 600;
   }
 
   .calc-close {
@@ -1194,17 +1249,22 @@
         <span class="vip-plate-small">VIP · 50+ дел/мес</span>
         <h3>Вы перешли в VIP</h3>
         <ul class="vip-list">
-          <li><b>5 дел на тест</b> — без оплаты судебных расходов</li>
-          <li><b>50% cashback фиксированно</b> — независимо от суммы реализации</li>
-          <li><b>Приоритетное ведение</b> — Ваши дела вне общей очереди</li>
-          <li><b>Персональный менеджер</b> — ведёт только Ваши дела</li>
-          <li><b>Индивидуальные условия</b> — ставка и порядок оплаты под Ваш поток</li>
-          <li><b>Ранний доступ</b> — новые продукты первыми</li>
+          <li><p><b>5 дел на тест</b> — без оплаты судебных расходов</p></li>
+          <li><p><b>50% cashback фиксированно</b> — независимо от суммы реализации</p></li>
+          <li><p><b>Приоритетное ведение</b> — Ваши дела вне общей очереди</p></li>
+          <li><p><b>Персональный менеджер</b> — ведёт только Ваши дела</p></li>
+          <li><p><b>Индивидуальные условия</b> — ставка и порядок оплаты под Ваш поток</p></li>
+          <li><p><b>Ранний доступ</b> — новые продукты первыми</p></li>
         </ul>
       </div>
 
       <div class="calc-footer-note">
         <b>От 100 дел/мес — индивидуальные условия.</b> Обсудите с Виктором.
+      </div>
+
+      <div class="calc-nav-actions">
+        <button class="calc-nav-btn calc-nav-btn--ghost" id="calcBack">← Назад</button>
+        <button class="calc-nav-btn calc-nav-btn--primary" id="calcNext">Дальше →</button>
       </div>
     </div>
   </section>
@@ -1313,7 +1373,7 @@
 
     <p class="contact-lead">
       Не надо верить на слово. Просто попробуйте. Личный кабинет,
-      персональный сопроводитель, прозрачная сверка. Дальше решите сами.
+      персональный менеджер по сопровождению, прозрачная сверка. Дальше решите сами.
     </p>
 
     <div class="contact-actions">
@@ -1369,7 +1429,6 @@
     calcClose.classList.toggle('visible', isCalc);
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current === total - 1;
-    // navBar НЕ скрывается на калькуляторе — кнопки скроллинга остаются
   }
 
   function goTo(n) {
@@ -1390,8 +1449,9 @@
   nextBtn.addEventListener('click', nextSlide);
   calcClose.addEventListener('click', () => goTo(0));
 
-  // Кнопка на титуле → калькулятор
   document.getElementById('hookCta').addEventListener('click', () => goTo(1));
+  document.getElementById('calcBack').addEventListener('click', () => goTo(0));
+  document.getElementById('calcNext').addEventListener('click', () => goTo(2));
 
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
@@ -1443,8 +1503,6 @@
 
     if (horizontal && (far && fast || notTooSlow)) {
       if (current === 1) {
-        // СПЕЦ-УСЛОВИЕ для калькулятора: только свайп вправо закрывает.
-        // Свайп влево НЕ переключает вперёд — защита от случайного улёта при движении ползунка.
         if (dx > 0) { goTo(0); }
         return;
       }

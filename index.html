@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0F1F1C">
+<title>АрбитрПро · Партнёрская программа</title>
+<style>
+  @font-face { font-family: 'Myriad Pro'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-SEMIBOLD.OTF') format('opentype'); font-weight: 600; font-display: swap; }
+  @font-face { font-family: 'Myriad Pro'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-BOLD.OTF') format('opentype'); font-weight: 700; font-display: swap; }
+  @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-Regular.otf') format('opentype'); font-weight: 400; font-display: swap; }
+  @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-SemiBold.otf') format('opentype'); font-weight: 600; font-display: swap; }
+
+  :root {
+    --green-deep: #0F1F1C;
+    --gold: #BEAC8C;
+    --cream: #F7EBDD;
+    --line: rgba(190,172,140,0.28);
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    background: var(--green-deep);
+    font-family: 'Inter', sans-serif;
+    color: var(--cream);
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .wrap {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: calc(32px + var(--safe-top)) 24px calc(32px + var(--safe-bottom));
+    background: radial-gradient(ellipse at 40% 50%, #1d3a35 0%, var(--green-deep) 70%);
+    text-align: center;
+  }
+
+  .brand {
+    height: 42px;
+    width: auto;
+    margin-bottom: 36px;
+    opacity: 0.95;
+  }
+
+  .title {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(22px, 5vw, 34px);
+    font-weight: 700;
+    color: var(--cream);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+
+  .title .hl { color: var(--gold); }
+
+  .subtitle {
+    font-size: clamp(13px, 3.2vw, 16px);
+    color: rgba(247,235,221,0.65);
+    line-height: 1.5;
+    margin-bottom: 40px;
+    max-width: 42ch;
+  }
+
+  .choices {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .choice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 60px;
+    padding: 16px 26px;
+    border-radius: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    border: 1px solid transparent;
+  }
+
+  .choice--primary {
+    background: var(--gold);
+    color: var(--green-deep);
+    border-color: var(--gold);
+    box-shadow: 0 10px 32px rgba(190,172,140,0.32);
+  }
+
+  .choice--primary:active {
+    transform: scale(0.97);
+    background: #cdbb9a;
+  }
+
+  .choice--ghost {
+    background: transparent;
+    color: var(--cream);
+    border-color: rgba(190,172,140,0.5);
+  }
+
+  .choice--ghost:active {
+    transform: scale(0.97);
+    background: rgba(190,172,140,0.10);
+    border-color: var(--gold);
+  }
+
+  .choice .ico {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .auto-note {
+    position: fixed;
+    bottom: calc(20px + var(--safe-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: rgba(247,235,221,0.4);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <img class="brand"
+       src="https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/main/ARBITR-PRO_1080%C3%97420px.png"
+       alt="АрбитрПро">
+
+  <div class="title">Партнёрская <span class="hl">программа</span></div>
+  <div class="subtitle">Выберите версию презентации — или мы определим её автоматически.</div>
+
+  <div class="choices">
+    <a class="choice choice--primary" id="btnMobile" href="mobile.html">
+      <span class="ico">📱</span> Версия для телефона
+    </a>
+    <a class="choice choice--ghost" id="btnDesktop" href="desktop.html">
+      <span class="ico">💻</span> Версия для компьютера
+    </a>
+  </div>
+</div>
+
+<div class="auto-note" id="autoNote">Определяем устройство…</div>
+
+<script>
+  // Определение мобильного устройства:
+  // 1. По User-Agent — классический признак.
+  // 2. По matchMedia — тач + нет hover (планшеты, телефоны).
+  // 3. По размеру экрана — как страховка.
+  function isMobile() {
+    const ua = navigator.userAgent || navigator.vendor || window.opener || '';
+    const uaMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua);
+    const touchOnly = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    const smallScreen = Math.min(window.innerWidth, window.innerHeight) < 768;
+    return uaMobile || (touchOnly && smallScreen);
+  }
+
+  const autoNote = document.getElementById('autoNote');
+  const target = isMobile() ? 'mobile.html' : 'desktop.html';
+
+  // Показываем на 350 мс, чтобы пользователь успел увидеть, куда его ведут,
+  // затем редирект. Кнопки остаются — на случай ошибки детекта.
+  autoNote.textContent = 'Открываем версию для ' + (target === 'mobile.html' ? 'телефона' : 'компьютера') + '…';
+
+  setTimeout(() => {
+    window.location.replace(target);
+  }, 350);
+</script>
+
+</body>
+</html>

@@ -2,186 +2,1492 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0F1F1C">
-<title>АрбитрПро · Партнёрская программа</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>АрбитрПро · Новым партнёрам</title>
 <style>
+  @font-face { font-family: 'Myriad Pro'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-REGULAR.OTF') format('opentype'); font-weight: 400; font-display: swap; }
   @font-face { font-family: 'Myriad Pro'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-SEMIBOLD.OTF') format('opentype'); font-weight: 600; font-display: swap; }
   @font-face { font-family: 'Myriad Pro'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-BOLD.OTF') format('opentype'); font-weight: 700; font-display: swap; }
   @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-Regular.otf') format('opentype'); font-weight: 400; font-display: swap; }
-  @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-SemiBold.otf') format('opentype'); font-weight: 600; font-display: swap; }
+  @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; }
+  @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-SemiBold.otf') format('opentype'); font-weight: 600; display: swap; }
+  @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-Bold.otf') format('opentype'); font-weight: 700; font-display: swap; }
 
   :root {
+    --green: #19322E;
     --green-deep: #0F1F1C;
     --gold: #BEAC8C;
     --cream: #F7EBDD;
+    --green-ok: #5FA97E;
+    --red: #C25B4E;
     --line: rgba(190,172,140,0.28);
-    --safe-top: env(safe-area-inset-top, 0px);
-    --safe-bottom: env(safe-area-inset-bottom, 0px);
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html, body {
     background: var(--green-deep);
     font-family: 'Inter', sans-serif;
     color: var(--cream);
+    overflow: hidden;
     height: 100vh;
-    height: 100dvh;
+  }
+
+  .deck {
+    position: relative;
+    width: 100vw; height: 100vh;
+    background: radial-gradient(ellipse at 40% 50%, #1d3a35 0%, var(--green-deep) 70%);
     overflow: hidden;
   }
 
-  .wrap {
+  .brand-corner {
     position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: calc(32px + var(--safe-top)) 24px calc(32px + var(--safe-bottom));
-    background: radial-gradient(ellipse at 40% 50%, #1d3a35 0%, var(--green-deep) 70%);
-    text-align: center;
-  }
-
-  .brand {
-    height: 42px;
-    width: auto;
-    margin-bottom: 36px;
+    top: 22px; left: 24px;
+    height: 4.5vh; width: auto;
+    z-index: 115;
+    pointer-events: none;
     opacity: 0.95;
   }
 
-  .title {
+  .slide-number {
+    position: fixed;
+    top: 24px; right: 26px;
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(22px, 5vw, 34px);
-    font-weight: 700;
-    color: var(--cream);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    line-height: 1.15;
-    margin-bottom: 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 2px;
+    opacity: 0.6;
+    z-index: 115;
+    pointer-events: none;
   }
 
-  .title .hl { color: var(--gold); }
-
-  .subtitle {
-    font-size: clamp(13px, 3.2vw, 16px);
-    color: rgba(247,235,221,0.65);
-    line-height: 1.5;
-    margin-bottom: 40px;
-    max-width: 42ch;
-  }
-
-  .choices {
-    display: flex;
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: none;
     flex-direction: column;
-    gap: 14px;
-    width: 100%;
-    max-width: 340px;
+    justify-content: center;
+    align-items: center;
+    padding: 9vh 5vw 16vh;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.45s ease;
   }
 
-  .choice {
-    display: flex;
+  .slide.active { display: flex; opacity: 1; }
+
+  .slide--scroll {
+    justify-content: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .slide-title {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(22px, 5.6vw, 40px);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: 0.3px;
+    color: var(--cream);
+    margin-bottom: 2.6vh;
+    text-transform: uppercase;
+    max-width: 24ch;
+  }
+
+  .slide-title .hl { color: var(--gold); }
+
+  .kicker {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(10px, 2.6vw, 13px);
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 1.6vh;
+  }
+
+  .kicker--gold { color: var(--gold); }
+
+  /* ЭКРАН 1 */
+  .hero-num {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(44px, 12vw, 100px);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.6vh;
+  }
+
+  .hero-sub {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(15px, 3.6vw, 26px);
+    font-weight: 600;
+    color: var(--cream);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 1vh;
+  }
+
+  .hero-cashback {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(12px, 3vw, 16px);
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 3.4vh;
+  }
+
+  .hero-q {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(14px, 3.6vw, 21px);
+    font-weight: 500;
+    color: rgba(247,235,221,0.92);
+    line-height: 1.4;
+    margin-bottom: 3.4vh;
+  }
+
+  .btn {
+    min-height: 52px;
+    padding: 14px 30px;
+    border-radius: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(14px, 3.4vw, 16px);
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    min-height: 60px;
-    padding: 16px 26px;
-    border-radius: 16px;
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: transform 0.15s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     border: 1px solid transparent;
+    transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .choice--primary {
+  .btn--primary {
     background: var(--gold);
     color: var(--green-deep);
     border-color: var(--gold);
-    box-shadow: 0 10px 32px rgba(190,172,140,0.32);
+    box-shadow: 0 8px 28px rgba(190,172,140,0.30);
   }
 
-  .choice--primary:active {
-    transform: scale(0.97);
-    background: #cdbb9a;
-  }
+  .btn--primary:hover { background: #cdbb9a; transform: translateY(-1px); }
 
-  .choice--ghost {
+  .btn--ghost {
     background: transparent;
     color: var(--cream);
-    border-color: rgba(190,172,140,0.5);
+    border-color: rgba(190,172,140,0.55);
   }
 
-  .choice--ghost:active {
-    transform: scale(0.97);
-    background: rgba(190,172,140,0.10);
-    border-color: var(--gold);
+  .btn--ghost:hover { background: rgba(190,172,140,0.10); border-color: var(--gold); }
+
+  .hero-tag {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(11px, 2.6vw, 14px);
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 3.4vh;
+    opacity: 0.85;
   }
 
-  .choice .ico {
-    font-size: 22px;
+  /* КАРТОЧКИ БОЛИ / РЕШЕНИЯ */
+  .ps-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4vh;
+    width: 100%;
+    max-width: 900px;
+    text-align: left;
+  }
+
+  .pain-card {
+    background: rgba(194,91,78,0.06);
+    border: 1px solid rgba(194,91,78,0.3);
+    border-left: 3px solid var(--red);
+    border-radius: 14px;
+    padding: 2vh 2.4vw;
+  }
+
+  .pain-card .pn {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(15px, 2.6vw, 20px);
+    font-weight: 700;
+    color: var(--red);
+    opacity: 0.8;
     line-height: 1;
+    margin-bottom: 0.8vh;
   }
 
-  .auto-note {
+  .pain-card .pain-h {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(14px, 3vw, 18px);
+    font-weight: 600;
+    color: var(--cream);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    line-height: 1.25;
+    margin-bottom: 0.7vh;
+  }
+
+  .pain-card .pt {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11.5px, 2.6vw, 14px);
+    line-height: 1.5;
+    color: rgba(247,235,221,0.72);
+  }
+
+  .sol-card {
+    background: rgba(95,169,126,0.07);
+    border: 1px solid rgba(95,169,126,0.35);
+    border-left: 3px solid var(--green-ok);
+    border-radius: 14px;
+    padding: 2vh 2.4vw;
+  }
+
+  .sol-card .sn {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(15px, 2.6vw, 20px);
+    font-weight: 700;
+    color: var(--green-ok);
+    opacity: 0.8;
+    line-height: 1;
+    margin-bottom: 0.8vh;
+  }
+
+  .sol-card .sol-h {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(14px, 3vw, 18px);
+    font-weight: 600;
+    color: var(--green-ok);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    line-height: 1.25;
+    margin-bottom: 0.7vh;
+  }
+
+  .sol-card .st {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11.5px, 2.6vw, 14px);
+    line-height: 1.5;
+    color: rgba(247,235,221,0.85);
+  }
+
+  /* КАЛЬКУЛЯТОР */
+  .calc-wrap {
+    width: 100%;
+    max-width: 640px;
+    text-align: left;
+  }
+
+  .calc-title {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(20px, 5vw, 32px);
+    font-weight: 600;
+    color: var(--cream);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.6vh;
+    text-align: center;
+  }
+
+  .calc-title .hl { color: var(--gold); }
+
+  .calc-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11px, 2.7vw, 14px);
+    color: rgba(247,235,221,0.65);
+    margin-bottom: 2.4vh;
+    text-align: center;
+  }
+
+  .slider-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.2vh;
+  }
+
+  .slider-head .lab {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(12px, 2.8vw, 15px);
+    font-weight: 600;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .slider-head .val {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(28px, 8vw, 44px);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1;
+    transition: color 0.3s ease;
+  }
+
+  .slider-head .val.vip { color: var(--gold); }
+
+  .slider-wrap { position: relative; margin-bottom: 3.4vh; }
+
+  .progress-track {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 6px;
+    background: rgba(190,172,140,0.15);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), #9c8763);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.25s ease, background 0.3s ease;
+  }
+
+  .progress-fill.vip { background: linear-gradient(90deg, var(--gold), var(--green-ok)); }
+
+  .vip-mark {
+    position: absolute;
+    bottom: -4px; left: 50%;
+    width: 2px; height: 14px;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+
+  .vip-mark-label {
+    position: absolute;
+    bottom: -22px; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.7;
+    white-space: nowrap;
+  }
+
+  input[type=range] {
+    width: 100%; height: 6px;
+    -webkit-appearance: none; appearance: none;
+    background: transparent;
+    cursor: pointer;
+    position: relative; z-index: 2;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 3px solid var(--green-deep);
+    box-shadow: 0 0 0 2px var(--gold);
+    cursor: pointer;
+  }
+
+  input[type=range]::-moz-range-thumb {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 3px solid var(--green-deep);
+    box-shadow: 0 0 0 2px var(--gold);
+    cursor: pointer;
+  }
+
+  .calc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4vh 10px;
+    margin-bottom: 1.6vh;
+  }
+
+  .calc-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.8vh 2vw;
+    transition: background 0.4s ease, border-color 0.4s ease;
+  }
+
+  .calc-card.vip {
+    background: linear-gradient(135deg, rgba(190,172,140,0.14), rgba(190,172,140,0.03));
+    border-color: rgba(190,172,140,0.55);
+  }
+
+  .calc-card .lab {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(9px, 2.2vw, 11px);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 700;
+    opacity: 0.65;
+    margin-bottom: 0.7vh;
+  }
+
+  .calc-card .val {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(18px, 4.6vw, 26px);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .calc-card .val.gold { color: var(--gold); }
+  .calc-card .val.green { color: var(--green-ok); }
+
+  .calc-card .sub {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(9.5px, 2.2vw, 11px);
+    opacity: 0.6;
+    margin-top: 0.7vh;
+    line-height: 1.35;
+  }
+
+  .total-hero {
+    margin: 1.6vh 0;
+    padding: 2.6vh 3vw;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(190,172,140,0.14), rgba(190,172,140,0.03));
+    border: 2px solid rgba(190,172,140,0.55);
+    text-align: center;
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .total-hero.vip {
+    background: linear-gradient(135deg, rgba(190,172,140,0.20), rgba(190,172,140,0.06));
+    border-color: var(--gold);
+    box-shadow: 0 0 60px rgba(190,172,140,0.18);
+  }
+
+  .total-hero .label {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(10px, 2.4vw, 13px);
+    font-weight: 600;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 1.2vh;
+  }
+
+  .total-hero .amount {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(38px, 11vw, 72px);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    transition: color 0.3s ease;
+  }
+
+  .total-hero.vip .amount { color: var(--gold); }
+
+  .total-hero .note {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(9.5px, 2.2vw, 11px);
+    color: rgba(247,235,221,0.55);
+    margin-top: 1vh;
+    letter-spacing: 0.5px;
+  }
+
+  .per-case {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.8vh 2.4vw;
+    background: rgba(95,169,126,0.08);
+    border: 1px solid rgba(95,169,126,0.4);
+    border-radius: 14px;
+    margin-bottom: 2.2vh;
+    gap: 10px;
+  }
+
+  .per-case .l {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(11px, 2.6vw, 14px);
+    font-weight: 600;
+    color: var(--cream);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.3;
+  }
+
+  .per-case .l span {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 9.5px;
+    font-weight: 400;
+    opacity: 0.65;
+    letter-spacing: 0.3px;
+    text-transform: none;
+    margin-top: 3px;
+  }
+
+  .per-case .r {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(24px, 7vw, 38px);
+    font-weight: 700;
+    color: var(--green-ok);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .cashback {
+    background: rgba(190,172,140,0.06);
+    border: 1px solid rgba(190,172,140,0.3);
+    border-radius: 14px;
+    padding: 2vh 2vw;
+    margin-bottom: 2vh;
+  }
+
+  .cashback-title {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(12px, 2.8vw, 15px);
+    font-weight: 600;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 0.6vh;
+  }
+
+  .cashback-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(10px, 2.3vw, 12px);
+    color: rgba(247,235,221,0.6);
+    margin-bottom: 1.6vh;
+    line-height: 1.4;
+  }
+
+  .cashback-buttons { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 1.6vh; }
+
+  .cb-btn {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: clamp(11px, 2.6vw, 13px);
+    color: var(--cream);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .cb-btn:hover { background: rgba(190,172,140,0.12); }
+
+  .cb-btn.active { background: var(--gold); color: var(--green-deep); border-color: var(--gold); }
+
+  .cb-result {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+
+  .cb-item {
+    background: rgba(0,0,0,0.18);
+    border: 1px solid rgba(190,172,140,0.2);
+    border-radius: 10px;
+    padding: 1.2vh 1.4vw;
+  }
+
+  .cb-item .lab {
+    font-family: 'Inter', sans-serif;
+    font-size: 8.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 700;
+    opacity: 0.6;
+    margin-bottom: 0.5vh;
+  }
+
+  .cb-item .val {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(13px, 3.2vw, 18px);
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .cb-note {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(9px, 2.1vw, 11px);
+    color: rgba(247,235,221,0.5);
+    margin-top: 1.2vh;
+    line-height: 1.5;
+    border-left: 2px solid var(--gold);
+    padding-left: 10px;
+  }
+
+  .vip-inline {
+    background: linear-gradient(135deg, rgba(190,172,140,0.18), rgba(190,172,140,0.05));
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    padding: 0 2vw;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.5s cubic-bezier(0.2,1,0.3,1), opacity 0.4s ease, padding 0.4s ease;
+    margin-bottom: 2vh;
+  }
+
+  .vip-inline.show { max-height: 900px; opacity: 1; padding: 2vh 2vw; }
+
+  .vip-inline .vip-plate-small {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 1.4vh;
+  }
+
+  .vip-inline h3 {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(14px, 3.2vw, 18px);
+    font-weight: 600;
+    color: var(--cream);
+    margin-bottom: 1.4vh;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  .vip-list { list-style: none; display: flex; flex-direction: column; gap: 1vh; margin: 0; text-align: left; }
+
+  .vip-list li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11px, 2.5vw, 13px);
+    line-height: 1.5;
+    color: rgba(247,235,221,0.9);
+  }
+
+  .vip-list li::before {
+    content: '★';
+    color: var(--gold);
+    font-size: 1em;
+    line-height: 1.5;
+    flex-shrink: 0;
+  }
+
+  .vip-list li b { color: var(--cream); font-weight: 600; }
+
+  /* УСЛОВИЯ */
+  .terms-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2vh;
+    width: 100%;
+    max-width: 800px;
+    text-align: left;
+  }
+
+  .term-card {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.8vh 2.2vw;
+  }
+
+  .term-card .t-num {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(18px, 4.6vw, 26px);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    white-space: nowrap;
+    min-width: 70px;
+  }
+
+  .term-card .t-text {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11.5px, 2.6vw, 14px);
+    line-height: 1.5;
+    color: rgba(247,235,221,0.8);
+  }
+
+  .term-card .t-text b { color: var(--cream); font-weight: 600; }
+
+  /* VIP СЕКЦИЯ */
+  .vip-plate {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 8px 20px;
+    border-radius: 999px;
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(10px, 2.4vw, 12px);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 2vh;
+    background: rgba(190,172,140,0.08);
+  }
+
+  .vip-plate::before,
+  .vip-plate::after { content: '★'; font-size: 0.9em; opacity: 0.9; }
+
+  .vip-title {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(24px, 6.4vw, 42px);
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.6vh;
+    line-height: 1.15;
+  }
+
+  .vip-title .cream {
+    color: var(--cream);
+    display: block;
+    font-size: 0.68em;
+    letter-spacing: 2px;
+    margin-top: 0.8vh;
+  }
+
+  .vip-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11px, 2.6vw, 13px);
+    color: rgba(247,235,221,0.65);
+    margin-bottom: 3vh;
+    letter-spacing: 0.3px;
+  }
+
+  .vip-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2vh 10px;
+    width: 100%;
+    max-width: 800px;
+    text-align: left;
+    margin-bottom: 2.4vh;
+  }
+
+  .vip-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(190,172,140,0.25);
+    border-radius: 14px;
+    padding: 1.8vh 2vw;
+  }
+
+  .vip-card h4 {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(12px, 2.8vw, 15px);
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 0.6vh;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+  }
+
+  .vip-card p {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(10.5px, 2.4vw, 12.5px);
+    line-height: 1.5;
+    color: rgba(247,235,221,0.78);
+  }
+
+  .cherry {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 1.4vh 2.2vw;
+    border: 1px solid rgba(190,172,140,0.35);
+    border-radius: 16px;
+    background: rgba(190,172,140,0.05);
+    margin-bottom: 2.2vh;
+    text-align: left;
+  }
+
+  .cherry .cherry-num {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(22px, 5.4vw, 30px);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .cherry .cherry-text {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(10.5px, 2.4vw, 12.5px);
+    color: rgba(247,235,221,0.85);
+    line-height: 1.4;
+  }
+
+  .cherry .cherry-text span {
+    display: block;
+    font-size: 0.85em;
+    color: rgba(247,235,221,0.55);
+    margin-top: 2px;
+  }
+
+  .vip-closing {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(12px, 2.8vw, 16px);
+    font-weight: 600;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+
+  .vip-closing span { color: var(--cream); opacity: 0.85; }
+
+  .vip-tagline {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11px, 2.4vw, 13px);
+    font-weight: 500;
+    color: rgba(247,235,221,0.55);
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin-top: 2vh;
+    font-style: italic;
+  }
+
+  /* ЗАЯВКА */
+  .cta-mantra {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(18px, 4.8vw, 28px);
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    line-height: 1.2;
+    margin-bottom: 2vh;
+  }
+
+  .cta-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(12px, 2.8vw, 14px);
+    line-height: 1.55;
+    color: rgba(247,235,221,0.75);
+    max-width: 52ch;
+    margin: 0 auto 3vh;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    margin-bottom: 3vh;
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contact-signature {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(12px, 2.8vw, 14px);
+    line-height: 1.9;
+    color: rgba(247,235,221,0.85);
+    padding-top: 2.4vh;
+    border-top: 1px solid rgba(190,172,140,0.15);
+    margin-top: 1vh;
+  }
+
+  .contact-signature b { color: var(--gold); font-weight: 600; }
+
+  .contact-signature a {
+    color: var(--cream);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(190,172,140,0.35);
+  }
+
+  .contact-signature a:hover { border-color: var(--gold); }
+
+  /* ГЛОБАЛЬНОЕ НИЖНЕЕ МЕНЮ */
+  .bottom-menu {
     position: fixed;
-    bottom: calc(20px + var(--safe-bottom));
+    bottom: 0; left: 0; right: 0;
+    display: flex;
+    gap: 10px;
+    padding: 14px 16px 18px;
+    background: rgba(15,31,28,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--line);
+    z-index: 120;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .bottom-menu.hidden {
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .bn-btn {
+    flex: 1;
+    min-height: 46px;
+    padding: 12px 10px;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(12px, 3vw, 14px);
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(190,172,140,0.45);
+    background: rgba(255,255,255,0.04);
+    color: var(--cream);
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .bn-btn:hover {
+    background: rgba(190,172,140,0.12);
+    border-color: var(--gold);
+    transform: translateY(-1px);
+  }
+
+  .bn-btn--gold {
+    background: var(--gold);
+    color: var(--green-deep);
+    border-color: var(--gold);
+    box-shadow: 0 6px 20px rgba(190,172,140,0.28);
+  }
+
+  .bn-btn--gold:hover {
+    background: #cdbb9a;
+    transform: translateY(-1px);
+  }
+
+  /* НАВИГАЦИЯ СТРЕЛКИ */
+  .nav-arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px; height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 24px;
+    font-family: 'Myriad Pro', sans-serif;
+    opacity: 0.3;
+    cursor: pointer;
+    z-index: 110;
+    transition: opacity 0.2s;
+    user-select: none;
+  }
+
+  .nav-arrow:hover { opacity: 0.85; }
+  .nav-arrow.left { left: 6px; }
+  .nav-arrow.right { right: 6px; }
+  .nav-arrow.hidden { display: none; }
+
+  /* ТОЧКИ И ЛИНИЯ */
+  .dots {
+    position: fixed;
+    bottom: 86px; /* Выше нижнего меню */
     left: 50%;
     transform: translateX(-50%);
-    font-size: 12px;
-    color: rgba(247,235,221,0.4);
-    letter-spacing: 0.5px;
-    white-space: nowrap;
+    display: flex;
+    gap: 8px;
+    z-index: 110;
+    transition: bottom 0.3s ease;
+  }
+
+  .dots span {
+    width: 7px; height: 7px;
+    border-radius: 4px;
+    background: rgba(190,172,140,0.25);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .dots span.active { background: var(--gold); width: 22px; }
+
+  .gold-line {
+    position: fixed;
+    bottom: 0; left: 0;
+    height: 2px;
+    background: var(--gold);
+    box-shadow: 0 0 20px rgba(190,172,140,0.5);
+    transition: width 0.5s cubic-bezier(0.65,0,0.35,1);
+    z-index: 130;
+  }
+
+  @media (max-width: 700px) {
+    .vip-cards { grid-template-columns: 1fr; }
+    .cb-result { grid-template-columns: 1fr; }
+    .per-case { flex-direction: column; align-items: flex-start; gap: 0.8vh; }
+    .per-case .r { align-self: flex-end; }
+    .nav-arrow { display: none; } /* На мобильных свайпы */
   }
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <img class="brand"
-       src="https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/main/ARBITR-PRO_1080%C3%97420px.png"
-       alt="АрбитрПро">
+<img class="brand-corner"
+     src="https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/main/ARBITR-PRO_1080%C3%97420px.png"
+     alt="АрбитрПро">
 
-  <div class="title">Партнёрская <span class="hl">программа</span></div>
-  <div class="subtitle">Выберите версию презентации — или мы определим её автоматически.</div>
+<div class="slide-number" id="slideNumber">01 / 07</div>
 
-  <div class="choices">
-    <a class="choice choice--primary" id="btnMobile" href="mobile.html">
-      <span class="ico">📱</span> Версия для телефона
-    </a>
-    <a class="choice choice--ghost" id="btnDesktop" href="desktop.html">
-      <span class="ico">💻</span> Версия для компьютера
-    </a>
-  </div>
+<div class="nav-arrow left" id="navLeft">‹</div>
+<div class="nav-arrow right" id="navRight">›</div>
+
+<div class="deck">
+
+  <!-- ЭКРАН 1 — КРЮЧОК -->
+  <section class="slide active" data-slide="0">
+    <div class="hero-num">4 800 000 ₽</div>
+    <div class="hero-sub">за 12 месяцев</div>
+    <div class="hero-cashback">+ cashback с реализации</div>
+    <div class="hero-q">Сколько из них — Ваши?</div>
+    <button class="btn btn--primary" id="heroNext">Подробнее</button>
+    <div class="hero-tag">АУ, который работает на Вас</div>
+  </section>
+
+  <!-- ЭКРАН 2 — ПРОБЛЕМЫ -->
+  <section class="slide slide--scroll" data-slide="1">
+    <div class="kicker">АУ — область тьмы</div>
+    <div class="slide-title">Знакомые <span class="hl">проблемы?</span></div>
+
+    <div class="ps-grid">
+      <div class="pain-card">
+        <div class="pn">01</div>
+        <div class="pain-h">Непонятно, как он работает</div>
+        <div class="pt">Не «чёрный ящик», а «область тьмы». Вы платите — и не понимаете, за что.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pn">02</div>
+        <div class="pain-h">Его нужно пинать для ответов и выплат</div>
+        <div class="pt">Позвонил — не ответил. Написал — тишина. Приходится дёргать, ждать и догадываться.</div>
+      </div>
+      <div class="pain-card">
+        <div class="pn">03</div>
+        <div class="pain-h">Затягивает сроки и нет контроля</div>
+        <div class="pt">Вы не видите, на каком этапе дело, и не можете на это повлиять.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 3 — РЕШЕНИЯ -->
+  <section class="slide slide--scroll" data-slide="2">
+    <div class="kicker kicker--gold">Как решаем</div>
+    <div class="slide-title">Мы — <span class="hl">на стороне партнёра</span></div>
+
+    <div class="ps-grid">
+      <div class="sol-card">
+        <div class="sn">01</div>
+        <div class="sol-h">Все под Вашим контролем</div>
+        <div class="st">Личный кабинет 24/7, персональный менеджер, онлайн-сверки, чаты, интеграции с Битрикс24.</div>
+      </div>
+      <div class="sol-card">
+        <div class="sn">02</div>
+        <div class="sol-h">Прозрачные и понятные сроки</div>
+        <div class="st">ПМ должнику — до 3-х рабочих дней после поступления денег. Конвейерный и системный подход к делу: отделы отвечают за свою зону ответственности. Ничего не зависает.</div>
+      </div>
+      <div class="sol-card">
+        <div class="sn">03</div>
+        <div class="sol-h">Берём сложное и не бросаем</div>
+        <div class="st">Ипотека, авто, доли, СВО, ООО, крипта, наследство, иностранцы. Разбираем до подачи, даём шаблоны.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 4 — КАЛЬКУЛЯТОР -->
+  <section class="slide slide--scroll" data-slide="3">
+    <div class="calc-wrap">
+      <div class="calc-title">Ваша <span class="hl">цифра</span></div>
+      <div class="calc-subtitle">Двигайте ползунок — увидите выплату за месяц и за 12 месяцев</div>
+
+      <div class="slider-head">
+        <span class="lab">Дел в месяц</span>
+        <span class="val" id="volValue">10</span>
+      </div>
+
+      <div class="slider-wrap">
+        <input type="range" id="volSlider" min="1" max="100" step="1" value="10">
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="vip-mark"></div>
+        <div class="vip-mark-label">VIP от 50</div>
+      </div>
+
+      <div class="calc-grid">
+        <div class="calc-card" id="cardMonthly">
+          <div class="lab">За месяц</div>
+          <div class="val green" id="monthlyTotal">40 000 ₽</div>
+          <div class="sub" id="monthlyNote">10 × 4 000 ₽</div>
+        </div>
+        <div class="calc-card" id="cardRate">
+          <div class="lab">Ставка за дело</div>
+          <div class="val gold" id="ratePerCase">4 000 ₽</div>
+          <div class="sub">включая тестовые</div>
+        </div>
+      </div>
+
+      <div class="total-hero" id="totalHero">
+        <div class="label">ИТОГО ЗА 12 МЕСЯЦЕВ</div>
+        <div class="amount" id="totalYear">480 000 ₽</div>
+        <div class="note">гарантированно · без cashback</div>
+      </div>
+
+      <div class="per-case">
+        <div class="l">С каждого дела<span>гарантированно получите</span></div>
+        <div class="r" id="effectiveRate">4 000 ₽</div>
+      </div>
+
+      <div class="cashback">
+        <div class="cashback-title">+ Cashback с реализации имущества</div>
+        <div class="cashback-sub">Cashback не входит в итог выше — он зависит от наличия имущества.</div>
+        <div class="cashback-buttons">
+          <button class="cb-btn" data-asset="0">Нет</button>
+          <button class="cb-btn active" data-asset="500000">500 тыс ₽</button>
+          <button class="cb-btn" data-asset="2000000">2 млн ₽</button>
+          <button class="cb-btn" data-asset="4000000">4 млн ₽</button>
+          <button class="cb-btn" data-asset="10000000">10 млн ₽</button>
+        </div>
+        <div class="cb-result">
+          <div class="cb-item">
+            <div class="lab">Реализация</div>
+            <div class="val" id="cbAsset">500 000 ₽</div>
+          </div>
+          <div class="cb-item">
+            <div class="lab">Доля</div>
+            <div class="val" id="cbShare">20%</div>
+          </div>
+          <div class="cb-item">
+            <div class="lab">Cashback</div>
+            <div class="val" id="cbAmount">7 000 ₽</div>
+          </div>
+        </div>
+        <div class="cb-note" id="cbNote">
+          Вознаграждение АУ = 500 000 × 7% = 35 000 ₽. Доля партнёра 20% = 7 000 ₽.
+        </div>
+      </div>
+
+      <div class="vip-inline" id="vipBlock">
+        <span class="vip-plate-small">VIP · 50+ дел/мес</span>
+        <h3>Вы перешли в VIP</h3>
+        <ul class="vip-list">
+          <li><b>5 тестовых дел</b> — оплачиваются как обычные</li>
+          <li><b>50% cashback фиксированно</b> — независимо от суммы реализации</li>
+          <li><b>Приоритетное ведение</b> — Ваши дела вне общей очереди</li>
+          <li><b>Персональный менеджер</b> — ведёт только Ваши дела</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 5 — УСЛОВИЯ -->
+  <section class="slide slide--scroll" data-slide="4">
+    <div class="kicker kicker--gold">Без звёздочек</div>
+    <div class="slide-title">Условия <span class="hl">работы</span></div>
+
+    <div class="terms-grid">
+      <div class="term-card">
+        <div class="t-num">4 000 ₽</div>
+        <div class="t-text">за каждое дело. <b>Без исключений</b> — тестовые дела тоже оплачиваются.</div>
+      </div>
+      <div class="term-card">
+        <div class="t-num">5 дел</div>
+        <div class="t-text">тестовых у каждого партнёра. <b>Без оплаты расходов.</b></div>
+      </div>
+      <div class="term-card">
+        <div class="t-num">20–50%</div>
+        <div class="t-text">cashback с реализации имущества. <b>В VIP — фиксированно 50%.</b></div>
+      </div>
+      <div class="term-card">
+        <div class="t-num">до 3-х дней</div>
+        <div class="t-text">срок перечисления ПМ должнику после поступления денег на счёт.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ЭКРАН 6 — VIP -->
+  <section class="slide slide--scroll" data-slide="5">
+    <div class="vip-plate">VIP Партнёрам</div>
+    <div class="vip-title">
+      Ваш объём — Ваш статус
+      <span class="cream">от 50 дел в месяц</span>
+    </div>
+    <div class="vip-sub">Вы — не один из. Мы работаем с Вами иначе.</div>
+
+    <div class="vip-cards">
+      <div class="vip-card">
+        <h4>Персональный менеджер</h4>
+        <p>Ведёт только Вашу компанию и Ваши дела. Знает Вашу специфику.</p>
+      </div>
+      <div class="vip-card">
+        <h4>Индивидуальные условия</h4>
+        <p>Ставка, порядок и формат оплаты — под Ваш поток. Не по общему прайсу.</p>
+      </div>
+      <div class="vip-card">
+        <h4>Ваши дела не ждут</h4>
+        <p>Вне общей очереди. Короче сроки. Быстрее согласования.</p>
+      </div>
+      <div class="vip-card">
+        <h4>Вы говорите с теми, кто решает</h4>
+        <p>Прямой контакт с руководством. Без посредников.</p>
+      </div>
+    </div>
+
+    <div class="cherry">
+      <div class="cherry-num">50%</div>
+      <div class="cherry-text">
+        Фиксированный cashback на все дела
+        <span>независимо от суммы реализации</span>
+      </div>
+    </div>
+
+    <div class="vip-closing">Ваш поток — <span>наши приоритетные условия.</span></div>
+    <div class="vip-tagline">Для тех, кто с нами всерьёз.</div>
+  </section>
+
+  <!-- ЭКРАН 7 — ЗАЯВКА -->
+  <section class="slide slide--scroll" data-slide="6">
+    <div class="slide-title">Не веришь? <span class="hl">ПРОВЕРЬ!</span></div>
+    <div class="cta-mantra">АУ, который работает на МЕНЯ</div>
+
+    <p class="cta-sub">
+      Личный кабинет, персональный менеджер по сопровождению, прозрачная сверка. Дальше решите сами.
+    </p>
+
+    <div class="cta-actions">
+      <a class="btn btn--primary" href="https://t.me/moroz_viktor" target="_blank" rel="noopener">
+        Оставить заявку
+      </a>
+      <a class="btn btn--ghost" href="referral.html">
+        Реферальная программа
+      </a>
+    </div>
+
+    <div class="contact-signature">
+      <b>@moroz_viktor</b><br>
+      Виктор Мороз · Руководитель отдела продаж<br>
+      <a href="tel:+79995534474">+7 999 553-44-74</a><br>
+      <a href="mailto:mvgoz@yandex.ru">mvgoz@yandex.ru</a>
+    </div>
+  </section>
+
 </div>
 
-<div class="auto-note" id="autoNote">Определяем устройство…</div>
+<!-- ГЛОБАЛЬНОЕ НИЖНЕЕ МЕНЮ -->
+<div class="bottom-menu" id="bottomMenu">
+  <button class="bn-btn" id="btnBack">Назад</button>
+  <button class="bn-btn bn-btn--gold" id="btnCta">Оставить заявку</button>
+  <button class="bn-btn" id="btnNext">Далее</button>
+</div>
+
+<div class="dots" id="dots"></div>
+<div class="gold-line" id="goldLine"></div>
 
 <script>
-  // Определение мобильного устройства:
-  // 1. По User-Agent — классический признак.
-  // 2. По matchMedia — тач + нет hover (планшеты, телефоны).
-  // 3. По размеру экрана — как страховка.
-  function isMobile() {
-    const ua = navigator.userAgent || navigator.vendor || window.opener || '';
-    const uaMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua);
-    const touchOnly = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-    const smallScreen = Math.min(window.innerWidth, window.innerHeight) < 768;
-    return uaMobile || (touchOnly && smallScreen);
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+
+  const dotsContainer = document.getElementById('dots');
+  const goldLine = document.getElementById('goldLine');
+  const slideNumber = document.getElementById('slideNumber');
+  const navLeft = document.getElementById('navLeft');
+  const navRight = document.getElementById('navRight');
+  const bottomMenu = document.getElementById('bottomMenu');
+  const btnBack = document.getElementById('btnBack');
+  const btnNext = document.getElementById('btnNext');
+  const btnCta = document.getElementById('btnCta');
+
+  for (let i = 0; i < total; i++) {
+    const s = document.createElement('span');
+    if (i === 0) s.classList.add('active');
+    s.onclick = () => goTo(i);
+    dotsContainer.appendChild(s);
   }
 
-  const autoNote = document.getElementById('autoNote');
-  const target = isMobile() ? 'mobile.html' : 'desktop.html';
+  function updateUI() {
+    const pct = ((current + 1) / total) * 100;
+    goldLine.style.width = pct + '%';
+    slideNumber.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    [...dotsContainer.children].forEach((d, i) => d.classList.toggle('active', i === current));
 
-  // Показываем на 350 мс, чтобы пользователь успел увидеть, куда его ведут,
-  // затем редирект. Кнопки остаются — на случай ошибки детекта.
-  autoNote.textContent = 'Открываем версию для ' + (target === 'mobile.html' ? 'телефона' : 'компьютера') + '…';
+    // Скрываем меню на первом и последнем слайде
+    if (current === 0 || current === total - 1) {
+      bottomMenu.classList.add('hidden');
+    } else {
+      bottomMenu.classList.remove('hidden');
+    }
 
-  setTimeout(() => {
-    window.location.replace(target);
-  }, 350);
+    // На последнем слайде оставляем только одну кнопку
+    if (current === total - 1) {
+      btnBack.style.display = 'inline-flex';
+      btnCta.style.display = 'none';
+      btnNext.style.display = 'none';
+    } else {
+      btnBack.style.display = 'inline-flex';
+      btnCta.style.display = 'inline-flex';
+      btnNext.style.display = 'inline-flex';
+    }
+
+    // Стрелки
+    navLeft.classList.toggle('hidden', current === 0);
+    navRight.classList.toggle('hidden', current === total - 1);
+  }
+
+  function goTo(n) {
+    if (n < 0) n = 0;
+    if (n >= total) n = total - 1;
+    if (n === current) return;
+    slides[current].classList.remove('active');
+    slides[n].classList.add('active');
+    slides[n].scrollTop = 0;
+    current = n;
+    updateUI();
+  }
+
+  function nextSlide() { goTo(current + 1); }
+  function prevSlide() { goTo(current - 1); }
+
+  // Кнопки меню
+  btnBack.onclick = prevSlide;
+  btnNext.onclick = nextSlide;
+  btnCta.onclick = () => goTo(6);
+
+  // Стрелки
+  navLeft.onclick = prevSlide;
+  navRight.onclick = nextSlide;
+
+  // Кнопка на 1-м слайде
+  document.getElementById('heroNext').onclick = () => goTo(1);
+
+  // Клавиатура
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault(); nextSlide();
+    }
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault(); prevSlide();
+    }
+  });
+
+  // Свайпы
+  let tx = 0, ty = 0;
+  document.addEventListener('touchstart', e => {
+    tx = e.touches[0].clientX;
+    ty = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    const dy = e.changedTouches[0].clientY - ty;
+    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+      dx < 0 ? nextSlide() : prevSlide();
+    }
+  });
+
+  // КАЛЬКУЛЯТОР
+  const slider = document.getElementById('volSlider');
+  const volValue = document.getElementById('volValue');
+  const progressFill = document.getElementById('progressFill');
+  const cardMonthly = document.getElementById('cardMonthly');
+  const cardRate = document.getElementById('cardRate');
+  const totalHero = document.getElementById('totalHero');
+  const vipBlock = document.getElementById('vipBlock');
+  const monthlyTotal = document.getElementById('monthlyTotal');
+  const monthlyNote = document.getElementById('monthlyNote');
+  const ratePerCase = document.getElementById('ratePerCase');
+  const totalYear = document.getElementById('totalYear');
+  const effectiveRate = document.getElementById('effectiveRate');
+  const cbAsset = document.getElementById('cbAsset');
+  const cbShare = document.getElementById('cbShare');
+  const cbAmount = document.getElementById('cbAmount');
+  const cbNote = document.getElementById('cbNote');
+
+  const RATE = 4000;
+  let currentAsset = 500000;
+
+  function rub(n) {
+    return Math.round(n).toLocaleString('ru-RU') + ' ₽';
+  }
+
+  function calculate() {
+    const perMonth = parseInt(slider.value, 10);
+    const isVip = perMonth >= 50;
+    const monthlyPay = perMonth * RATE;
+    const yearPay = perMonth * 12 * RATE;
+
+    volValue.textContent = perMonth;
+    volValue.classList.toggle('vip', isVip);
+
+    monthlyTotal.textContent = rub(monthlyPay);
+    monthlyNote.textContent = perMonth + ' × ' + rub(RATE);
+    ratePerCase.textContent = rub(RATE);
+    totalYear.textContent = rub(yearPay);
+    effectiveRate.textContent = rub(RATE);
+
+    const pct = ((perMonth - 1) / 99) * 100;
+    progressFill.style.width = pct + '%';
+    progressFill.classList.toggle('vip', isVip);
+
+    [cardMonthly, cardRate, totalHero].forEach(el => el.classList.toggle('vip', isVip));
+    vipBlock.classList.toggle('show', isVip);
+
+    updateCashback(isVip);
+  }
+
+  function updateCashback(isVip) {
+    if (currentAsset === 0) {
+      cbAsset.textContent = '—';
+      cbShare.textContent = '—';
+      cbAmount.textContent = '0 ₽';
+      cbNote.textContent = 'Имущества нет — cashback не начисляется.';
+      return;
+    }
+    const reward = currentAsset * 0.07;
+    let share;
+    if (isVip) share = 0.50;
+    else {
+      if (currentAsset <= 1500000) share = 0.20;
+      else if (currentAsset <= 3000000) share = 0.30;
+      else if (currentAsset <= 5000000) share = 0.40;
+      else share = 0.50;
+    }
+    const amount = reward * share;
+    cbAsset.textContent = rub(currentAsset);
+    cbShare.textContent = Math.round(share * 100) + '%' + (isVip ? ' VIP' : '');
+    cbAmount.textContent = rub(amount);
+    cbNote.textContent = 'Вознаграждение АУ = ' + rub(currentAsset) + ' × 7% = ' + rub(reward) +
+      '. Доля партнёра ' + Math.round(share * 100) + '% = ' + rub(amount) + '.';
+  }
+
+  document.querySelectorAll('.cb-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.cb-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentAsset = parseInt(btn.dataset.asset, 10);
+      updateCashback(parseInt(slider.value, 10) >= 50);
+    });
+  });
+
+  slider.addEventListener('input', calculate);
+  calculate();
+  updateUI();
 </script>
 
 </body>

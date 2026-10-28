@@ -10,7 +10,7 @@
   @font-face { font-family: 'Myriad Pro'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-BOLD.OTF') format('opentype'); font-weight: 700; font-display: swap; }
   @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-Regular.otf') format('opentype'); font-weight: 400; font-display: swap; }
   @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; }
-  @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-SemiBold.otf') format('opentype'); font-weight: 600; display: swap; }
+  @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-SemiBold.otf') format('opentype'); font-weight: 600; font-display: swap; }
   @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-Bold.otf') format('opentype'); font-weight: 700; font-display: swap; }
 
   :root {
@@ -975,7 +975,7 @@
     transform: translateY(-1px);
   }
 
-  /* НАВИГАЦИЯ СТРЕЛКИ */
+  /* СТРЕЛКИ */
   .nav-arrow {
     position: fixed;
     top: 50%;
@@ -1002,13 +1002,12 @@
   /* ТОЧКИ И ЛИНИЯ */
   .dots {
     position: fixed;
-    bottom: 86px; /* Выше нижнего меню */
+    bottom: 86px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
     gap: 8px;
     z-index: 110;
-    transition: bottom 0.3s ease;
   }
 
   .dots span {
@@ -1036,7 +1035,7 @@
     .cb-result { grid-template-columns: 1fr; }
     .per-case { flex-direction: column; align-items: flex-start; gap: 0.8vh; }
     .per-case .r { align-self: flex-end; }
-    .nav-arrow { display: none; } /* На мобильных свайпы */
+    .nav-arrow { display: none; }
   }
 </style>
 </head>
@@ -1328,14 +1327,12 @@
     slideNumber.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
     [...dotsContainer.children].forEach((d, i) => d.classList.toggle('active', i === current));
 
-    // Скрываем меню на первом и последнем слайде
     if (current === 0 || current === total - 1) {
       bottomMenu.classList.add('hidden');
     } else {
       bottomMenu.classList.remove('hidden');
     }
 
-    // На последнем слайде оставляем только одну кнопку
     if (current === total - 1) {
       btnBack.style.display = 'inline-flex';
       btnCta.style.display = 'none';
@@ -1346,7 +1343,6 @@
       btnNext.style.display = 'inline-flex';
     }
 
-    // Стрелки
     navLeft.classList.toggle('hidden', current === 0);
     navRight.classList.toggle('hidden', current === total - 1);
   }
@@ -1365,19 +1361,15 @@
   function nextSlide() { goTo(current + 1); }
   function prevSlide() { goTo(current - 1); }
 
-  // Кнопки меню
   btnBack.onclick = prevSlide;
   btnNext.onclick = nextSlide;
-  btnCta.onclick = () => goTo(6);
+  btnCta.onclick = () => window.open('https://t.me/moroz_viktor', '_blank');
 
-  // Стрелки
   navLeft.onclick = prevSlide;
   navRight.onclick = nextSlide;
 
-  // Кнопка на 1-м слайде
   document.getElementById('heroNext').onclick = () => goTo(1);
 
-  // Клавиатура
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
       e.preventDefault(); nextSlide();
@@ -1387,7 +1379,6 @@
     }
   });
 
-  // Свайпы
   let tx = 0, ty = 0;
   document.addEventListener('touchstart', e => {
     tx = e.touches[0].clientX;

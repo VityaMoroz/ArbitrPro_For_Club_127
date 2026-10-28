@@ -110,44 +110,96 @@
   .kicker--gold { color: var(--gold); }
 
   /* ЭКРАН 1 */
-  .hero-title {
+  .hero-accent {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(16px, 4.5vw, 28px);
+    font-size: clamp(13px, 3.2vw, 20px);
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 3vh;
+    position: relative;
+    padding-bottom: 1.4vh;
+  }
+
+  .hero-accent::after {
+    content: '';
+    position: absolute;
+    left: 50%; bottom: 0;
+    transform: translateX(-50%);
+    width: 46px; height: 2px;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+
+  .hero-lead {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(18px, 5vw, 32px);
     font-weight: 600;
     color: var(--cream);
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: 1.5vh;
-    opacity: 0.9;
+    line-height: 1.2;
+    margin-bottom: 1.2vh;
+    opacity: 0.95;
   }
 
   .hero-num {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(44px, 12vw, 100px);
+    font-size: clamp(52px, 14vw, 116px);
     font-weight: 700;
     color: var(--gold);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    margin-bottom: 0.6vh;
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    text-shadow: 0 0 50px rgba(190,172,140,0.35);
+    margin-bottom: 1.4vh;
+    animation: pop 0.9s cubic-bezier(0.2,1,0.3,1) both;
+  }
+
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.86); }
+    to   { opacity: 1; transform: scale(1); }
   }
 
   .hero-sub {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(15px, 3.6vw, 26px);
+    font-size: clamp(14px, 3.6vw, 25px);
     font-weight: 600;
     color: var(--cream);
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    margin-bottom: 1vh;
+    margin-bottom: 2.6vh;
   }
 
-  .hero-cashback {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(12px, 3vw, 16px);
-    color: var(--gold);
-    font-weight: 500;
-    margin-bottom: 3.4vh;
+  .hero-facts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 3.6vh;
   }
+
+  .fact {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11px, 2.6vw, 13.5px);
+    font-weight: 600;
+    color: var(--cream);
+    background: rgba(95,169,126,0.10);
+    border: 1px solid rgba(95,169,126,0.35);
+    border-radius: 10px;
+    padding: 8px 14px;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .fact b { color: var(--green-ok); }
+
+  .fact--gold {
+    background: rgba(190,172,140,0.10);
+    border-color: rgba(190,172,140,0.4);
+  }
+
+  .fact--gold b { color: var(--gold); }
 
   .btn {
     min-height: 52px;
@@ -182,17 +234,6 @@
   }
 
   .btn--ghost:hover { background: rgba(190,172,140,0.10); border-color: var(--gold); }
-
-  .hero-tag {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(11px, 2.6vw, 14px);
-    font-weight: 600;
-    color: var(--gold);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-top: 3.4vh;
-    opacity: 0.85;
-  }
 
   /* КАРТОЧКИ БОЛИ / РЕШЕНИЯ */
   .ps-grid {
@@ -1056,12 +1097,16 @@
 
   <!-- ЭКРАН 1 — КРЮЧОК -->
   <section class="slide active" data-slide="0">
-    <div class="hero-title">Заработайте до</div>
+    <div class="hero-accent">АУ, который работает на Вас</div>
+    <div class="hero-lead">Заработай до</div>
     <div class="hero-num">4 800 000 ₽</div>
     <div class="hero-sub">за 12 месяцев работы с нами</div>
-    <div class="hero-cashback">+ cashback с реализации</div>
+    <div class="hero-facts">
+      <span class="fact"><b>4 000 ₽</b> за каждое дело</span>
+      <span class="fact fact--gold">+ cashback до <b>50%</b></span>
+      <span class="fact">без звёздочек</span>
+    </div>
     <button class="btn btn--primary" id="heroNext">Посчитать свой доход</button>
-    <div class="hero-tag">АУ, который работает на Вас</div>
   </section>
 
   <!-- ЭКРАН 2 — ПРОБЛЕМЫ -->
@@ -1102,7 +1147,7 @@
       <div class="sol-card">
         <div class="sn">02</div>
         <div class="sol-h">Прозрачные и понятные сроки</div>
-        <div class="st">ПМ должнику — до 3-х рабочих дней после поступления денег. Конвейерный и системный подход к делу: отделы отвечают за свою зону ответственности. Ничего не зависает.</div>
+        <div class="st">ПМ должнику — в день поступления денег на счёт. Конвейерный и системный подход к делу: отделы отвечают за свою зону ответственности. Ничего не зависает.</div>
       </div>
       <div class="sol-card">
         <div class="sn">03</div>
@@ -1217,8 +1262,8 @@
         <div class="t-text">cashback с реализации имущества. <b>В VIP — фиксированно 50%.</b></div>
       </div>
       <div class="term-card">
-        <div class="t-num">до 3-х дней</div>
-        <div class="t-text">срок перечисления ПМ должнику после поступления денег на счёт.</div>
+        <div class="t-num">в день</div>
+        <div class="t-text">поступления денег на счёт — <b>ПМ должнику.</b></div>
       </div>
     </div>
   </section>

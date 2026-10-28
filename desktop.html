@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>АрбитрПро · Партнёрская программа</title>
+<title>АрбитрПро · Реферальная программа</title>
 <style>
   @font-face { font-family: 'Myriad Pro'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-REGULAR.OTF') format('opentype'); font-weight: 400; font-display: swap; }
   @font-face { font-family: 'Myriad Pro'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-SEMIBOLD.OTF') format('opentype'); font-weight: 600; font-display: swap; }
@@ -19,6 +19,7 @@
     --gold: #BEAC8C;
     --cream: #F7EBDD;
     --green-ok: #5FA97E;
+    --red: #C25B4E;
     --line: rgba(190,172,140,0.28);
   }
 
@@ -41,8 +42,8 @@
 
   .brand-corner {
     position: fixed;
-    top: 22px; left: 28px;
-    height: 5vh; width: auto;
+    top: 22px; left: 24px;
+    height: 4.5vh; width: auto;
     z-index: 115;
     pointer-events: none;
     opacity: 0.95;
@@ -50,7 +51,7 @@
 
   .slide-number {
     position: fixed;
-    top: 26px; right: 32px;
+    top: 24px; right: 26px;
     font-family: 'Myriad Pro', sans-serif;
     font-size: 12px;
     font-weight: 600;
@@ -68,518 +69,144 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 10vh 6vw 14vh;
+    padding: 9vh 5vw 16vh;
     text-align: center;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.45s ease;
   }
 
   .slide.active { display: flex; opacity: 1; }
 
+  .slide--scroll {
+    justify-content: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .slide-title {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(28px, 3.5vw, 52px);
+    font-size: clamp(24px, 6vw, 44px);
     font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: 0.5px;
+    line-height: 1.12;
+    letter-spacing: 0.3px;
     color: var(--cream);
-    margin-bottom: 4vh;
+    margin-bottom: 2.4vh;
     text-transform: uppercase;
     max-width: 24ch;
   }
 
   .slide-title .hl { color: var(--gold); }
 
-  .slide-lead {
+  .kicker {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(14px, 1.2vw, 17px);
-    line-height: 1.5;
-    color: rgba(247,235,221,0.7);
-    margin-bottom: 4vh;
-    max-width: 70ch;
+    font-size: clamp(10px, 2.6vw, 13px);
+    font-weight: 700;
+    color: var(--green-ok);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 1.6vh;
   }
 
   /* ЭКРАН 1 */
-  .hook-num {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(64px, 10vw, 140px);
-    font-weight: 700;
-    color: var(--gold);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-    margin-bottom: 1vh;
-  }
-
-  .hook-sub {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(18px, 2.2vw, 34px);
-    font-weight: 600;
-    color: var(--cream);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 1.5vh;
-  }
-
-  .hook-cashback {
+  .intro-lead {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(14px, 1.3vw, 18px);
-    color: var(--gold);
-    font-weight: 500;
-    margin-bottom: 5vh;
-    letter-spacing: 0.5px;
-  }
-
-  .hook-question {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(16px, 1.7vw, 24px);
-    font-weight: 500;
-    color: rgba(247,235,221,0.9);
-    margin-bottom: 5vh;
-    line-height: 1.4;
-  }
-
-  .hook-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    padding: 22px 46px;
-    background: var(--gold);
-    color: var(--green-deep);
-    border: none;
-    border-radius: 999px;
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(15px, 1.3vw, 19px);
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    box-shadow: 0 12px 44px rgba(190,172,140,0.35), 0 0 0 1px rgba(190,172,140,0.5);
-    transition: transform 0.15s ease, box-shadow 0.25s ease;
-  }
-
-  .hook-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 18px 56px rgba(190,172,140,0.5);
-  }
-
-  .hook-cta .arrow {
-    font-size: 1.1em;
-    line-height: 1;
-    transform: translateY(-1px);
-  }
-
-  .hook-cta-caption {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(12px, 1vw, 15px);
-    font-weight: 600;
-    color: rgba(247,235,221,0.55);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-top: 2.5vh;
-  }
-
-  /* ЭКРАН 3 */
-  .parts {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2vw;
-    width: 100%;
-    max-width: 1000px;
-    margin-bottom: 3vh;
-  }
-
-  .part {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(190,172,140,0.35);
-    border-radius: 18px;
-    padding: 4vh 2.5vw;
-    text-align: left;
-  }
-
-  .part .num {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(24px, 2.5vw, 36px);
-    font-weight: 700;
-    color: var(--gold);
-    line-height: 1;
-    margin-bottom: 1.5vh;
-    opacity: 0.5;
-  }
-
-  .part .name {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(16px, 1.5vw, 22px);
-    font-weight: 600;
-    color: var(--cream);
-    line-height: 1.2;
-    margin-bottom: 1.5vh;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .part .desc {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(13px, 1.1vw, 16px);
-    line-height: 1.5;
-    color: rgba(247,235,221,0.75);
-  }
-
-  .cashback-note {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(12px, 1vw, 15px);
-    line-height: 1.5;
-    color: var(--gold);
-    max-width: 80ch;
-    padding-top: 3vh;
-    border-top: 1px solid rgba(190,172,140,0.2);
-    margin-top: 2vh;
-  }
-
-  /* ЭКРАН 4 */
-  .money-ladder {
-    display: flex;
-    flex-direction: column;
-    gap: 1vh;
-    width: 100%;
-    max-width: 800px;
-    margin-bottom: 3vh;
-  }
-
-  .money-row {
-    display: grid;
-    grid-template-columns: 1fr auto 1.2fr;
-    align-items: center;
-    gap: 1.5vw;
-    padding: 1.6vh 2vw;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    font-family: 'Inter', sans-serif;
-  }
-
-  .money-row.vip {
-    background: linear-gradient(135deg, rgba(190,172,140,0.12), rgba(190,172,140,0.03));
-    border-color: rgba(190,172,140,0.5);
-  }
-
-  .money-row .vol {
-    font-size: clamp(13px, 1.1vw, 16px);
-    font-weight: 500;
-    color: rgba(247,235,221,0.85);
-    text-align: left;
-  }
-
-  .money-row .arrow {
-    color: var(--gold);
-    font-size: clamp(13px, 1.1vw, 16px);
-  }
-
-  .money-row .sum {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(18px, 1.8vw, 26px);
-    font-weight: 700;
-    color: var(--gold);
-    text-align: right;
-    letter-spacing: -0.02em;
-  }
-
-  /* ЭКРАН 5 */
-  .test-big {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(56px, 8vw, 120px);
-    font-weight: 700;
-    color: var(--gold);
-    line-height: 1;
-    letter-spacing: -0.02em;
-    margin: 2vh 0 3vh;
-    text-transform: uppercase;
-  }
-
-  .test-line {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(14px, 1.3vw, 18px);
-    color: rgba(247,235,221,0.85);
-    margin-bottom: 1.5vh;
-  }
-
-  .test-vip {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(13px, 1.1vw, 16px);
-    color: var(--gold);
-    font-weight: 600;
-    margin-top: 4vh;
-    padding: 1.8vh 2.5vw;
-    border: 1px solid rgba(190,172,140,0.4);
-    border-radius: 12px;
-    background: rgba(190,172,140,0.08);
-  }
-
-  /* ЭКРАН 6 */
-  .vip-plate {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    padding: 11px 32px;
-    border-radius: 999px;
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(11px, 0.9vw, 13px);
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 3vh;
-    background: rgba(190,172,140,0.08);
-    box-shadow: 0 0 40px rgba(190,172,140,0.20);
-  }
-
-  .vip-plate::before,
-  .vip-plate::after {
-    content: '★';
-    font-size: 0.9em;
-    opacity: 0.9;
-  }
-
-  .vip-title {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(30px, 3.6vw, 54px);
-    font-weight: 700;
-    color: var(--gold);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 1vh;
-    text-align: center;
-    text-shadow: 0 0 40px rgba(190,172,140,0.25);
-    line-height: 1.15;
-  }
-
-  .vip-title .cream {
-    color: var(--cream);
-    display: block;
-    font-size: 0.7em;
-    letter-spacing: 3px;
-    margin-top: 1vh;
-  }
-
-  .vip-sub {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(13px, 1.05vw, 15px);
-    color: rgba(247,235,221,0.65);
-    margin-bottom: 4vh;
-    text-align: center;
-    letter-spacing: 0.5px;
-  }
-
-  .vip-answers {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.4vw;
-    width: 100%;
-    max-width: 940px;
-    margin-bottom: 3vh;
-    text-align: left;
-  }
-
-  .vip-answer {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(190,172,140,0.25);
-    border-radius: 16px;
-    padding: 2.6vh 2vw;
-    transition: border-color 0.3s, background 0.3s;
-  }
-
-  .vip-answer:hover {
-    border-color: rgba(190,172,140,0.55);
-    background: rgba(190,172,140,0.05);
-  }
-
-  .vip-answer--main {
-    border: 2px solid rgba(190,172,140,0.5);
-    background: linear-gradient(135deg, rgba(190,172,140,0.08), rgba(190,172,140,0.02));
-    padding: 3vh 2.2vw;
-  }
-
-  .vip-answer h4 {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(15px, 1.35vw, 20px);
-    font-weight: 700;
-    color: var(--gold);
-    margin-bottom: 1vh;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    line-height: 1.15;
-  }
-
-  .vip-answer p {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(12px, 0.95vw, 14px);
+    font-size: clamp(14px, 3.4vw, 18px);
     line-height: 1.55;
-    color: rgba(247,235,221,0.78);
-  }
-
-  .cherry {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    padding: 1.4vh 2.2vw;
-    border: 1px solid rgba(190,172,140,0.35);
-    border-radius: 999px;
-    background: rgba(190,172,140,0.05);
-    margin-bottom: 2.5vh;
-    font-family: 'Inter', sans-serif;
-  }
-
-  .cherry .cherry-num {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(22px, 2vw, 32px);
-    font-weight: 700;
-    color: var(--gold);
-    line-height: 1;
-    letter-spacing: -0.02em;
-  }
-
-  .cherry .cherry-text {
-    font-size: clamp(11.5px, 0.9vw, 13.5px);
     color: rgba(247,235,221,0.85);
-    line-height: 1.35;
-    text-align: left;
-  }
-
-  .cherry .cherry-text span {
-    display: block;
-    font-size: 0.85em;
-    color: rgba(247,235,221,0.55);
-    margin-top: 0.3vh;
-  }
-
-  .vip-closing {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(15px, 1.4vw, 21px);
-    font-weight: 600;
-    color: var(--gold);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    text-align: center;
-  }
-
-  .vip-closing span {
-    color: var(--cream);
-    opacity: 0.85;
-  }
-
-  /* ЭКРАН 7 */
-  .contact-lead {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(13px, 1.05vw, 16px);
-    line-height: 1.6;
-    color: rgba(247,235,221,0.75);
-    max-width: 62ch;
-    margin: 0 auto 4vh;
-    text-align: center;
-  }
-
-  .contact-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    justify-content: center;
-    width: 100%;
-    max-width: 900px;
+    max-width: 54ch;
     margin: 0 auto 3vh;
   }
 
-  .contact-btn {
-    flex: 1 1 auto;
-    min-width: 220px;
-    min-height: 56px;
-    padding: 16px 32px;
+  .intro-lead b { color: var(--gold); font-weight: 600; }
+
+  .intro-rules {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2vh;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto 3.4vh;
+    text-align: left;
+  }
+
+  .rule {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.8vh 2vw;
+  }
+
+  .rule .r-num {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(18px, 4.6vw, 24px);
+    font-weight: 700;
+    color: var(--green-ok);
+    line-height: 1;
+    white-space: nowrap;
+    min-width: 90px;
+  }
+
+  .rule .r-text {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(11.5px, 2.7vw, 14px);
+    line-height: 1.5;
+    color: rgba(247,235,221,0.82);
+  }
+
+  .rule .r-text b { color: var(--cream); font-weight: 600; }
+
+  .btn {
+    min-height: 52px;
+    padding: 14px 30px;
     border-radius: 14px;
     font-family: 'Inter', sans-serif;
-    font-size: clamp(14px, 1.1vw, 16px);
+    font-size: clamp(14px, 3.4vw, 16px);
     font-weight: 600;
     letter-spacing: 0.3px;
     cursor: pointer;
-    transition: transform 0.15s ease, background 0.25s ease, box-shadow 0.25s ease;
-    border: 1px solid transparent;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    white-space: nowrap;
+    border: 1px solid transparent;
+    transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .contact-btn--primary {
+  .btn--primary {
     background: var(--gold);
     color: var(--green-deep);
     border-color: var(--gold);
     box-shadow: 0 8px 28px rgba(190,172,140,0.30);
   }
 
-  .contact-btn--primary:hover {
-    background: #cdbb9a;
-    transform: translateY(-1px);
-    box-shadow: 0 12px 36px rgba(190,172,140,0.42);
-  }
+  .btn--primary:hover { background: #cdbb9a; transform: translateY(-1px); }
 
-  .contact-btn--ghost {
+  .btn--ghost {
     background: transparent;
     color: var(--cream);
     border-color: rgba(190,172,140,0.55);
   }
 
-  .contact-btn--ghost:hover {
-    background: rgba(190,172,140,0.10);
-    border-color: var(--gold);
-    transform: translateY(-1px);
-  }
-
-  .contact-signature {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(13px, 1vw, 15px);
-    line-height: 1.8;
-    color: rgba(247,235,221,0.85);
-    text-align: center;
-  }
-
-  .contact-signature b {
-    color: var(--gold);
-    font-weight: 600;
-  }
-
-  .contact-signature a {
-    color: var(--cream);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(190,172,140,0.35);
-    transition: border-color 0.2s;
-  }
-
-  .contact-signature a:hover {
-    border-color: var(--gold);
-  }
+  .btn--ghost:hover { background: rgba(190,172,140,0.10); border-color: var(--gold); }
 
   /* КАЛЬКУЛЯТОР */
-  .calc-slide {
-    padding: 4vh 4vw 8vh;
-    justify-content: flex-start;
-    overflow-y: auto;
-  }
-
   .calc-wrap {
     width: 100%;
-    max-width: 900px;
+    max-width: 640px;
     text-align: left;
-    margin: 0 auto;
   }
 
   .calc-title {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(24px, 2.8vw, 40px);
+    font-size: clamp(20px, 5vw, 32px);
     font-weight: 600;
     color: var(--cream);
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 1vh;
+    margin-bottom: 0.6vh;
     text-align: center;
   }
 
@@ -587,9 +214,9 @@
 
   .calc-subtitle {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(12px, 1vw, 15px);
+    font-size: clamp(11px, 2.7vw, 14px);
     color: rgba(247,235,221,0.65);
-    margin-bottom: 3vh;
+    margin-bottom: 2.4vh;
     text-align: center;
   }
 
@@ -597,38 +224,32 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 1.5vh;
+    margin-bottom: 1.2vh;
   }
 
   .slider-head .lab {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(13px, 1.1vw, 16px);
+    font-size: clamp(12px, 2.8vw, 15px);
     font-weight: 600;
     color: var(--gold);
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
   }
 
   .slider-head .val {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(32px, 3.5vw, 48px);
+    font-size: clamp(28px, 8vw, 44px);
     font-weight: 700;
     color: var(--cream);
     line-height: 1;
     transition: color 0.3s ease;
   }
 
-  .slider-head .val.vip { color: var(--gold); }
-
-  .slider-wrap {
-    position: relative;
-    margin-bottom: 4vh;
-  }
+  .slider-wrap { position: relative; margin-bottom: 3.4vh; }
 
   .progress-track {
     position: absolute;
-    bottom: 0;
-    left: 0; right: 0;
+    bottom: 0; left: 0; right: 0;
     height: 6px;
     background: rgba(190,172,140,0.15);
     border-radius: 3px;
@@ -637,121 +258,66 @@
 
   .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--gold), #9c8763);
+    background: linear-gradient(90deg, var(--green-ok), #3f7a58);
     border-radius: 3px;
     width: 0%;
-    transition: width 0.25s ease, background 0.3s ease;
-  }
-
-  .progress-fill.vip {
-    background: linear-gradient(90deg, var(--gold), var(--green-ok));
-  }
-
-  .vip-mark {
-    position: absolute;
-    bottom: -4px;
-    left: 50%;
-    width: 2px;
-    height: 14px;
-    background: var(--gold);
-    opacity: 0.6;
-  }
-
-  .vip-mark-label {
-    position: absolute;
-    bottom: -28px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: var(--gold);
-    text-transform: uppercase;
-    opacity: 0.7;
+    transition: width 0.25s ease;
   }
 
   input[type=range] {
-    width: 100%;
-    height: 6px;
-    -webkit-appearance: none;
-    appearance: none;
+    width: 100%; height: 6px;
+    -webkit-appearance: none; appearance: none;
     background: transparent;
     cursor: pointer;
-    position: relative;
-    z-index: 2;
+    position: relative; z-index: 2;
   }
 
   input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 22px;
-    height: 22px;
+    -webkit-appearance: none; appearance: none;
+    width: 24px; height: 24px;
     border-radius: 50%;
-    background: var(--gold);
+    background: var(--green-ok);
     border: 3px solid var(--green-deep);
-    box-shadow: 0 0 0 2px var(--gold);
+    box-shadow: 0 0 0 2px var(--green-ok);
     cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-
-  input[type=range]::-webkit-slider-thumb:hover {
-    transform: scale(1.15);
   }
 
   input[type=range]::-moz-range-thumb {
-    width: 22px;
-    height: 22px;
+    width: 24px; height: 24px;
     border-radius: 50%;
-    background: var(--gold);
+    background: var(--green-ok);
     border: 3px solid var(--green-deep);
-    box-shadow: 0 0 0 2px var(--gold);
+    box-shadow: 0 0 0 2px var(--green-ok);
     cursor: pointer;
   }
 
   .calc-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5vw;
-    margin-bottom: 2vh;
+    gap: 1.4vh 10px;
+    margin-bottom: 1.8vh;
   }
 
   .calc-card {
     background: rgba(255,255,255,0.04);
     border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 2.5vh 2vw;
-    transition: background 0.4s ease, border-color 0.4s ease;
-  }
-
-  .calc-card.vip {
-    background: linear-gradient(135deg, rgba(190,172,140,0.14), rgba(190,172,140,0.03));
-    border-color: rgba(190,172,140,0.55);
-  }
-
-  .calc-card.flash {
-    animation: flash 0.5s ease;
-  }
-
-  @keyframes flash {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(190,172,140,0.7); }
-    50% { transform: scale(1.02); box-shadow: 0 0 0 12px rgba(190,172,140,0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(190,172,140,0); }
+    border-radius: 14px;
+    padding: 1.8vh 2vw;
   }
 
   .calc-card .lab {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(10px, 0.85vw, 12px);
-    letter-spacing: 0.08em;
+    font-size: clamp(9px, 2.2vw, 11px);
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     font-weight: 700;
     opacity: 0.65;
-    margin-bottom: 1vh;
+    margin-bottom: 0.7vh;
   }
 
   .calc-card .val {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(22px, 2.2vw, 30px);
+    font-size: clamp(20px, 5vw, 28px);
     font-weight: 700;
     color: var(--cream);
     line-height: 1.05;
@@ -763,425 +329,304 @@
 
   .calc-card .sub {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(11px, 0.9vw, 13px);
+    font-size: clamp(9.5px, 2.2vw, 11px);
     opacity: 0.6;
-    margin-top: 1vh;
-    line-height: 1.4;
+    margin-top: 0.7vh;
+    line-height: 1.35;
   }
 
   .total-hero {
-    position: relative;
-    margin: 3vh 0;
-    padding: 4vh 3vw;
-    border-radius: 22px;
-    background: linear-gradient(135deg, rgba(190,172,140,0.14), rgba(190,172,140,0.03));
-    border: 2px solid rgba(190,172,140,0.55);
+    margin: 1.6vh 0;
+    padding: 2.6vh 3vw;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(95,169,126,0.16), rgba(95,169,126,0.04));
+    border: 2px solid rgba(95,169,126,0.55);
     text-align: center;
-    box-shadow: 0 0 50px rgba(190,172,140,0.10);
-    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-  }
-
-  .total-hero.vip {
-    background: linear-gradient(135deg, rgba(190,172,140,0.20), rgba(190,172,140,0.06));
-    border-color: var(--gold);
-    box-shadow: 0 0 80px rgba(190,172,140,0.20);
   }
 
   .total-hero .label {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(12px, 1.1vw, 16px);
+    font-size: clamp(10px, 2.4vw, 13px);
     font-weight: 600;
-    color: var(--gold);
+    color: var(--green-ok);
     text-transform: uppercase;
-    letter-spacing: 4px;
-    margin-bottom: 2vh;
+    letter-spacing: 3px;
+    margin-bottom: 1.2vh;
   }
 
   .total-hero .amount {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(56px, 8vw, 100px);
+    font-size: clamp(38px, 11vw, 68px);
     font-weight: 700;
     color: var(--cream);
-    line-height: 0.95;
-    letter-spacing: -0.04em;
-    transition: color 0.3s ease;
+    line-height: 1;
+    letter-spacing: -0.03em;
   }
-
-  .total-hero.vip .amount { color: var(--gold); }
 
   .total-hero .note {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(11px, 0.9vw, 13px);
+    font-size: clamp(9.5px, 2.2vw, 11px);
     color: rgba(247,235,221,0.55);
-    margin-top: 2vh;
-    letter-spacing: 1px;
+    margin-top: 1vh;
+    letter-spacing: 0.5px;
   }
 
   .per-case {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2.5vh 2.5vw;
-    background: rgba(95,169,126,0.08);
-    border: 1px solid rgba(95,169,126,0.4);
-    border-radius: 18px;
-    margin-bottom: 3vh;
-    gap: 2vw;
+    padding: 1.8vh 2.4vw;
+    background: rgba(190,172,140,0.08);
+    border: 1px solid rgba(190,172,140,0.4);
+    border-radius: 14px;
+    margin-bottom: 2.2vh;
+    gap: 10px;
   }
 
   .per-case .l {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(13px, 1.2vw, 17px);
+    font-size: clamp(11px, 2.6vw, 14px);
     font-weight: 600;
     color: var(--cream);
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
     line-height: 1.3;
   }
 
   .per-case .l span {
     display: block;
     font-family: 'Inter', sans-serif;
-    font-size: 0.7em;
+    font-size: 9.5px;
     font-weight: 400;
     opacity: 0.65;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
     text-transform: none;
-    margin-top: 0.5vh;
+    margin-top: 3px;
   }
 
   .per-case .r {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(28px, 3.5vw, 48px);
+    font-size: clamp(24px, 7vw, 38px);
     font-weight: 700;
-    color: var(--green-ok);
+    color: var(--gold);
     letter-spacing: -0.02em;
     line-height: 1;
     white-space: nowrap;
   }
 
-  .cashback-block {
-    background: rgba(190,172,140,0.06);
-    border: 1px solid rgba(190,172,140,0.3);
-    border-radius: 16px;
-    padding: 2.5vh 2vw;
-    margin-bottom: 3vh;
-  }
-
-  .cashback-title {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(13px, 1.1vw, 17px);
-    font-weight: 600;
-    color: var(--gold);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1vh;
-  }
-
-  .cashback-sub {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(11px, 0.9vw, 13px);
-    color: rgba(247,235,221,0.6);
-    margin-bottom: 2vh;
-    line-height: 1.4;
-  }
-
-  .cashback-buttons {
+  .test-note {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 2vh;
-  }
-
-  .cb-btn {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 10px 18px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
-    font-size: clamp(12px, 0.95vw, 14px);
-    color: var(--cream);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .cb-btn:hover { background: rgba(190,172,140,0.12); }
-
-  .cb-btn.active {
-    background: var(--gold);
-    color: var(--green);
-    border-color: var(--gold);
-  }
-
-  .cb-result {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1vw;
-  }
-
-  .cb-item {
-    background: rgba(0,0,0,0.15);
-    border: 1px solid rgba(190,172,140,0.2);
+    gap: 12px;
+    align-items: center;
+    background: rgba(190,172,140,0.08);
+    border: 1px dashed rgba(190,172,140,0.45);
     border-radius: 12px;
-    padding: 1.5vh 1.2vw;
+    padding: 1.6vh 1.8vw;
+    margin-top: 2vh;
+    text-align: left;
   }
 
-  .cb-item .lab {
-    font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-weight: 700;
-    opacity: 0.55;
-    margin-bottom: 0.8vh;
-  }
-
-  .cb-item .val {
+  .test-note .tn-num {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(16px, 1.4vw, 22px);
+    font-size: clamp(22px, 5.4vw, 30px);
     font-weight: 700;
     color: var(--gold);
+    line-height: 1;
+    white-space: nowrap;
   }
 
-  .cb-note {
+  .test-note .tn-text {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(10px, 0.85vw, 12px);
-    color: rgba(247,235,221,0.5);
-    margin-top: 1.5vh;
-    line-height: 1.5;
-    border-left: 2px solid var(--gold);
-    padding-left: 1vw;
+    font-size: clamp(11px, 2.6vw, 13px);
+    line-height: 1.45;
+    color: rgba(247,235,221,0.82);
   }
 
-  .calc-footer-note {
+  .test-note .tn-text b { color: var(--cream); font-weight: 600; }
+
+  /* ФИНАЛЬНЫЙ ЭКРАН */
+  .final-mantra {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(22px, 5.6vw, 36px);
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    line-height: 1.15;
+    margin-bottom: 2.4vh;
+  }
+
+  .final-lead {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(11px, 0.9vw, 13px);
-    color: rgba(247,235,221,0.55);
-    text-align: center;
-    padding: 2vh 0;
-    border-top: 1px solid rgba(190,172,140,0.15);
-    line-height: 1.5;
+    font-size: clamp(13px, 3vw, 16px);
+    line-height: 1.6;
+    color: rgba(247,235,221,0.8);
+    max-width: 54ch;
+    margin: 0 auto 3.4vh;
   }
 
-  .calc-footer-note b { color: var(--gold); }
-
-  .calc-nav-actions {
+  .final-actions {
     display: flex;
-    gap: 14px;
-    margin-top: 2.5vh;
-    padding-top: 2.5vh;
-    border-top: 1px solid rgba(190,172,140,0.15);
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto 3vh;
   }
 
-  .calc-nav-btn {
-    flex: 1;
-    min-height: 56px;
-    padding: 16px 24px;
-    border-radius: 14px;
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(14px, 1.1vw, 16px);
+  .slogan {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(13px, 3.2vw, 17px);
     font-weight: 600;
-    letter-spacing: 0.3px;
+    color: var(--cream);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    line-height: 1.35;
+    margin: 2.2vh auto 1.2vh;
+    max-width: 38ch;
+    opacity: 0.95;
+  }
+
+  .slogan span { color: var(--gold); }
+
+  .contact-signature {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(12px, 2.8vw, 14px);
+    line-height: 1.9;
+    color: rgba(247,235,221,0.85);
+    padding-top: 2.4vh;
+    border-top: 1px solid rgba(190,172,140,0.15);
+    margin-top: 1vh;
+  }
+
+  .contact-signature b { color: var(--gold); font-weight: 600; }
+
+  .contact-signature a {
+    color: var(--cream);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(190,172,140,0.35);
+  }
+
+  .contact-signature a:hover { border-color: var(--gold); }
+
+  /* ГЛОБАЛЬНОЕ НИЖНЕЕ МЕНЮ */
+  .bottom-menu {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    display: flex;
+    gap: 10px;
+    padding: 14px 16px 18px;
+    background: rgba(15,31,28,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--line);
+    z-index: 120;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .bottom-menu.hidden {
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .bn-btn {
+    flex: 1;
+    min-height: 46px;
+    padding: 12px 10px;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(12px, 3vw, 14px);
+    font-weight: 600;
+    letter-spacing: 0.2px;
     cursor: pointer;
-    border: 1px solid transparent;
-    transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid rgba(190,172,140,0.45);
+    background: rgba(255,255,255,0.04);
+    color: var(--cream);
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+    white-space: nowrap;
   }
 
-  .calc-nav-btn--primary {
-    background: var(--gold);
+  .bn-btn:hover {
+    background: rgba(190,172,140,0.12);
+    border-color: var(--gold);
+    transform: translateY(-1px);
+  }
+
+  .bn-btn--green {
+    background: var(--green-ok);
     color: var(--green-deep);
-    border-color: var(--gold);
-    box-shadow: 0 8px 24px rgba(190,172,140,0.28);
+    border-color: var(--green-ok);
+    box-shadow: 0 6px 20px rgba(95,169,126,0.30);
   }
 
-  .calc-nav-btn--primary:hover {
-    background: #cdbb9a;
-    transform: translateY(-1px);
-    box-shadow: 0 12px 32px rgba(190,172,140,0.42);
-  }
-
-  .calc-nav-btn--ghost {
-    background: transparent;
-    color: var(--cream);
-    border-color: rgba(190,172,140,0.5);
-  }
-
-  .calc-nav-btn--ghost:hover {
-    background: rgba(190,172,140,0.10);
-    border-color: var(--gold);
+  .bn-btn--green:hover {
+    background: #71bd8f;
     transform: translateY(-1px);
   }
 
-  /* VIP-БЛОК В КАЛЬКУЛЯТОРЕ */
-  .vip-block {
-    background: linear-gradient(135deg, rgba(190,172,140,0.18), rgba(190,172,140,0.05));
-    border: 1px solid var(--gold);
-    border-radius: 18px;
-    padding: 0 2.5vw;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.6s cubic-bezier(0.2,1,0.3,1),
-                opacity 0.4s ease,
-                padding 0.4s ease;
-    margin-top: 3vh;
-  }
-
-  .vip-block.show {
-    max-height: 900px;
-    opacity: 1;
-    padding: 3vh 2.5vw;
-  }
-
-  .vip-block .vip-plate-small {
-    display: inline-block;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    padding: 6px 16px;
-    border-radius: 999px;
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 2vh;
-  }
-
-  .vip-block h3 {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(18px, 1.6vw, 24px);
-    font-weight: 600;
-    color: var(--cream);
-    margin-bottom: 2.5vh;
-    text-transform: uppercase;
-  }
-
-  .vip-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 1.4vh;
-    margin: 0;
-  }
-
-  .vip-list li {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(13px, 1.05vw, 15px);
-    line-height: 1.55;
-    color: rgba(247,235,221,0.9);
-  }
-
-  .vip-list li::before {
-    content: '★';
-    color: var(--gold);
-    font-size: 1em;
-    line-height: 1.55;
-    flex-shrink: 0;
-  }
-
-  .vip-list li p {
-    margin: 0;
-    flex: 1;
-  }
-
-  .vip-list li b {
-    color: var(--cream);
-    font-weight: 600;
-  }
-
-  .calc-close {
-    position: fixed;
-    top: 22px; right: 32px;
-    width: 40px; height: 40px;
-    background: rgba(190,172,140,0.10);
-    border: 1px solid var(--line);
-    border-radius: 50%;
-    color: var(--gold);
-    font-size: 20px;
-    cursor: pointer;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 200;
-    transition: background 0.2s;
-    font-family: 'Myriad Pro', sans-serif;
-  }
-
-  .calc-close:hover { background: rgba(190,172,140,0.25); }
-
-  .calc-close.visible { display: flex; }
-
+  /* СТРЕЛКИ */
   .nav-arrow {
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    width: 56px; height: 56px;
+    width: 48px; height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--gold);
-    font-size: 28px;
+    font-size: 24px;
     font-family: 'Myriad Pro', sans-serif;
-    opacity: 0.25;
+    opacity: 0.3;
     cursor: pointer;
-    z-index: 100;
+    z-index: 110;
     transition: opacity 0.2s;
     user-select: none;
   }
 
   .nav-arrow:hover { opacity: 0.85; }
-  .nav-arrow.left { left: 16px; }
-  .nav-arrow.right { right: 16px; }
+  .nav-arrow.left { left: 6px; }
+  .nav-arrow.right { right: 6px; }
+  .nav-arrow.hidden { display: none; }
 
+  /* ТОЧКИ И ЛИНИЯ */
   .dots {
     position: fixed;
-    bottom: 4vh;
+    bottom: 86px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 10px;
-    z-index: 100;
+    gap: 8px;
+    z-index: 110;
   }
 
   .dots span {
-    width: 8px; height: 8px;
+    width: 7px; height: 7px;
     border-radius: 4px;
     background: rgba(190,172,140,0.25);
     cursor: pointer;
     transition: all 0.3s ease;
   }
 
-  .dots span.active {
-    background: var(--gold);
-    width: 28px;
-  }
+  .dots span.active { background: var(--green-ok); width: 22px; }
 
   .gold-line {
     position: fixed;
     bottom: 0; left: 0;
     height: 2px;
-    background: var(--gold);
-    box-shadow: 0 0 20px rgba(190,172,140,0.5);
+    background: var(--green-ok);
+    box-shadow: 0 0 20px rgba(95,169,126,0.5);
     transition: width 0.5s cubic-bezier(0.65,0,0.35,1);
-    z-index: 100;
+    z-index: 130;
   }
 
-  @media (max-width: 900px) {
-    .parts, .calc-grid, .cb-result, .vip-answers { grid-template-columns: 1fr; }
-    .money-row { grid-template-columns: 1fr; text-align: center; gap: 1vh; }
-    .money-row .vol, .money-row .sum { text-align: center; }
-    .money-row .arrow { display: none; }
-    .cherry { flex-direction: column; align-items: flex-start; }
-    .contact-actions { flex-direction: column; }
-    .contact-btn { width: 100%; min-width: 0; white-space: normal; }
-    .calc-nav-actions { flex-direction: column; }
+  @media (max-width: 700px) {
+    .calc-grid { grid-template-columns: 1fr 1fr; }
+    .nav-arrow { display: none; }
   }
 </style>
 </head>
@@ -1191,36 +636,48 @@
      src="https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/main/ARBITR-PRO_1080%C3%97420px.png"
      alt="АрбитрПро">
 
-<div class="slide-number" id="slideNumber">01 / 07</div>
-
-<div class="calc-close" id="calcClose">×</div>
+<div class="slide-number" id="slideNumber">01 / 03</div>
 
 <div class="nav-arrow left" id="navLeft">‹</div>
 <div class="nav-arrow right" id="navRight">›</div>
 
-<div class="deck" id="deck">
+<div class="deck">
 
-  <!-- ЭКРАН 1 — КРЮЧОК -->
-  <section class="slide active" data-slide="0">
-    <div class="hook-num">2 285 000 ₽</div>
-    <div class="hook-sub">за 6 месяцев</div>
-    <div class="hook-cashback">+ cashback с реализации</div>
-    <div class="hook-question">Сколько из них — Ваши?</div>
-    <button class="hook-cta" id="hookCta">
-      Открыть калькулятор
-      <span class="arrow">→</span>
-    </button>
-    <div class="hook-cta-caption">Узнать за 30 секунд</div>
+  <!-- ЭКРАН 1 — УСЛОВИЯ -->
+  <section class="slide active slide--scroll" data-slide="0">
+    <div class="kicker">Реферальная программа</div>
+    <div class="slide-title">Рекомендуй нас — <span class="hl">зарабатывай с нами</span></div>
+
+    <p class="intro-lead">
+      Если ты готов нас рекомендовать, мы будем платить <b>и тебе, и привлечённой компании</b>. Без потолков и сложных условий: каждое дело, доведённое до результата, — это деньги для обоих.
+    </p>
+
+    <div class="intro-rules">
+      <div class="rule">
+        <div class="r-num">2 000 ₽</div>
+        <div class="r-text"><b>Вам</b> — за каждое дело привлечённой компании.</div>
+      </div>
+      <div class="rule">
+        <div class="r-num">2 000 ₽</div>
+        <div class="r-text"><b>Привлечённой ЮК</b> — за каждое её дело. Это её ставка, вместо стандартных 4 000 ₽.</div>
+      </div>
+      <div class="rule">
+        <div class="r-num">5 дел</div>
+        <div class="r-text"><b>Тестовых для проверки нас.</b> Без оплаты расходов — пусть убедятся, что мы делаем, прежде чем работать всерьёз.</div>
+      </div>
+    </div>
+
+    <button class="btn btn--primary" id="introNext">Посчитать</button>
   </section>
 
   <!-- ЭКРАН 2 — КАЛЬКУЛЯТОР -->
-  <section class="slide calc-slide" data-slide="1">
+  <section class="slide slide--scroll" data-slide="1">
     <div class="calc-wrap">
-      <div class="calc-title">Ваша <span class="hl">цифра</span></div>
-      <div class="calc-subtitle">Двигайте ползунок — увидите свою выплату за месяц и за 6 месяцев</div>
+      <div class="calc-title">Ваш <span class="hl">доход</span></div>
+      <div class="calc-subtitle">Двигайте ползунок — увидите, сколько получает реферер и привлечённая ЮК</div>
 
       <div class="slider-head">
-        <span class="lab">Дел в месяц</span>
+        <span class="lab">Дел в месяц у привлечённой</span>
         <span class="val" id="volValue">10</span>
       </div>
 
@@ -1229,239 +686,81 @@
         <div class="progress-track">
           <div class="progress-fill" id="progressFill"></div>
         </div>
-        <div class="vip-mark"></div>
-        <div class="vip-mark-label">VIP от 50</div>
       </div>
 
       <div class="calc-grid">
-        <div class="calc-card" id="cardMonthly">
-          <div class="lab">За месяц</div>
-          <div class="val green" id="monthlyTotal">20 000 ₽</div>
-          <div class="sub" id="monthlyNote">10 × 2 000 ₽</div>
+        <div class="calc-card">
+          <div class="lab">Рефереру за месяц</div>
+          <div class="val green" id="refMonth">20 000 ₽</div>
+          <div class="sub" id="refNote">10 × 2 000 ₽</div>
         </div>
-        <div class="calc-card" id="cardRate">
-          <div class="lab">Ставка за дело</div>
-          <div class="val gold" id="ratePerCase">2 000 ₽</div>
-          <div class="sub" id="rateNote">1–49 дел/мес</div>
-        </div>
-      </div>
-
-      <div class="calc-grid">
-        <div class="calc-card" id="cardPay">
-          <div class="lab">за 6 месяцев</div>
-          <div class="val" id="payForCases">114 000 ₽</div>
-          <div class="sub" id="payNote">57 × 2 000 ₽</div>
-        </div>
-        <div class="calc-card" id="cardBonus">
-          <div class="lab">Бонус за объём</div>
-          <div class="val gold" id="volumeBonus">100 000 ₽</div>
-          <div class="sub" id="bonusNote">51–100 дел</div>
+        <div class="calc-card">
+          <div class="lab">Привлечённой ЮК за месяц</div>
+          <div class="val gold" id="partnerMonth">20 000 ₽</div>
+          <div class="sub" id="partnerNote">10 × 2 000 ₽</div>
         </div>
       </div>
 
-      <div class="total-hero" id="totalHero">
-        <div class="label">ИТОГО ЗА 6 МЕСЯЦЕВ</div>
-        <div class="amount" id="totalSix">214 000 ₽</div>
-        <div class="note">гарантированно · без cashback</div>
+      <div class="total-hero">
+        <div class="label">ВАШ ДОХОД ЗА 12 МЕСЯЦЕВ</div>
+        <div class="amount" id="refYear">240 000 ₽</div>
+        <div class="note">рефереру · без cashback с реализации</div>
       </div>
 
       <div class="per-case">
-        <div class="l">
-          С каждого дела
-          <span>гарантированно получите</span>
-        </div>
-        <div class="r" id="effectiveRate">3 754 ₽</div>
+        <div class="l">Привлечённая ЮК<span>получит за 12 месяцев</span></div>
+        <div class="r" id="partnerYear">240 000 ₽</div>
       </div>
 
-      <div class="cashback-block">
-        <div class="cashback-title">+ Cashback с реализации имущества</div>
-        <div class="cashback-sub">Нажмите сумму реализации, чтобы увидеть расчёт с одного дела. Cashback не входит в итог выше — он зависит от наличия имущества.</div>
-        <div class="cashback-buttons">
-          <button class="cb-btn" data-asset="0">Нет</button>
-          <button class="cb-btn active" data-asset="500000">500 тыс ₽</button>
-          <button class="cb-btn" data-asset="2000000">2 млн ₽</button>
-          <button class="cb-btn" data-asset="4000000">4 млн ₽</button>
-          <button class="cb-btn" data-asset="10000000">10 млн ₽</button>
-        </div>
-        <div class="cb-result">
-          <div class="cb-item">
-            <div class="lab">Сумма реализации</div>
-            <div class="val" id="cbAsset">500 000 ₽</div>
-          </div>
-          <div class="cb-item">
-            <div class="lab">Доля партнёра</div>
-            <div class="val" id="cbShare">20%</div>
-          </div>
-          <div class="cb-item">
-            <div class="lab">Cashback с дела</div>
-            <div class="val" id="cbAmount">7 000 ₽</div>
-          </div>
-        </div>
-        <div class="cb-note" id="cbNote">
-          Вознаграждение АУ = 500 000 × 7% = 35 000 ₽. Доля партнёра 20% = 7 000 ₽.
-        </div>
-      </div>
-
-      <div class="vip-block" id="vipBlock">
-        <span class="vip-plate-small">VIP · 50+ дел/мес</span>
-        <h3>Вы перешли в VIP</h3>
-        <ul class="vip-list">
-          <li><p><b>5 дел на тест</b> — без оплаты судебных расходов</p></li>
-          <li><p><b>50% cashback фиксированно</b> — независимо от суммы реализации</p></li>
-          <li><p><b>Приоритетное ведение</b> — Ваши дела вне общей очереди</p></li>
-          <li><p><b>Персональный менеджер</b> — ведёт только Ваши дела</p></li>
-          <li><p><b>Индивидуальные условия</b> — ставка и порядок оплаты под Ваш поток</p></li>
-          <li><p><b>Ранний доступ</b> — новые продукты первыми</p></li>
-        </ul>
-      </div>
-
-      <div class="calc-footer-note">
-        <b>От 100 дел/мес — индивидуальные условия.</b> Обсудите с Виктором.
-      </div>
-
-      <div class="calc-nav-actions">
-        <button class="calc-nav-btn calc-nav-btn--ghost" id="calcBack">← Назад</button>
-        <button class="calc-nav-btn calc-nav-btn--primary" id="calcNext">Дальше →</button>
+      <div class="test-note">
+        <div class="tn-num">5 дел</div>
+        <div class="tn-text"><b>тестовых</b> — без оплаты расходов. Проверка нас перед стартом.</div>
       </div>
     </div>
   </section>
 
-  <!-- ЭКРАН 3 — ДВЕ ЧАСТИ -->
-  <section class="slide" data-slide="2">
-    <div class="slide-title">Ваша гарантированная выплата <span class="hl">состоит из двух частей</span></div>
-    <div class="parts">
-      <div class="part">
-        <div class="num">01</div>
-        <div class="name">За каждое дело</div>
-        <div class="desc">2 000 ₽ при объёме 1–49 дел/мес.<br>3 000 ₽ при объёме 50+ дел/мес.</div>
-      </div>
-      <div class="part">
-        <div class="num">02</div>
-        <div class="name">Бонус за объём за 6 месяцев</div>
-        <div class="desc">от 30 000 ₽ до 500 000 ₽ — по достижении планки переданных дел.</div>
-      </div>
-    </div>
-    <div class="cashback-note">
-      <b>+ Cashback с реализации имущества</b> — 20–50% от вознаграждения АУ. Зависит от наличия имущества. Может быть 0.
-    </div>
-  </section>
+  <!-- ЭКРАН 3 — ФИНАЛ -->
+  <section class="slide slide--scroll" data-slide="2">
+    <div class="kicker">С чего начать</div>
+    <div class="slide-title">Два пути — <span class="hl">один результат</span></div>
 
-  <!-- ЭКРАН 4 — ЛЕСТНИЦА -->
-  <section class="slide" data-slide="3">
-    <div class="slide-title">Сколько Вы получите <span class="hl">за 6 месяцев</span></div>
-    <p class="slide-lead">Гарантированные выплаты. Без cashback — он зависит от реализации.</p>
-    <div class="money-ladder">
-      <div class="money-row">
-        <div class="vol">10 дел/мес · 60 за 6 мес</div>
-        <div class="arrow">→</div>
-        <div class="sum">214 000 ₽</div>
-      </div>
-      <div class="money-row">
-        <div class="vol">30 дел/мес · 180 за 6 мес</div>
-        <div class="arrow">→</div>
-        <div class="sum">554 000 ₽</div>
-      </div>
-      <div class="money-row vip">
-        <div class="vol">50 дел/мес · 300 за 6 мес</div>
-        <div class="arrow">→</div>
-        <div class="sum">1 085 000 ₽</div>
-      </div>
-      <div class="money-row vip">
-        <div class="vol">83 дел/мес · 498 за 6 мес</div>
-        <div class="arrow">→</div>
-        <div class="sum">1 829 000 ₽</div>
-      </div>
-      <div class="money-row vip">
-        <div class="vol">100 дел/мес · 600 за 6 мес</div>
-        <div class="arrow">→</div>
-        <div class="sum">2 285 000 ₽</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ЭКРАН 5 — ТЕСТ -->
-  <section class="slide" data-slide="4">
-    <div class="slide-title">Не верите? <span class="hl">Проверьте</span></div>
-    <div class="test-big">3 дела</div>
-    <div class="test-line">Передайте 3 дела — <b style="color:var(--gold);">без оплаты судебных расходов.</b></div>
-    <div class="test-line">Посмотрите на результат сами.</div>
-    <div class="test-vip">Для партнёров с объёмом 50+ дел/мес — <b>5 дел на тест.</b></div>
-  </section>
-
-  <!-- ЭКРАН 6 — VIP -->
-  <section class="slide" data-slide="5">
-    <div class="vip-plate">VIP Партнёрам</div>
-    <div class="vip-title">
-      Ваш объём — Ваш статус
-      <span class="cream">от 50 дел в месяц</span>
-    </div>
-    <div class="vip-sub">Вы — не один из. Мы работаем с Вами иначе.</div>
-
-    <div class="vip-answers">
-      <div class="vip-answer vip-answer--main">
-        <h4>Персональный менеджер</h4>
-        <p>Ведёт только Вашу компанию и Ваши дела. Знает Вашу специфику.</p>
-      </div>
-      <div class="vip-answer vip-answer--main">
-        <h4>Индивидуальные условия</h4>
-        <p>Ставка, порядок и формат оплаты — под Ваш поток. Не по общему прайсу.</p>
-      </div>
-      <div class="vip-answer">
-        <h4>Ваши дела не ждут</h4>
-        <p>Вне общей очереди. Короче сроки. Быстрее согласования.</p>
-      </div>
-      <div class="vip-answer">
-        <h4>Вы говорите с теми, кто решает</h4>
-        <p>Прямой контакт с руководством. Без посредников.</p>
-      </div>
-    </div>
-
-    <div class="cherry">
-      <div class="cherry-num">50%</div>
-      <div class="cherry-text">
-        Фиксированный cashback на все дела
-        <span>независимо от суммы реализации</span>
-      </div>
-    </div>
-
-    <div class="vip-closing">
-      Ваш поток — <span>наши приоритетные условия.</span>
-    </div>
-  </section>
-
-  <!-- ЭКРАН 7 — КОНТАКТ -->
-  <section class="slide" data-slide="6">
-    <div class="slide-title">Передайте 3 дела — <span class="hl">и сами всё увидите</span></div>
-
-    <p class="contact-lead">
-      Не надо верить на слово. Просто попробуйте. Личный кабинет,
-      персональный менеджер по сопровождению, прозрачная сверка. Дальше решите сами.
+    <p class="final-lead">
+      Можно просто рекомендовать нас и получать за это. А можно самому стать партнёром и зарабатывать на каждом деле — с полным контролем и поддержкой.
     </p>
 
-    <div class="contact-actions">
-      <a class="contact-btn contact-btn--primary"
+    <div class="final-actions">
+      <a class="btn btn--primary"
          href="https://t.me/moroz_viktor"
          target="_blank" rel="noopener">
-        Оставить заявку
+        Хочу стать рефералом
       </a>
-      <a class="contact-btn contact-btn--ghost"
-         href="tel:+79995534474">
-        Позвонить Виктору
-      </a>
-      <a class="contact-btn contact-btn--ghost"
-         href="mailto:mvgoz@yandex.ru?subject=Заявка%20с%20презентации%20АрбитрПро">
-        Написать на почту
+    </div>
+
+    <div class="slogan">Готовы получать больше? <span>Станьте партнёром — и зарабатывайте на каждом деле.</span></div>
+
+    <div class="final-actions">
+      <a class="btn btn--ghost"
+         href="https://raw.githubusercontent.com/VityaMoroz/ArbitrPro_For_Club_127/refs/heads/main/index.html"
+         target="_blank" rel="noopener">
+        Хочу стать партнёром
       </a>
     </div>
 
     <div class="contact-signature">
       <b>@moroz_viktor</b><br>
-      Виктор Мороз<br>
+      Виктор Мороз · Руководитель отдела продаж<br>
       <a href="tel:+79995534474">+7 999 553-44-74</a><br>
       <a href="mailto:mvgoz@yandex.ru">mvgoz@yandex.ru</a>
     </div>
   </section>
 
+</div>
+
+<!-- НИЖНЕЕ МЕНЮ -->
+<div class="bottom-menu" id="bottomMenu">
+  <button class="bn-btn" id="btnBack">Назад</button>
+  <button class="bn-btn bn-btn--green" id="btnCta">Стать рефералом</button>
+  <button class="bn-btn" id="btnNext">Далее</button>
 </div>
 
 <div class="dots" id="dots"></div>
@@ -1477,7 +776,10 @@
   const slideNumber = document.getElementById('slideNumber');
   const navLeft = document.getElementById('navLeft');
   const navRight = document.getElementById('navRight');
-  const calcClose = document.getElementById('calcClose');
+  const bottomMenu = document.getElementById('bottomMenu');
+  const btnBack = document.getElementById('btnBack');
+  const btnNext = document.getElementById('btnNext');
+  const btnCta = document.getElementById('btnCta');
 
   for (let i = 0; i < total; i++) {
     const s = document.createElement('span');
@@ -1490,11 +792,26 @@
     const pct = ((current + 1) / total) * 100;
     goldLine.style.width = pct + '%';
     slideNumber.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
-
     [...dotsContainer.children].forEach((d, i) => d.classList.toggle('active', i === current));
 
-    const isCalc = current === 1;
-    calcClose.classList.toggle('visible', isCalc);
+    if (current === 0 || current === total - 1) {
+      bottomMenu.classList.add('hidden');
+    } else {
+      bottomMenu.classList.remove('hidden');
+    }
+
+    if (current === total - 1) {
+      btnBack.style.display = 'inline-flex';
+      btnCta.style.display = 'none';
+      btnNext.style.display = 'none';
+    } else {
+      btnBack.style.display = 'inline-flex';
+      btnCta.style.display = 'inline-flex';
+      btnNext.style.display = 'inline-flex';
+    }
+
+    navLeft.classList.toggle('hidden', current === 0);
+    navRight.classList.toggle('hidden', current === total - 1);
   }
 
   function goTo(n) {
@@ -1503,6 +820,7 @@
     if (n === current) return;
     slides[current].classList.remove('active');
     slides[n].classList.add('active');
+    slides[n].scrollTop = 0;
     current = n;
     updateUI();
   }
@@ -1510,13 +828,14 @@
   function nextSlide() { goTo(current + 1); }
   function prevSlide() { goTo(current - 1); }
 
-  navLeft.addEventListener('click', prevSlide);
-  navRight.addEventListener('click', nextSlide);
-  calcClose.addEventListener('click', () => goTo(0));
+  btnBack.onclick = prevSlide;
+  btnNext.onclick = nextSlide;
+  btnCta.onclick = () => window.open('https://t.me/moroz_viktor', '_blank');
 
-  document.getElementById('hookCta').addEventListener('click', () => goTo(1));
-  document.getElementById('calcBack').addEventListener('click', () => goTo(0));
-  document.getElementById('calcNext').addEventListener('click', () => goTo(2));
+  navLeft.onclick = prevSlide;
+  navRight.onclick = nextSlide;
+
+  document.getElementById('introNext').onclick = () => goTo(1);
 
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
@@ -1524,9 +843,6 @@
     }
     if (e.key === 'ArrowLeft') {
       e.preventDefault(); prevSlide();
-    }
-    if (e.key === 'Escape' && current === 1) {
-      goTo(0);
     }
   });
 
@@ -1538,8 +854,7 @@
   document.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - tx;
     const dy = e.changedTouches[0].clientY - ty;
-    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) {
-      if (current === 1 && dx > 0) { goTo(0); return; }
+    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.5) {
       dx < 0 ? nextSlide() : prevSlide();
     }
   });
@@ -1548,124 +863,35 @@
   const slider = document.getElementById('volSlider');
   const volValue = document.getElementById('volValue');
   const progressFill = document.getElementById('progressFill');
-  const cardMonthly = document.getElementById('cardMonthly');
-  const cardRate = document.getElementById('cardRate');
-  const cardPay = document.getElementById('cardPay');
-  const cardBonus = document.getElementById('cardBonus');
-  const totalHero = document.getElementById('totalHero');
-  const vipBlock = document.getElementById('vipBlock');
-  const monthlyTotal = document.getElementById('monthlyTotal');
-  const monthlyNote = document.getElementById('monthlyNote');
-  const ratePerCase = document.getElementById('ratePerCase');
-  const rateNote = document.getElementById('rateNote');
-  const payForCases = document.getElementById('payForCases');
-  const payNote = document.getElementById('payNote');
-  const volumeBonus = document.getElementById('volumeBonus');
-  const bonusNote = document.getElementById('bonusNote');
-  const totalSix = document.getElementById('totalSix');
-  const effectiveRate = document.getElementById('effectiveRate');
-  const cbAsset = document.getElementById('cbAsset');
-  const cbShare = document.getElementById('cbShare');
-  const cbAmount = document.getElementById('cbAmount');
-  const cbNote = document.getElementById('cbNote');
+  const refMonth = document.getElementById('refMonth');
+  const refNote = document.getElementById('refNote');
+  const partnerMonth = document.getElementById('partnerMonth');
+  const partnerNote = document.getElementById('partnerNote');
+  const refYear = document.getElementById('refYear');
+  const partnerYear = document.getElementById('partnerYear');
 
-  let currentAsset = 500000;
-  let prevBonusThreshold = null;
+  const RATE = 2000;
 
   function rub(n) {
     return Math.round(n).toLocaleString('ru-RU') + ' ₽';
   }
 
-  function getBonusTier(workingCases) {
-    if (workingCases >= 500) return { bonus: 500000, label: '500+ дел', tier: 5 };
-    if (workingCases >= 301) return { bonus: 350000, label: '301–500 дел', tier: 4 };
-    if (workingCases >= 101) return { bonus: 200000, label: '101–300 дел', tier: 3 };
-    if (workingCases >= 51) return { bonus: 100000, label: '51–100 дел', tier: 2 };
-    if (workingCases >= 10) return { bonus: 30000, label: '10–50 дел', tier: 1 };
-    return { bonus: 0, label: 'менее 10 дел', tier: 0 };
-  }
-
   function calculate() {
     const perMonth = parseInt(slider.value, 10);
-    const isVip = perMonth >= 50;
-    const rate = isVip ? 3000 : 2000;
-    const tests = isVip ? 5 : 3;
-    const totalCases = perMonth * 6;
-    const workingCases = Math.max(0, totalCases - tests);
-    const monthlyPay = perMonth * rate;
-    const sixMonthPay = workingCases * rate;
-    const bonusData = getBonusTier(workingCases);
-    const bonus = bonusData.bonus;
-    const totalSum = sixMonthPay + bonus;
-    const effective = workingCases > 0 ? totalSum / workingCases : 0;
+    const monthPay = perMonth * RATE;
+    const yearPay = perMonth * 12 * RATE;
 
     volValue.textContent = perMonth;
-    volValue.classList.toggle('vip', isVip);
-
-    monthlyTotal.textContent = rub(monthlyPay);
-    monthlyNote.textContent = perMonth + ' × ' + rub(rate);
-    ratePerCase.textContent = rub(rate);
-    rateNote.textContent = isVip ? '50+ дел/мес' : '1–49 дел/мес';
-    payForCases.textContent = rub(sixMonthPay);
-    payNote.textContent = workingCases + ' × ' + rub(rate);
-    volumeBonus.textContent = rub(bonus);
-    bonusNote.textContent = bonusData.label;
-    totalSix.textContent = rub(totalSum);
-    effectiveRate.textContent = rub(effective);
+    refMonth.textContent = rub(monthPay);
+    refNote.textContent = perMonth + ' × ' + rub(RATE);
+    partnerMonth.textContent = rub(monthPay);
+    partnerNote.textContent = perMonth + ' × ' + rub(RATE);
+    refYear.textContent = rub(yearPay);
+    partnerYear.textContent = rub(yearPay);
 
     const pct = ((perMonth - 1) / 99) * 100;
     progressFill.style.width = pct + '%';
-    progressFill.classList.toggle('vip', isVip);
-
-    [cardMonthly, cardRate, cardPay, cardBonus, totalHero].forEach(el => {
-      el.classList.toggle('vip', isVip);
-    });
-
-    vipBlock.classList.toggle('show', isVip);
-
-    if (prevBonusThreshold !== null && prevBonusThreshold !== bonusData.tier) {
-      cardBonus.classList.remove('flash');
-      void cardBonus.offsetWidth;
-      cardBonus.classList.add('flash');
-    }
-    prevBonusThreshold = bonusData.tier;
-
-    updateCashback(isVip);
   }
-
-  function updateCashback(isVip) {
-    if (currentAsset === 0) {
-      cbAsset.textContent = '—';
-      cbShare.textContent = '—';
-      cbAmount.textContent = '0 ₽';
-      cbNote.textContent = 'Имущества нет — cashback не начисляется.';
-      return;
-    }
-    const reward = currentAsset * 0.07;
-    let share;
-    if (isVip) share = 0.50;
-    else {
-      if (currentAsset <= 1500000) share = 0.20;
-      else if (currentAsset <= 3000000) share = 0.30;
-      else if (currentAsset <= 5000000) share = 0.40;
-      else share = 0.50;
-    }
-    const amount = reward * share;
-    cbAsset.textContent = rub(currentAsset);
-    cbShare.textContent = Math.round(share * 100) + '%' + (isVip ? ' (VIP)' : '');
-    cbAmount.textContent = rub(amount);
-    cbNote.textContent = 'Вознаграждение АУ = ' + rub(currentAsset) + ' × 7% = ' + rub(reward) +
-      '. Доля партнёра ' + Math.round(share * 100) + '% = ' + rub(amount) + '.';
-  }
-
-  document.querySelectorAll('.cb-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.cb-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentAsset = parseInt(btn.dataset.asset, 10);
-      updateCashback(parseInt(slider.value, 10) >= 50);
-    });
-  });
 
   slider.addEventListener('input', calculate);
   calculate();

@@ -110,6 +110,17 @@
   .kicker--gold { color: var(--gold); }
 
   /* ЭКРАН 1 */
+  .hero-title {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(16px, 4.5vw, 28px);
+    font-weight: 600;
+    color: var(--cream);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1.5vh;
+    opacity: 0.9;
+  }
+
   .hero-num {
     font-family: 'Myriad Pro', sans-serif;
     font-size: clamp(44px, 12vw, 100px);
@@ -135,15 +146,6 @@
     font-size: clamp(12px, 3vw, 16px);
     color: var(--gold);
     font-weight: 500;
-    margin-bottom: 3.4vh;
-  }
-
-  .hero-q {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(14px, 3.6vw, 21px);
-    font-weight: 500;
-    color: rgba(247,235,221,0.92);
-    line-height: 1.4;
     margin-bottom: 3.4vh;
   }
 
@@ -1054,11 +1056,11 @@
 
   <!-- ЭКРАН 1 — КРЮЧОК -->
   <section class="slide active" data-slide="0">
+    <div class="hero-title">Заработайте до</div>
     <div class="hero-num">4 800 000 ₽</div>
-    <div class="hero-sub">за 12 месяцев</div>
+    <div class="hero-sub">за 12 месяцев работы с нами</div>
     <div class="hero-cashback">+ cashback с реализации</div>
-    <div class="hero-q">Сколько из них — Ваши?</div>
-    <button class="btn btn--primary" id="heroNext">Подробнее</button>
+    <button class="btn btn--primary" id="heroNext">Посчитать свой доход</button>
     <div class="hero-tag">АУ, который работает на Вас</div>
   </section>
 
@@ -1271,7 +1273,7 @@
     </p>
 
     <div class="cta-actions">
-      <a class="btn btn--primary" href="https://t.me/moroz_viktor" target="_blank" rel="noopener">
+      <a class="btn btn--primary" href="https://forms.yandex.ru/u/6ae1d5766d2d7358de8d642c/" target="_blank" rel="noopener">
         Оставить заявку
       </a>
       <a class="btn btn--ghost" href="referral.html">
@@ -1363,7 +1365,7 @@
 
   btnBack.onclick = prevSlide;
   btnNext.onclick = nextSlide;
-  btnCta.onclick = () => window.open('https://t.me/moroz_viktor', '_blank');
+  btnCta.onclick = () => window.open('https://forms.yandex.ru/u/6ae1d5766d2d7358de8d642c/', '_blank');
 
   navLeft.onclick = prevSlide;
   navRight.onclick = nextSlide;

@@ -1055,28 +1055,26 @@ async function apSubmit(e) {
 
 // Привязка к кнопкам на referral.html
 document.addEventListener('DOMContentLoaded', function() {
-  // 1. Любая кнопка с текстом "стать рефералом" или "стать партнёром"
-  const allButtons = document.querySelectorAll('button, .btn, a.btn');
+  // 1. Кнопка "Хочу стать рефералом" - открывает модалку
+  const allButtons = document.querySelectorAll('button, .btn');
   allButtons.forEach(btn => {
     const text = btn.textContent.toLowerCase();
-    if (text.includes('стать рефералом') || text.includes('стать партнёром')) {
+    if (text.includes('хочу стать рефералом')) {
       btn.onclick = function(e) {
         e.preventDefault();
         apOpenModal('referral_partner');
       };
     }
+    // 2. Кнопка "Хочу стать партнёром" - ведёт на index.html
+    else if (text.includes('хочу стать партнёром')) {
+      btn.onclick = function(e) {
+        e.preventDefault();
+        window.location.href = 'index.html';
+      };
+    }
   });
 
-  // 2. Кнопка "Оставить заявку" на последнем экране
-  const ctaBtn = document.querySelector('.cta-actions .btn--primary');
-  if (ctaBtn) {
-    ctaBtn.onclick = function(e) {
-      e.preventDefault();
-      apOpenModal('referral_partner');
-    };
-  }
-  
-  // 3. Кнопка "Оставить заявку" в нижнем меню
+  // 3. Кнопка "Оставить заявку" в нижнем меню (если есть)
   const bottomCtaBtn = document.getElementById('btnCta');
   if (bottomCtaBtn) {
     bottomCtaBtn.onclick = function(e) {

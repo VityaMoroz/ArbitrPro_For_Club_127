@@ -910,6 +910,121 @@
   calculate();
   updateUI();
 </script>
+<!-- МОДАЛЬНОЕ ОКНО ЗАЯВКИ АРБИТРПРО -->
+<div class="ap-modal-overlay" id="apModal">
+  <div class="ap-modal">
+    <button class="ap-modal-close" onclick="apCloseModal()">&times;</button>
+    <h3 id="apModalTitle">Заявка</h3>
+    <form id="apForm" onsubmit="apSubmit(event)">
+      <input type="text" class="ap-input" id="apName" placeholder="Ваше имя *" required minlength="2" maxlength="100">
+      <input type="tel" class="ap-input" id="apPhone" placeholder="Телефон *" required>
+      <input type="text" class="ap-input" id="apCompany" placeholder="Компания" maxlength="200">
+      <textarea class="ap-input" id="apComment" placeholder="Комментарий" rows="3" maxlength="1000" style="display:none;"></textarea>
+      <button type="submit" class="ap-btn" id="apSubmitBtn">Отправить</button>
+      <div class="ap-msg" id="apMsg"></div>
+    </form>
+  </div>
+</div>
 
+<style>
+.ap-modal-overlay{position:fixed;inset:0;background:rgba(15,31,28,0.88);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;pointer-events:none;transition:opacity .3s}
+.ap-modal-overlay.active{opacity:1;pointer-events:all}
+.ap-modal{background:#0F1F1C;border:1px solid #BEAC8C;border-radius:18px;padding:40px 30px;width:90%;max-width:420px;position:relative}
+.ap-modal-close{position:absolute;top:12px;right:18px;background:none;border:none;color:#F7EBDD;font-size:28px;cursor:pointer;opacity:.6}
+.ap-modal-close:hover{opacity:1}
+.ap-modal h3{font-family:'Myriad Pro',sans-serif;color:#BEAC8C;text-transform:uppercase;letter-spacing:1.5px;margin:0 0 24px;text-align:center;font-size:20px}
+.ap-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(190,172,140,0.3);border-radius:12px;padding:14px 16px;color:#F7EBDD;font-family:'Inter',sans-serif;font-size:15px;margin-bottom:14px;outline:none;box-sizing:border-box}
+.ap-input:focus{border-color:#BEAC8C}
+.ap-input::placeholder{color:rgba(247,235,221,0.5)}
+.ap-btn{width:100%;background:#BEAC8C;color:#0F1F1C;border:none;border-radius:14px;padding:16px;font-family:'Inter',sans-serif;font-weight:600;font-size:16px;cursor:pointer;transition:background .2s}
+.ap-btn:hover{background:#cdbb9a}
+.ap-btn:disabled{opacity:.6;cursor:not-allowed}
+.ap-msg{text-align:center;margin-top:14px;font-size:14px;font-family:'Inter',sans-serif;min-height:20px}
+</style>
+
+<script>
+const AP_SERVER = 'https://arbitrpro-server.onrender.com/api/lead';
+
+function apOpenModal(type) {
+  const modal = document.getElementById('apModal');
+  const title = document.getElementById('apModalTitle');
+  const companyField = document.getElementById('apCompany');
+  const commentField = document.getElementById('apComment');
+
+  if (type === 'referral_partner') {
+    title.textContent = 'Стать арбитражным партнёром';
+    companyField.required = true;
+    companyField.placeholder = 'Название компании *';
+    commentField.style.display = 'none';
+  } else {
+    title.textContent = 'Заявка на встречу';
+    companyField.required = false;
+    companyField.placeholder = 'Компания';
+    commentField.style.display = 'block';
+  }
+  modal.dataset.type = type;
+  modal.classList.add('active');
+}
+
+function apCloseModal() {
+  document.getElementById('apModal').classList.remove('active');
+  document.getElementById('apForm').reset();
+  document.getElementById('apMsg').textContent = '';
+}
+
+async function apSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('apSubmitBtn');
+  const msg = document.getElementById('apMsg');
+  btn.disabled = true;
+  btn.textContent = 'Отправка...';
+  msg.textContent = '';
+
+  const modal = document.getElementById('apModal');
+  const data = {
+    lead_type: modal.dataset.type,
+    name: document.getElementById('apName').value.trim(),
+    phone: document.getElementById('apPhone').value.trim(),
+    company: document.getElementById('apCompany').value.trim(),
+    comment: document.getElementById('apComment').value.trim(),
+    source: window.location.href.includes('referral') ? 'referral_site' : 'client_site',
+    page_url: window.location.href
+  };
+
+  try {
+    const res = await fetch(AP_SERVER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (result.ok) {
+      msg.style.color = '#5FA97E';
+      msg.textContent = 'Спасибо! Мы свяжемся с вами в ближайшее время.';
+      setTimeout(apCloseModal, 2500);
+    } else {
+      throw new Error(result.detail || 'Ошибка');
+    }
+  } catch (err) {
+    msg.style.color = '#C25B4E';
+    msg.textContent = 'Ошибка отправки. Попробуйте позже.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Отправить';
+  }
+}
+
+// Автоматически находим главную кнопку на странице и переназначаем её
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.querySelector('.btn--primary');
+  if (btn) {
+    const isReferral = window.location.href.includes('referral');
+    btn.onclick = function(e) {
+      e.preventDefault();
+      apOpenModal(isReferral ? 'referral_partner' : 'meeting_request');
+    };
+  }
+});
+</script>
 </body>
 </html>

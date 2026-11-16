@@ -2,1087 +2,133 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>АрбитрПро · Реферальная программа</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>АрбитрПро — Реферальная программа</title>
 <style>
-  @font-face { font-family: 'Myriad Pro'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-REGULAR.OTF') format('opentype'); font-weight: 400; font-display: swap; }
-  @font-face { font-family: 'Myriad Pro'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-SEMIBOLD.OTF') format('opentype'); font-weight: 600; font-display: swap; }
-  @font-face { font-family: 'Myriad Pro'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-BOLD.OTF') format('opentype'); font-weight: 700; font-display: swap; }
-  @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-Regular.otf') format('opentype'); font-weight: 400; font-display: swap; }
-  @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-Medium.otf') format('opentype'); font-weight: 500; font-display: swap; }
-  @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-SemiBold.otf') format('opentype'); font-weight: 600; font-display: swap; }
-  @font-face { font-family: 'Inter'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-Bold.otf') format('opentype'); font-weight: 700; font-display: swap; }
-
-  :root {
-    --green: #19322E;
-    --green-deep: #0F1F1C;
-    --gold: #BEAC8C;
-    --cream: #F7EBDD;
-    --green-ok: #5FA97E;
-    --red: #C25B4E;
-    --line: rgba(190,172,140,0.28);
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html, body {
-    background: var(--green-deep);
-    font-family: 'Inter', sans-serif;
-    color: var(--cream);
-    overflow: hidden;
-    height: 100vh;
-  }
-
-  .deck {
-    position: relative;
-    width: 100vw; height: 100vh;
-    background: radial-gradient(ellipse at 40% 50%, #1d3a35 0%, var(--green-deep) 70%);
-    overflow: hidden;
-  }
-
-  .brand-corner {
-    position: fixed;
-    top: 22px; left: 24px;
-    height: 4.5vh; width: auto;
-    z-index: 115;
-    pointer-events: none;
-    opacity: 0.95;
-  }
-
-  .slide-number {
-    position: fixed;
-    top: 24px; right: 26px;
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--gold);
-    letter-spacing: 2px;
-    opacity: 0.6;
-    z-index: 115;
-    pointer-events: none;
-  }
-
-  .slide {
-    position: absolute;
-    inset: 0;
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 9vh 5vw 16vh;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.45s ease;
-  }
-
-  .slide.active { display: flex; opacity: 1; }
-
-  .slide--scroll {
-    justify-content: flex-start;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .slide-title {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(24px, 6vw, 44px);
-    font-weight: 600;
-    line-height: 1.12;
-    letter-spacing: 0.3px;
-    color: var(--cream);
-    margin-bottom: 2.4vh;
-    text-transform: uppercase;
-    max-width: 24ch;
-  }
-
-  .slide-title .hl { color: var(--gold); }
-
-  .kicker {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(10px, 2.6vw, 13px);
-    font-weight: 700;
-    color: var(--green-ok);
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    margin-bottom: 1.6vh;
-  }
-
-  /* ЭКРАН 1 */
-  .intro-lead {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(14px, 3.4vw, 18px);
-    line-height: 1.55;
-    color: rgba(247,235,221,0.85);
-    max-width: 54ch;
-    margin: 0 auto 3vh;
-  }
-
-  .intro-lead b { color: var(--gold); font-weight: 600; }
-
-  .intro-rules {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2vh;
-    width: 100%;
-    max-width: 640px;
-    margin: 0 auto 3.4vh;
-    text-align: left;
-  }
-
-  .rule {
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 1.8vh 2vw;
-  }
-
-  .rule .r-num {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(18px, 4.6vw, 24px);
-    font-weight: 700;
-    color: var(--green-ok);
-    line-height: 1;
-    white-space: nowrap;
-    min-width: 90px;
-  }
-
-  .rule .r-text {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(11.5px, 2.7vw, 14px);
-    line-height: 1.5;
-    color: rgba(247,235,221,0.82);
-  }
-
-  .rule .r-text b { color: var(--cream); font-weight: 600; }
-
-  .btn {
-    min-height: 52px;
-    padding: 14px 30px;
-    border-radius: 14px;
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(14px, 3.4vw, 16px);
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid transparent;
-    transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .btn--primary {
-    background: var(--gold);
-    color: var(--green-deep);
-    border-color: var(--gold);
-    box-shadow: 0 8px 28px rgba(190,172,140,0.30);
-  }
-
-  .btn--primary:hover { background: #cdbb9a; transform: translateY(-1px); }
-
-  .btn--ghost {
-    background: transparent;
-    color: var(--cream);
-    border-color: rgba(190,172,140,0.55);
-  }
-
-  .btn--ghost:hover { background: rgba(190,172,140,0.10); border-color: var(--gold); }
-
-  /* КАЛЬКУЛЯТОР */
-  .calc-wrap {
-    width: 100%;
-    max-width: 640px;
-    text-align: left;
-  }
-
-  .calc-title {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(20px, 5vw, 32px);
-    font-weight: 600;
-    color: var(--cream);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.6vh;
-    text-align: center;
-  }
-
-  .calc-title .hl { color: var(--gold); }
-
-  .calc-subtitle {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(11px, 2.7vw, 14px);
-    color: rgba(247,235,221,0.65);
-    margin-bottom: 2.4vh;
-    text-align: center;
-  }
-
-  .slider-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 1.2vh;
-  }
-
-  .slider-head .lab {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(12px, 2.8vw, 15px);
-    font-weight: 600;
-    color: var(--gold);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-  }
-
-  .slider-head .val {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(28px, 8vw, 44px);
-    font-weight: 700;
-    color: var(--cream);
-    line-height: 1;
-    transition: color 0.3s ease;
-  }
-
-  .slider-wrap { position: relative; margin-bottom: 3.4vh; }
-
-  .progress-track {
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 6px;
-    background: rgba(190,172,140,0.15);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--green-ok), #3f7a58);
-    border-radius: 3px;
-    width: 0%;
-    transition: width 0.25s ease;
-  }
-
-  input[type=range] {
-    width: 100%; height: 6px;
-    -webkit-appearance: none; appearance: none;
-    background: transparent;
-    cursor: pointer;
-    position: relative; z-index: 2;
-  }
-
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none; appearance: none;
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    background: var(--green-ok);
-    border: 3px solid var(--green-deep);
-    box-shadow: 0 0 0 2px var(--green-ok);
-    cursor: pointer;
-  }
-
-  input[type=range]::-moz-range-thumb {
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    background: var(--green-ok);
-    border: 3px solid var(--green-deep);
-    box-shadow: 0 0 0 2px var(--green-ok);
-    cursor: pointer;
-  }
-
-  .calc-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.4vh 10px;
-    margin-bottom: 1.8vh;
-  }
-
-  .calc-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 1.8vh 2vw;
-  }
-
-  .calc-card .lab {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(9px, 2.2vw, 11px);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-weight: 700;
-    opacity: 0.65;
-    margin-bottom: 0.7vh;
-  }
-
-  .calc-card .val {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(20px, 5vw, 28px);
-    font-weight: 700;
-    color: var(--cream);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-  }
-
-  .calc-card .val.gold { color: var(--gold); }
-  .calc-card .val.green { color: var(--green-ok); }
-
-  .calc-card .sub {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(9.5px, 2.2vw, 11px);
-    opacity: 0.6;
-    margin-top: 0.7vh;
-    line-height: 1.35;
-  }
-
-  .total-hero {
-    margin: 1.6vh 0;
-    padding: 2.6vh 3vw;
-    border-radius: 18px;
-    background: linear-gradient(135deg, rgba(95,169,126,0.16), rgba(95,169,126,0.04));
-    border: 2px solid rgba(95,169,126,0.55);
-    text-align: center;
-  }
-
-  .total-hero .label {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(10px, 2.4vw, 13px);
-    font-weight: 600;
-    color: var(--green-ok);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    margin-bottom: 1.2vh;
-  }
-
-  .total-hero .amount {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(38px, 11vw, 68px);
-    font-weight: 700;
-    color: var(--cream);
-    line-height: 1;
-    letter-spacing: -0.03em;
-  }
-
-  .total-hero .note {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(9.5px, 2.2vw, 11px);
-    color: rgba(247,235,221,0.55);
-    margin-top: 1vh;
-    letter-spacing: 0.5px;
-  }
-
-  .per-case {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.8vh 2.4vw;
-    background: rgba(190,172,140,0.08);
-    border: 1px solid rgba(190,172,140,0.4);
-    border-radius: 14px;
-    margin-bottom: 2.2vh;
-    gap: 10px;
-  }
-
-  .per-case .l {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(11px, 2.6vw, 14px);
-    font-weight: 600;
-    color: var(--cream);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    line-height: 1.3;
-  }
-
-  .per-case .l span {
-    display: block;
-    font-family: 'Inter', sans-serif;
-    font-size: 9.5px;
-    font-weight: 400;
-    opacity: 0.65;
-    letter-spacing: 0.3px;
-    text-transform: none;
-    margin-top: 3px;
-  }
-
-  .per-case .r {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(24px, 7vw, 38px);
-    font-weight: 700;
-    color: var(--gold);
-    letter-spacing: -0.02em;
-    line-height: 1;
-    white-space: nowrap;
-  }
-
-  .test-note {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    background: rgba(190,172,140,0.08);
-    border: 1px dashed rgba(190,172,140,0.45);
-    border-radius: 12px;
-    padding: 1.6vh 1.8vw;
-    margin-top: 2vh;
-    text-align: left;
-  }
-
-  .test-note .tn-num {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(22px, 5.4vw, 30px);
-    font-weight: 700;
-    color: var(--gold);
-    line-height: 1;
-    white-space: nowrap;
-  }
-
-  .test-note .tn-text {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(11px, 2.6vw, 13px);
-    line-height: 1.45;
-    color: rgba(247,235,221,0.82);
-  }
-
-  .test-note .tn-text b { color: var(--cream); font-weight: 600; }
-
-  /* ФИНАЛЬНЫЙ ЭКРАН */
-  .final-mantra {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(22px, 5.6vw, 36px);
-    font-weight: 700;
-    color: var(--gold);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    line-height: 1.15;
-    margin-bottom: 2.4vh;
-  }
-
-  .final-lead {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(13px, 3vw, 16px);
-    line-height: 1.6;
-    color: rgba(247,235,221,0.8);
-    max-width: 54ch;
-    margin: 0 auto 3.4vh;
-  }
-
-  .final-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-    max-width: 420px;
-    margin: 0 auto 3vh;
-  }
-
-  .slogan {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(13px, 3.2vw, 17px);
-    font-weight: 600;
-    color: var(--cream);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    line-height: 1.35;
-    margin: 2.2vh auto 1.2vh;
-    max-width: 38ch;
-    opacity: 0.95;
-  }
-
-  .slogan span { color: var(--gold); }
-
-  .contact-signature {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(12px, 2.8vw, 14px);
-    line-height: 1.9;
-    color: rgba(247,235,221,0.85);
-    padding-top: 2.4vh;
-    border-top: 1px solid rgba(190,172,140,0.15);
-    margin-top: 1vh;
-  }
-
-  .contact-signature b { color: var(--gold); font-weight: 600; }
-
-  .contact-signature a {
-    color: var(--cream);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(190,172,140,0.35);
-  }
-
-  .contact-signature a:hover { border-color: var(--gold); }
-
-  /* ГЛОБАЛЬНОЕ НИЖНЕЕ МЕНЮ */
-  .bottom-menu {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    display: flex;
-    gap: 10px;
-    padding: 14px 16px 18px;
-    background: rgba(15,31,28,0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-top: 1px solid var(--line);
-    z-index: 120;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-  }
-
-  .bottom-menu.hidden {
-    transform: translateY(100%);
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .bn-btn {
-    flex: 1;
-    min-height: 46px;
-    padding: 12px 10px;
-    border-radius: 12px;
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(12px, 3vw, 14px);
-    font-weight: 600;
-    letter-spacing: 0.2px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(190,172,140,0.45);
-    background: rgba(255,255,255,0.04);
-    color: var(--cream);
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
-    white-space: nowrap;
-  }
-
-  .bn-btn:hover {
-    background: rgba(190,172,140,0.12);
-    border-color: var(--gold);
-    transform: translateY(-1px);
-  }
-
-  .bn-btn--green {
-    background: var(--green-ok);
-    color: var(--green-deep);
-    border-color: var(--green-ok);
-    box-shadow: 0 6px 20px rgba(95,169,126,0.30);
-  }
-
-  .bn-btn--green:hover {
-    background: #71bd8f;
-    transform: translateY(-1px);
-  }
-
-  /* СТРЕЛКИ */
-  .nav-arrow {
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 48px; height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--gold);
-    font-size: 24px;
-    font-family: 'Myriad Pro', sans-serif;
-    opacity: 0.3;
-    cursor: pointer;
-    z-index: 110;
-    transition: opacity 0.2s;
-    user-select: none;
-  }
-
-  .nav-arrow:hover { opacity: 0.85; }
-  .nav-arrow.left { left: 6px; }
-  .nav-arrow.right { right: 6px; }
-  .nav-arrow.hidden { display: none; }
-
-  /* ТОЧКИ И ЛИНИЯ */
-  .dots {
-    position: fixed;
-    bottom: 86px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 8px;
-    z-index: 110;
-  }
-
-  .dots span {
-    width: 7px; height: 7px;
-    border-radius: 4px;
-    background: rgba(190,172,140,0.25);
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .dots span.active { background: var(--green-ok); width: 22px; }
-
-  .gold-line {
-    position: fixed;
-    bottom: 0; left: 0;
-    height: 2px;
-    background: var(--green-ok);
-    box-shadow: 0 0 20px rgba(95,169,126,0.5);
-    transition: width 0.5s cubic-bezier(0.65,0,0.35,1);
-    z-index: 130;
-  }
-
-  @media (max-width: 700px) {
-    .calc-grid { grid-template-columns: 1fr 1fr; }
-    .nav-arrow { display: none; }
-  }
+@font-face{font-family:'Myriad Pro';src:url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-REGULAR.OTF') format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:'Myriad Pro';src:url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-SEMIBOLD.OTF') format('opentype');font-weight:600;font-display:swap}
+@font-face{font-family:'Myriad Pro';src:url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-BOLD.OTF') format('opentype');font-weight:700;font-display:swap}
+@font-face{font-family:Inter;src:url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-Regular.otf') format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:Inter;src:url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-SemiBold.otf') format('opentype');font-weight:600;font-display:swap}
+@font-face{font-family:Inter;src:url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/Inter-Bold.otf') format('opentype');font-weight:700;font-display:swap}
+:root{--bg:#0F1F1C;--green:#19322E;--gold:#BEAC8C;--cream:#F7EBDD;--accent:#5FA97E;--line:rgba(190,172,140,.3);--muted:rgba(247,235,221,.78)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--cream);font-family:Inter,sans-serif}body{min-height:100vh;min-height:100dvh;background:radial-gradient(ellipse at 50% 25%,#1d3a35 0%,var(--bg) 75%)}button,input{font:inherit}button,a,input{touch-action:manipulation}button{cursor:pointer}a{color:inherit}.app{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column}.header{width:min(100%,700px);margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:calc(16px + env(safe-area-inset-top)) 22px 14px;gap:16px}.logo{width:112px;height:auto;display:block}.counter{font-family:'Myriad Pro',sans-serif;color:var(--gold);font-size:13px;font-weight:600;letter-spacing:.16em;white-space:nowrap}.progress{height:2px;background:rgba(190,172,140,.18)}.progress span{display:block;height:100%;width:33.333%;background:var(--accent);transition:width .25s ease}.content{width:min(100%,700px);margin:0 auto;flex:1;padding:30px 22px 28px}.slide[hidden]{display:none}.slide{animation:slideIn .3s ease-out}@keyframes slideIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}.slide.slide-back{animation:slideBack .3s ease-out}@keyframes slideBack{from{opacity:0;transform:translateX(-30px)}to{opacity:1;transform:translateX(0)}}.eyebrow{margin:0 0 13px;color:var(--accent);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase}.title{margin:0;font-family:'Myriad Pro',sans-serif;font-size:clamp(32px,8vw,49px);font-weight:600;line-height:1.08;text-transform:uppercase;letter-spacing:.01em}.gold{color:var(--gold)}.lead{font-size:15px;line-height:1.6;color:var(--muted);margin:17px 0 22px}.hero-card{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:18px;padding:22px;margin-top:22px}.hero-label,.result-label{font-size:11px;color:var(--accent);font-weight:700;text-transform:uppercase;letter-spacing:.12em}.hero-amount{font-family:'Myriad Pro',sans-serif;font-size:clamp(47px,13vw,68px);font-weight:700;line-height:1;margin:10px 0}.hero-caption{font-size:14px;line-height:1.5;color:var(--muted);max-width:32ch}.facts{display:grid;grid-template-columns:1fr 1fr;gap:15px;border-top:1px solid var(--line);padding-top:18px;margin-top:20px}.fact strong{display:block;font-family:'Myriad Pro',sans-serif;font-size:23px;line-height:1.1;color:var(--gold)}.fact span{display:block;color:var(--muted);font-size:12px;line-height:1.4;margin-top:5px}.hint{color:var(--muted);font-size:12px;line-height:1.5;margin:16px 0 0}.steps{margin:22px 0;display:grid;gap:14px}.step{display:flex;gap:14px;align-items:flex-start}.step-num{font-family:'Myriad Pro',sans-serif;color:var(--accent);font-size:19px;font-weight:700;line-height:1.3}.step p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}.step b{color:var(--cream);font-weight:600}.calc{border:1px solid var(--line);border-radius:18px;padding:20px;background:rgba(255,255,255,.035)}.calc-head{display:flex;align-items:end;justify-content:space-between;gap:12px}.calc-head label{font-size:13px;color:var(--cream);font-weight:600;line-height:1.4;max-width:20ch}.count{font-family:'Myriad Pro',sans-serif;font-size:38px;line-height:1;font-weight:700;color:var(--gold)}.range{width:100%;height:32px;margin:12px 0 0;accent-color:var(--accent);cursor:pointer}.range-limits{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.result{margin-top:20px;border-top:1px solid var(--line);padding-top:17px}.result-amount{font-family:'Myriad Pro',sans-serif;font-size:clamp(34px,9vw,48px);line-height:1.1;font-weight:700;margin:8px 0 3px}.result-formula{font-size:12px;color:var(--muted)}.annual{margin-top:17px;padding-top:15px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}.annual span{font-size:13px;color:var(--muted)}.annual strong{font-family:'Myriad Pro',sans-serif;color:var(--gold);font-size:25px;white-space:nowrap}.notice{font-size:12px;line-height:1.5;color:var(--muted);margin:15px 0 0}.notice b{color:var(--cream)}
+
+/* ДВЕ CTA-КНОПКИ */
+.two-cta{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+
+/* РЯД КОНТАКТОВ */
+.contacts-row{display:flex;gap:8px;margin-top:30px;flex-wrap:wrap;justify-content:center}
+.contact-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border:1px solid var(--line);border-radius:10px;background:transparent;color:var(--muted);font-size:13px;font-weight:500;line-height:1;text-decoration:none;transition:border-color .2s,color .2s,background .2s}
+.contact-btn:hover{border-color:var(--gold);color:var(--cream);background:rgba(190,172,140,.06)}
+.contact-btn svg{width:14px;height:14px;flex-shrink:0}
+
+/* ПОДПИСЬ ПОД КОНТАКТАМИ */
+.contact-signature{margin-top:14px;text-align:center;font-size:12px;color:rgba(247,235,221,.45);line-height:1.5}
+
+/* НАВИГАЦИЯ И БАЗОВЫЕ КНОПКИ */
+.nav{position:sticky;bottom:0;z-index:5;background:rgba(15,31,28,.96);border-top:1px solid var(--line);padding:12px 22px calc(12px + env(safe-area-inset-bottom));backdrop-filter:blur(12px)}.nav-inner{max-width:656px;margin:auto;display:flex;gap:10px}.btn{min-height:50px;border-radius:12px;padding:12px 18px;font-size:14px;font-weight:600;border:1px solid var(--gold);display:inline-flex;justify-content:center;align-items:center;text-align:center;text-decoration:none}.btn-primary{background:var(--gold);color:var(--bg);flex:1}.btn-primary:hover{background:#cdbb9a}.btn-ghost{background:transparent;color:var(--cream);border-color:var(--line)}.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}.btn-back{background:transparent;color:var(--cream);min-width:96px}.btn-back:hover{background:rgba(190,172,140,.1)}.btn[hidden]{display:none}.modal-overlay{position:fixed;inset:0;z-index:20;background:rgba(15,31,28,.92);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;overflow:auto}.modal-overlay[hidden]{display:none}.modal{background:var(--bg);border:1px solid var(--gold);border-radius:18px;padding:34px 22px 24px;width:100%;max-width:420px;position:relative;max-height:100%;overflow:auto}.modal h2{font-family:'Myriad Pro',sans-serif;font-size:25px;line-height:1.15;color:var(--gold);text-transform:uppercase;margin:0 32px 8px 0}.modal p{font-size:13px;line-height:1.5;color:var(--muted);margin:0 0 18px}.close{position:absolute;top:10px;right:13px;width:44px;height:44px;background:none;border:0;color:var(--cream);font-size:29px}.field{display:block;font-size:13px;margin:0 0 13px}.field input{display:block;width:100%;margin-top:6px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:13px 14px;color:var(--cream);font-size:16px;min-height:50px}.field input::placeholder{color:rgba(247,235,221,.5)}.field input:focus{border-color:var(--gold)}.submit{width:100%;margin-top:4px}.submit:disabled{opacity:.6;cursor:not-allowed}.message{min-height:20px;margin-top:12px;text-align:center;font-size:13px}.error{color:#C25B4E}.success{color:var(--accent)}:focus-visible{outline:2px solid var(--accent);outline-offset:3px}@media(min-width:701px){.content{padding-top:48px;padding-bottom:45px}.header{padding-top:24px}.slide{max-width:570px;margin:auto}.nav-inner{max-width:570px}}@media(max-width:350px){.content{padding-left:17px;padding-right:17px}.title{font-size:30px}.hero-card,.calc{padding:17px}.nav{padding-left:17px;padding-right:17px}.btn-back{min-width:80px}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+<div class="app">
+<header><div class="header"><img class="logo" src="https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/main/ARBITR-PRO_1080%C3%97420px.png" alt="АрбитрПро"><div class="counter" id="counter" aria-live="polite">01 / 03</div></div><div class="progress" aria-hidden="true"><span id="progress"></span></div></header>
+<main class="content" id="main">
 
-<img class="brand-corner"
-     src="https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/main/ARBITR-PRO_1080%C3%97420px.png"
-     alt="АрбитрПро">
+<section class="slide" id="slide1" aria-labelledby="title1">
+<p class="eyebrow">Реферальная программа</p>
+<h1 class="title" id="title1" tabindex="-1">Рекомендуйте.<br><span class="gold">Получайте вознаграждение.</span></h1>
+<p class="lead">Познакомьте юридическую компанию с АрбитрПро и получайте вознаграждение за её дела в течение 12 месяцев.</p>
+<div class="hero-card">
+<div class="hero-label">Ваше вознаграждение</div>
+<div class="hero-amount">2 000 ₽</div>
+<div class="hero-caption">за каждое дело привлечённой вами компании</div>
+<div class="facts">
+<div class="fact"><strong>2 000 ₽</strong><span>компании за каждое её дело</span></div>
+<div class="fact"><strong>5 дел</strong><span>без оплаты расходов для компании</span></div>
+</div>
+</div>
+<p class="hint">Рекомендовать компанию может любой человек.</p>
+</section>
 
-<div class="slide-number" id="slideNumber">01 / 03</div>
+<section class="slide" id="slide2" aria-labelledby="title2" hidden>
+<p class="eyebrow">Как это работает</p>
+<h2 class="title" id="title2" tabindex="-1">Одна рекомендация — <span class="gold">выгода для двоих</span></h2>
+<div class="steps">
+<div class="step"><span class="step-num">01</span><p><b>Вы знакомите нас</b> с юридической компанией.</p></div>
+<div class="step"><span class="step-num">02</span><p><b>Компания передаёт дела</b> в АрбитрПро.</p></div>
+<div class="step"><span class="step-num">03</span><p><b>Вы и компания получаете</b> по 2 000 ₽ за каждое её дело.</p></div>
+</div>
+<div class="calc">
+<div class="calc-head"><label for="volSlider">Сколько дел компания передаёт в месяц?</label><output class="count" id="volValue" for="volSlider">10</output></div>
+<input class="range" type="range" id="volSlider" min="1" max="100" step="1" value="10">
+<div class="range-limits"><span>1 дело</span><span>100 дел</span></div>
+<div class="result" aria-live="polite">
+<div class="result-label">Ваше вознаграждение в месяц</div>
+<div class="result-amount" id="refMonth">20 000 ₽</div>
+<div class="result-formula" id="refNote">10 × 2 000 ₽</div>
+<div class="annual"><span>За 12 месяцев</span><strong id="refYear">240 000 ₽</strong></div>
+</div>
+</div>
+<p class="notice"><b>Первые 5 дел — без оплаты расходов для компании.</b> Вознаграждение вам и компании начисляется и за них.</p>
+<p class="notice">Расчёт приведён при одинаковом количестве дел каждый месяц. Фактическая сумма зависит от количества переданных дел.</p>
+</section>
 
-<div class="nav-arrow left" id="navLeft">‹</div>
-<div class="nav-arrow right" id="navRight">›</div>
+<section class="slide" id="slide3" aria-labelledby="title3" hidden>
+<p class="eyebrow">Начать просто</p>
+<h2 class="title" id="title3" tabindex="-1">Рекомендуйте и передавайте. <span class="gold">Получайте больше.</span></h2>
+<p class="lead">Можно получать вознаграждение за рекомендации. А можно стать партнёром и передавать дела самостоятельно. Или совмещать обе роли.</p>
 
-<div class="deck">
-
-  <!-- ЭКРАН 1 — УСЛОВИЯ -->
-  <section class="slide active slide--scroll" data-slide="0">
-    <div class="kicker">Реферальная программа</div>
-    <div class="slide-title">Рекомендуй нас — <span class="hl">зарабатывай с нами</span></div>
-
-    <p class="intro-lead">
-      Если ты готов нас рекомендовать, мы будем платить <b>и тебе, и привлечённой компании</b>. Без потолков и сложных условий: каждое дело, доведённое до результата, — это деньги для обоих.
-    </p>
-
-    <div class="intro-rules">
-      <div class="rule">
-        <div class="r-num">2 000 ₽</div>
-        <div class="r-text"><b>Вам</b> — за каждое дело привлечённой компании.</div>
-      </div>
-      <div class="rule">
-        <div class="r-num">2 000 ₽</div>
-        <div class="r-text"><b>Привлечённой ЮК</b> — за каждое её дело. Это её ставка, вместо стандартных 4 000 ₽.</div>
-      </div>
-      <div class="rule">
-        <div class="r-num">5 дел</div>
-        <div class="r-text"><b>Тестовых для проверки нас.</b> Без оплаты расходов — пусть убедятся, что мы делаем, прежде чем работать всерьёз.</div>
-      </div>
-    </div>
-
-    <button class="btn btn--primary" id="introNext">Посчитать</button>
-  </section>
-
-  <!-- ЭКРАН 2 — КАЛЬКУЛЯТОР -->
-  <section class="slide slide--scroll" data-slide="1">
-    <div class="calc-wrap">
-      <div class="calc-title">Ваш <span class="hl">доход</span></div>
-      <div class="calc-subtitle">Двигайте ползунок — увидите, сколько получает реферер и привлечённая ЮК</div>
-
-      <div class="slider-head">
-        <span class="lab">Дел в месяц у привлечённой</span>
-        <span class="val" id="volValue">10</span>
-      </div>
-
-      <div class="slider-wrap">
-        <input type="range" id="volSlider" min="1" max="100" step="1" value="10">
-        <div class="progress-track">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
-      </div>
-
-      <div class="calc-grid">
-        <div class="calc-card">
-          <div class="lab">Рефереру за месяц</div>
-          <div class="val green" id="refMonth">20 000 ₽</div>
-          <div class="sub" id="refNote">10 × 2 000 ₽</div>
-        </div>
-        <div class="calc-card">
-          <div class="lab">Привлечённой ЮК за месяц</div>
-          <div class="val gold" id="partnerMonth">20 000 ₽</div>
-          <div class="sub" id="partnerNote">10 × 2 000 ₽</div>
-        </div>
-      </div>
-
-      <div class="total-hero">
-        <div class="label">ВАШ ДОХОД ЗА 12 МЕСЯЦЕВ</div>
-        <div class="amount" id="refYear">240 000 ₽</div>
-        <div class="note">рефереру · без cashback с реализации</div>
-      </div>
-
-      <div class="per-case">
-        <div class="l">Привлечённая ЮК<span>получит за 12 месяцев</span></div>
-        <div class="r" id="partnerYear">240 000 ₽</div>
-      </div>
-
-      <div class="test-note">
-        <div class="tn-num">5 дел</div>
-        <div class="tn-text"><b>тестовых</b> — без оплаты расходов. Проверка нас перед стартом.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ЭКРАН 3 — ФИНАЛ -->
-  <section class="slide slide--scroll" data-slide="2">
-    <div class="kicker">С чего начать</div>
-    <div class="slide-title">Два пути — <span class="hl">один результат</span></div>
-
-    <p class="final-lead">
-      Можно просто рекомендовать нас и получать за это. А можно самому стать партнёром и зарабатывать на каждом деле — с полным контролем и поддержкой.
-    </p>
-
-    <div class="final-actions">
-      <a class="btn btn--primary"
-         href="https://t.me/moroz_viktor"
-         target="_blank" rel="noopener">
-        Хочу стать рефералом
-      </a>
-    </div>
-
-    <div class="slogan">Готовы получать больше? <span>Станьте партнёром — и зарабатывайте на каждом деле.</span></div>
-
-    <div class="final-actions">
-      <a class="btn btn--ghost"
-         href="https://vityamoroz.github.io/ArbitrPro_For_Club_127/"
-         target="_blank" rel="noopener">
-        Хочу стать партнёром
-      </a>
-    </div>
-
-    <div class="contact-signature">
-      <b>@moroz_viktor</b><br>
-      Виктор Мороз · Руководитель отдела продаж<br>
-      <a href="tel:+79995534474">+7 999 553-44-74</a><br>
-      <a href="mailto:mvgoz@yandex.ru">mvgoz@yandex.ru</a>
-    </div>
-  </section>
-
+<div class="two-cta">
+<button class="btn btn-primary" id="openModal" type="button">Стать рефералом</button>
+<a class="btn btn-ghost" href="index.html">Стать партнёром</a>
 </div>
 
-<!-- НИЖНЕЕ МЕНЮ -->
-<div class="bottom-menu" id="bottomMenu">
-  <button class="bn-btn" id="btnBack">Назад</button>
-  <button class="bn-btn bn-btn--green" id="btnCta">Стать рефералом</button>
-  <button class="bn-btn" id="btnNext">Далее</button>
+<div class="contacts-row">
+<a class="contact-btn" href="https://t.me/moroz_viktor" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.5 4.5L2.5 12.5L9.5 14.5L12.5 21.5L16 17L21 21L21.5 4.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.5 14.5L17 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+<span>Telegram</span>
+</a>
+<a class="contact-btn" href="tel:+79995534474" aria-label="Позвонить">
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+<span>+7 999 553-44-74</span>
+</a>
+<a class="contact-btn" href="mailto:mvgoz@yandex.ru" aria-label="Написать на почту">
+<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 6 9-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<span>Написать</span>
+</a>
 </div>
 
-<div class="dots" id="dots"></div>
-<div class="gold-line" id="goldLine"></div>
+<div class="contact-signature">Мороз Виктор | Руководитель отдела продаж</div>
+</section>
+
+</main>
+<nav class="nav" aria-label="Навигация по презентации"><div class="nav-inner"><button class="btn btn-back" id="back" type="button" hidden>← Назад</button><button class="btn btn-primary" id="next" type="button">Далее →</button><button class="btn btn-primary" id="bottomCta" type="button" hidden>Стать рефералом</button></div></nav>
+</div>
+
+<div class="modal-overlay" id="apModal" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="apModalTitle"><button class="close" id="apClose" type="button" aria-label="Закрыть">×</button><h2 id="apModalTitle">Оставить заявку</h2><p>Расскажем об условиях и обсудим вашу рекомендацию.</p><form id="apForm"><label class="field" for="apName">Ваше имя *<input type="text" id="apName" placeholder="Как к вам обращаться" required minlength="2" maxlength="100" autocomplete="name"></label><label class="field" for="apPhone">Телефон *<input type="tel" id="apPhone" placeholder="+7 (___) ___-__-__" required autocomplete="tel" inputmode="tel"></label><label class="field" for="apCompany">Название компании *<input type="text" id="apCompany" placeholder="Название компании" required maxlength="200"></label><button type="submit" class="btn btn-primary submit" id="apSubmitBtn">Отправить заявку</button><div class="message" id="apMsg" role="status" aria-live="polite"></div></form></div></div>
 
 <script>
-  const slides = document.querySelectorAll('.slide');
-  const total = slides.length;
-  let current = 0;
+const slides=[...document.querySelectorAll('.slide')],back=document.getElementById('back'),next=document.getElementById('next'),openButton=document.getElementById('openModal'),bottomCta=document.getElementById('bottomCta');let current=0,previousIndex=0;
+function goTo(index,direction='forward'){if(index<0||index>=slides.length||index===current)return;previousIndex=current;current=index;slides.forEach((slide,i)=>{slide.hidden=i!==current;if(!slide.hidden){slide.classList.remove('slide-back');if(direction==='back')slide.classList.add('slide-back')}});back.hidden=current===0;next.hidden=current===slides.length-1;bottomCta.hidden=current!==slides.length-1;document.getElementById('counter').textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');document.getElementById('progress').style.width=((current+1)/slides.length*100)+'%';window.scrollTo(0,0);slides[current].querySelector('h1,h2').focus({preventScroll:true})}
+back.addEventListener('click',()=>goTo(current-1,'back'));next.addEventListener('click',()=>goTo(current+1,'forward'));
 
-  const dotsContainer = document.getElementById('dots');
-  const goldLine = document.getElementById('goldLine');
-  const slideNumber = document.getElementById('slideNumber');
-  const navLeft = document.getElementById('navLeft');
-  const navRight = document.getElementById('navRight');
-  const bottomMenu = document.getElementById('bottomMenu');
-  const btnBack = document.getElementById('btnBack');
-  const btnNext = document.getElementById('btnNext');
-  const btnCta = document.getElementById('btnCta');
+const slider=document.getElementById('volSlider');const rub=n=>new Intl.NumberFormat('ru-RU').format(n)+' ₽';function calculate(){const count=Number(slider.value);document.getElementById('volValue').value=count;document.getElementById('volValue').textContent=count;document.getElementById('refMonth').textContent=rub(count*2000);document.getElementById('refNote').textContent=count+' × 2 000 ₽';document.getElementById('refYear').textContent=rub(count*2000*12)}slider.addEventListener('input',calculate);calculate();
 
-  for (let i = 0; i < total; i++) {
-    const s = document.createElement('span');
-    if (i === 0) s.classList.add('active');
-    s.onclick = () => goTo(i);
-    dotsContainer.appendChild(s);
-  }
+const AP_SERVER='https://arbitrpro-api.mvgoz.workers.dev/api/lead';const modal=document.getElementById('apModal'),form=document.getElementById('apForm'),phone=document.getElementById('apPhone'),message=document.getElementById('apMsg'),submit=document.getElementById('apSubmitBtn');let sending=false,closeTimer=null;
+function openModal(){clearTimeout(closeTimer);modal.hidden=false;document.body.style.overflow='hidden';document.getElementById('apName').focus()}
+function closeModal(){if(sending)return;clearTimeout(closeTimer);modal.hidden=true;document.body.style.overflow='';form.reset();message.textContent='';message.className='message'}
+function triggerModal(e){e.preventDefault();openModal()}
+openButton.addEventListener('click',triggerModal);
+bottomCta.addEventListener('click',triggerModal);
+document.getElementById('apClose').addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(modal.hidden)return;if(e.key==='Escape'){closeModal();return}if(e.key==='Tab'){const items=[...modal.querySelectorAll('button:not(:disabled),input:not(:disabled)')];const first=items[0],last=items[items.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
+phone.addEventListener('input',()=>{let digits=phone.value.replace(/\D/g,'');if(!digits){phone.value='';return}if(digits[0]==='8')digits='7'+digits.slice(1);else if(digits[0]!=='7')digits='7'+digits;digits=digits.slice(0,11);let value='+7';if(digits.length>1)value+=' ('+digits.slice(1,4);if(digits.length>=5)value+=') '+digits.slice(4,7);if(digits.length>=8)value+='-'+digits.slice(7,9);if(digits.length>=10)value+='-'+digits.slice(9,11);phone.value=value});
+form.addEventListener('submit',async e=>{e.preventDefault();if(sending)return;const cleanPhone=phone.value.replace(/\D/g,'');const name=document.getElementById('apName').value.trim(),company=document.getElementById('apCompany').value.trim();message.className='message error';if(name.length<2||!company){message.textContent='Укажите имя и название компании.';return}if(cleanPhone.length!==11||cleanPhone[0]!=='7'){message.textContent='Введите корректный номер телефона.';return}const data={lead_type:'referral_partner',name:name,phone:'+'+cleanPhone,company:company,comment:'',source:'referral_site',page_url:window.location.href};sending=true;submit.disabled=true;submit.textContent='Отправка...';message.textContent='';try{const res=await fetch(AP_SERVER,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});const result=await res.json();if(!res.ok||!result.ok)throw new Error('Ошибка отправки');message.className='message success';message.textContent='Спасибо! Мы свяжемся с вами в ближайшее время.';closeTimer=setTimeout(closeModal,2500)}catch(err){message.className='message error';message.textContent='Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.'}finally{sending=false;submit.disabled=false;submit.textContent='Отправить заявку'}});
 
-  function updateUI() {
-    const pct = ((current + 1) / total) * 100;
-    goldLine.style.width = pct + '%';
-    slideNumber.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
-    [...dotsContainer.children].forEach((d, i) => d.classList.toggle('active', i === current));
-
-    if (current === 0 || current === total - 1) {
-      bottomMenu.classList.add('hidden');
-    } else {
-      bottomMenu.classList.remove('hidden');
-    }
-
-    if (current === total - 1) {
-      btnBack.style.display = 'inline-flex';
-      btnCta.style.display = 'none';
-      btnNext.style.display = 'none';
-    } else {
-      btnBack.style.display = 'inline-flex';
-      btnCta.style.display = 'inline-flex';
-      btnNext.style.display = 'inline-flex';
-    }
-
-    navLeft.classList.toggle('hidden', current === 0);
-    navRight.classList.toggle('hidden', current === total - 1);
-  }
-
-  function goTo(n) {
-    if (n < 0) n = 0;
-    if (n >= total) n = total - 1;
-    if (n === current) return;
-    slides[current].classList.remove('active');
-    slides[n].classList.add('active');
-    slides[n].scrollTop = 0;
-    current = n;
-    updateUI();
-  }
-
-  function nextSlide() { goTo(current + 1); }
-  function prevSlide() { goTo(current - 1); }
-
-  btnBack.onclick = prevSlide;
-  btnNext.onclick = nextSlide;
-  btnCta.onclick = () => window.open('https://t.me/moroz_viktor', '_blank');
-
-  navLeft.onclick = prevSlide;
-  navRight.onclick = nextSlide;
-
-  document.getElementById('introNext').onclick = () => goTo(1);
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
-      e.preventDefault(); nextSlide();
-    }
-    if (e.key === 'ArrowLeft') {
-      e.preventDefault(); prevSlide();
-    }
-  });
-
-  // ИСПРАВЛЕННЫЙ СВАЙП (ползунок не листает)
-  let tx = 0, ty = 0;
-  let isSliderTouch = false;
-
-  document.addEventListener('touchstart', e => {
-    if (e.target.closest('input[type=range]')) {
-      isSliderTouch = true;
-      return;
-    }
-    isSliderTouch = false;
-    tx = e.touches[0].clientX;
-    ty = e.touches[0].clientY;
-  }, { passive: true });
-
-  document.addEventListener('touchend', e => {
-    if (isSliderTouch) {
-      isSliderTouch = false;
-      return;
-    }
-    const dx = e.changedTouches[0].clientX - tx;
-    const dy = e.changedTouches[0].clientY - ty;
-    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-      dx < 0 ? nextSlide() : prevSlide();
-    }
-  });
-
-  // КАЛЬКУЛЯТОР
-  const slider = document.getElementById('volSlider');
-  const volValue = document.getElementById('volValue');
-  const progressFill = document.getElementById('progressFill');
-  const refMonth = document.getElementById('refMonth');
-  const refNote = document.getElementById('refNote');
-  const partnerMonth = document.getElementById('partnerMonth');
-  const partnerNote = document.getElementById('partnerNote');
-  const refYear = document.getElementById('refYear');
-  const partnerYear = document.getElementById('partnerYear');
-
-  const RATE = 2000;
-
-  function rub(n) {
-    return Math.round(n).toLocaleString('ru-RU') + ' ₽';
-  }
-
-  function calculate() {
-    const perMonth = parseInt(slider.value, 10);
-    const monthPay = perMonth * RATE;
-    const yearPay = perMonth * 12 * RATE;
-
-    volValue.textContent = perMonth;
-    refMonth.textContent = rub(monthPay);
-    refNote.textContent = perMonth + ' × ' + rub(RATE);
-    partnerMonth.textContent = rub(monthPay);
-    partnerNote.textContent = perMonth + ' × ' + rub(RATE);
-    refYear.textContent = rub(yearPay);
-    partnerYear.textContent = rub(yearPay);
-
-    const pct = ((perMonth - 1) / 99) * 100;
-    progressFill.style.width = pct + '%';
-  }
-
-  slider.addEventListener('input', calculate);
-  calculate();
-  updateUI();
-</script>
-<!-- МОДАЛЬНОЕ ОКНО ЗАЯВКИ АРБИТРПРО -->
-<div class="ap-modal-overlay" id="apModal">
-  <div class="ap-modal">
-    <button class="ap-modal-close" onclick="apCloseModal()">&times;</button>
-    <h3 id="apModalTitle">Оставить заявку</h3>
-    <form id="apForm" onsubmit="apSubmit(event)">
-      <input type="text" class="ap-input" id="apName" placeholder="Ваше имя *" required minlength="2" maxlength="100">
-      <input type="tel" class="ap-input" id="apPhone" placeholder="+7 (___) ___-__-__" required>
-      <input type="text" class="ap-input" id="apCompany" placeholder="Название компании *" required maxlength="200">
-      <button type="submit" class="ap-btn" id="apSubmitBtn">Отправить</button>
-      <div class="ap-msg" id="apMsg"></div>
-    </form>
-  </div>
-</div>
-
-<style>
-.ap-modal-overlay{position:fixed;inset:0;background:rgba(15,31,28,0.88);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;pointer-events:none;transition:opacity .3s}
-.ap-modal-overlay.active{opacity:1;pointer-events:all}
-.ap-modal{background:#0F1F1C;border:1px solid #BEAC8C;border-radius:18px;padding:40px 30px;width:90%;max-width:420px;position:relative}
-.ap-modal-close{position:absolute;top:12px;right:18px;background:none;border:none;color:#F7EBDD;font-size:28px;cursor:pointer;opacity:.6}
-.ap-modal-close:hover{opacity:1}
-.ap-modal h3{font-family:'Myriad Pro',sans-serif;color:#BEAC8C;text-transform:uppercase;letter-spacing:1.5px;margin:0 0 24px;text-align:center;font-size:20px}
-.ap-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(190,172,140,0.3);border-radius:12px;padding:14px 16px;color:#F7EBDD;font-family:'Inter',sans-serif;font-size:15px;margin-bottom:14px;outline:none;box-sizing:border-box}
-.ap-input:focus{border-color:#BEAC8C}
-.ap-input::placeholder{color:rgba(247,235,221,0.5)}
-.ap-btn{width:100%;background:#BEAC8C;color:#0F1F1C;border:none;border-radius:14px;padding:16px;font-family:'Inter',sans-serif;font-weight:600;font-size:16px;cursor:pointer;transition:background .2s}
-.ap-btn:hover{background:#cdbb9a}
-.ap-btn:disabled{opacity:.6;cursor:not-allowed}
-.ap-msg{text-align:center;margin-top:14px;font-size:14px;font-family:'Inter',sans-serif;min-height:20px}
-</style>
-
-<script>
-const AP_SERVER = 'https://arbitrpro-api.mvgoz.workers.dev/api/lead';
-
-function initPhoneMask() {
-  const phoneInput = document.getElementById('apPhone');
-  if (!phoneInput) return;
-
-  const mask = (value) => {
-    const clean = value.replace(/\D/g, '');
-    let formatted = '+7';
-    if (clean.length > 1) formatted += ' (' + clean.substring(1, 4);
-    if (clean.length >= 5) formatted += ') ' + clean.substring(4, 7);
-    if (clean.length >= 8) formatted += '-' + clean.substring(7, 9);
-    if (clean.length >= 10) formatted += '-' + clean.substring(9, 11);
-    return formatted;
-  };
-
-  phoneInput.addEventListener('input', (e) => {
-    e.target.value = mask(e.target.value);
-  });
-
-  phoneInput.addEventListener('focus', () => {
-    if (phoneInput.value === '') phoneInput.value = '+7';
-  });
-}
-
-function apOpenModal(type) {
-  const modal = document.getElementById('apModal');
-  const title = document.getElementById('apModalTitle');
-  const companyField = document.getElementById('apCompany');
-
-  title.textContent = 'Оставить заявку';
-  
-  if (type === 'referral_partner') {
-    companyField.required = true;
-    companyField.placeholder = 'Название компании *';
-  } else {
-    companyField.required = false;
-    companyField.placeholder = 'Компания';
-  }
-  modal.dataset.type = type;
-  modal.classList.add('active');
-  initPhoneMask();
-}
-
-function apCloseModal() {
-  document.getElementById('apModal').classList.remove('active');
-  document.getElementById('apForm').reset();
-  document.getElementById('apMsg').textContent = '';
-}
-
-function formatPhoneForDisplay(phone) {
-  const clean = phone.replace(/\D/g, '');
-  if (clean.length === 11 && clean.startsWith('7')) {
-    return `+7 (${clean.substring(1, 4)}) ${clean.substring(4, 7)}-${clean.substring(7, 9)}-${clean.substring(9, 11)}`;
-  }
-  return '+' + clean;
-}
-
-async function apSubmit(e) {
-  e.preventDefault();
-  const btn = document.getElementById('apSubmitBtn');
-  const msg = document.getElementById('apMsg');
-  btn.disabled = true;
-  btn.textContent = 'Отправка...';
-  msg.textContent = '';
-
-  const modal = document.getElementById('apModal');
-  const rawPhone = document.getElementById('apPhone').value;
-  const cleanPhone = rawPhone.replace(/\D/g, '');
-  
-  if (cleanPhone.length < 11) {
-    msg.style.color = '#C25B4E';
-    msg.textContent = 'Введите корректный номер телефона';
-    btn.disabled = false;
-    btn.textContent = 'Отправить';
-    return;
-  }
-
-  const data = {
-    lead_type: modal.dataset.type,
-    name: document.getElementById('apName').value.trim(),
-    phone: '+' + cleanPhone,
-    company: document.getElementById('apCompany').value.trim(),
-    comment: '',
-    source: 'referral_site',
-    page_url: window.location.href
-  };
-
-  try {
-    const res = await fetch(AP_SERVER, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    const result = await res.json();
-    if (result.ok) {
-      msg.style.color = '#5FA97E';
-      msg.textContent = 'Спасибо! Мы свяжемся с вами в ближайшее время.';
-      setTimeout(apCloseModal, 2500);
-    } else {
-      throw new Error(result.detail || 'Ошибка');
-    }
-  } catch (err) {
-    msg.style.color = '#C25B4E';
-    msg.textContent = 'Ошибка сети. Проверьте подключение.';
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Отправить';
-  }
-}
-
-// Привязка к кнопкам на referral.html
-document.addEventListener('DOMContentLoaded', function() {
-  // 1. Кнопка "Хочу стать рефералом" - открывает модалку
-  const allButtons = document.querySelectorAll('button, .btn');
-  allButtons.forEach(btn => {
-    const text = btn.textContent.toLowerCase();
-    if (text.includes('хочу стать рефералом')) {
-      btn.onclick = function(e) {
-        e.preventDefault();
-        apOpenModal('referral_partner');
-      };
-    }
-    // 2. Кнопка "Хочу стать партнёром" - ведёт на index.html
-    else if (text.includes('хочу стать партнёром')) {
-      btn.onclick = function(e) {
-        e.preventDefault();
-        window.location.href = 'index.html';
-      };
-    }
-  });
-
-  // 3. Кнопка "Оставить заявку" в нижнем меню (если есть)
-  const bottomCtaBtn = document.getElementById('btnCta');
-  if (bottomCtaBtn) {
-    bottomCtaBtn.onclick = function(e) {
-      e.preventDefault();
-      apOpenModal('referral_partner');
-    };
-  }
-});
+// Свайпы
+let touchStartX=0,touchStartY=0,touchEndX=0,touchEndY=0,ignoreSwipe=false;
+document.addEventListener('touchstart',e=>{if(e.target.closest('.range')||e.target.closest('.modal')||e.target.closest('input')||!modal.hidden){ignoreSwipe=true;return}ignoreSwipe=false;touchStartX=e.changedTouches[0].screenX;touchStartY=e.changedTouches[0].screenY},{passive:true});
+document.addEventListener('touchend',e=>{if(ignoreSwipe){ignoreSwipe=false;return}touchEndX=e.changedTouches[0].screenX;touchEndY=e.changedTouches[0].screenY;const diffX=touchEndX-touchStartX;const diffY=touchEndY-touchStartY;if(Math.abs(diffX)>70&&Math.abs(diffX)>Math.abs(diffY)*1.5){if(diffX<0){next.click()}else{back.click()}}},{passive:true});
 </script>
 </body>
 </html>

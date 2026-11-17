@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>АрбитрПро · Новым партнёрам</title>
 <style>
   @font-face { font-family: 'Myriad Pro'; src: url('https://raw.githubusercontent.com/VityaMoroz/ArbitrPRO/VityaMoroz-patch-1/MYRIADPRO-REGULAR.OTF') format('opentype'); font-weight: 400; font-display: swap; }
@@ -25,6 +25,10 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   html, body {
     background: var(--green-deep);
     font-family: 'Inter', sans-serif;
@@ -32,6 +36,8 @@
     overflow: hidden;
     height: 100vh;
   }
+
+  button, a, input { touch-action: manipulation; }
 
   .deck {
     position: relative;
@@ -235,53 +241,161 @@
 
   .btn--ghost:hover { background: rgba(190,172,140,0.10); border-color: var(--gold); }
 
-  /* КАРТОЧКИ БОЛИ / РЕШЕНИЯ */
-  .ps-grid {
+  /* ЧАТ (ЭКРАН 2) */
+  .chat {
+    width: 100%;
+    max-width: 480px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 2vh 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 3vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chat-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 6px;
+  }
+
+  .chat-avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), #9c8763);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Myriad Pro', sans-serif;
+    font-weight: 700;
+    color: var(--green-deep);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .chat-name {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cream);
+    line-height: 1.2;
+  }
+
+  .chat-status {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: rgba(247,235,221,0.5);
+  }
+
+  .msg {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(13px, 3.2vw, 14.5px);
+    font-weight: 500;
+    line-height: 1.4;
+    opacity: 0;
+    transform: translateY(10px);
+    visibility: hidden;
+  }
+
+  .msg.show {
+    visibility: visible;
+    animation: msgIn 0.35s cubic-bezier(0.2,0.8,0.3,1) forwards;
+  }
+
+  @keyframes msgIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg.p {
+    align-self: flex-end;
+    background: rgba(190,172,140,0.20);
+    border: 1px solid rgba(190,172,140,0.40);
+    color: var(--cream);
+    border-bottom-right-radius: 4px;
+  }
+
+  .msg.a {
+    align-self: flex-start;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid var(--line);
+    color: rgba(247,235,221,0.85);
+    border-bottom-left-radius: 4px;
+  }
+
+  .msg-time {
+    display: block;
+    font-size: 9.5px;
+    opacity: 0.55;
+    margin-top: 4px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+  }
+
+  .msg.p .msg-time { text-align: right; }
+
+  .typing {
+    align-self: flex-start;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid var(--line);
+    padding: 14px 16px;
+    border-radius: 14px;
+    border-bottom-left-radius: 4px;
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .typing.show {
+    visibility: visible;
+    animation: msgIn 0.3s ease forwards;
+  }
+
+  .typing span {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.5;
+    animation: dotPulse 1.3s infinite ease-in-out;
+  }
+  .typing span:nth-child(2) { animation-delay: 0.18s; }
+  .typing span:nth-child(3) { animation-delay: 0.36s; }
+
+  @keyframes dotPulse {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-5px); opacity: 1; }
+  }
+
+  .pain-headline {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(15px, 3.8vw, 22px);
+    font-weight: 600;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    line-height: 1.3;
+    max-width: 26ch;
+  }
+
+  /* СИСТЕМА (ЭКРАН 3) */
+  .sys-list {
+    width: 100%;
+    max-width: 640px;
     display: flex;
     flex-direction: column;
     gap: 1.4vh;
-    width: 100%;
-    max-width: 900px;
     text-align: left;
   }
 
-  .pain-card {
-    background: rgba(194,91,78,0.06);
-    border: 1px solid rgba(194,91,78,0.3);
-    border-left: 3px solid var(--red);
-    border-radius: 14px;
-    padding: 2vh 2.4vw;
-  }
-
-  .pain-card .pn {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(15px, 2.6vw, 20px);
-    font-weight: 700;
-    color: var(--red);
-    opacity: 0.8;
-    line-height: 1;
-    margin-bottom: 0.8vh;
-  }
-
-  .pain-card .pain-h {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(14px, 3vw, 18px);
-    font-weight: 600;
-    color: var(--cream);
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    line-height: 1.25;
-    margin-bottom: 0.7vh;
-  }
-
-  .pain-card .pt {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(11.5px, 2.6vw, 14px);
-    line-height: 1.5;
-    color: rgba(247,235,221,0.72);
-  }
-
-  .sol-card {
+  .sys-item {
     background: rgba(95,169,126,0.07);
     border: 1px solid rgba(95,169,126,0.35);
     border-left: 3px solid var(--green-ok);
@@ -289,32 +403,65 @@
     padding: 2vh 2.4vw;
   }
 
-  .sol-card .sn {
-    font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(15px, 2.6vw, 20px);
-    font-weight: 700;
-    color: var(--green-ok);
-    opacity: 0.8;
-    line-height: 1;
-    margin-bottom: 0.8vh;
+  .sys-item--gold {
+    background: rgba(190,172,140,0.06);
+    border: 1px solid rgba(190,172,140,0.40);
+    border-left: 3px solid var(--gold);
   }
 
-  .sol-card .sol-h {
+  .sys-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 0.7vh;
+  }
+
+  .sys-num {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(14px, 3vw, 18px);
+    font-size: clamp(16px, 3.6vw, 20px);
+    font-weight: 700;
+    color: var(--green-ok);
+    opacity: 0.75;
+    line-height: 1;
+  }
+
+  .sys-item--gold .sys-num { color: var(--gold); }
+
+  .sys-item h3 {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(14px, 3.2vw, 18px);
     font-weight: 600;
     color: var(--green-ok);
     text-transform: uppercase;
     letter-spacing: 0.3px;
-    line-height: 1.25;
-    margin-bottom: 0.7vh;
   }
 
-  .sol-card .st {
+  .sys-item--gold h3 { color: var(--gold); }
+
+  .sys-item p {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(11.5px, 2.6vw, 14px);
-    line-height: 1.5;
+    font-size: clamp(12px, 2.7vw, 14.5px);
+    line-height: 1.55;
     color: rgba(247,235,221,0.85);
+  }
+
+  .sys-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 1.2vh;
+  }
+
+  .sys-tags span {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(10px, 2.4vw, 11.5px);
+    font-weight: 600;
+    color: var(--cream);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(190,172,140,0.35);
+    border-radius: 999px;
+    padding: 6px 12px;
+    line-height: 1.2;
   }
 
   /* КАЛЬКУЛЯТОР */
@@ -372,11 +519,12 @@
 
   .slider-head .val.vip { color: var(--gold); }
 
-  .slider-wrap { position: relative; margin-bottom: 3.4vh; }
+  .slider-wrap { position: relative; margin-bottom: 3.2vh; }
 
   .progress-track {
     position: absolute;
-    bottom: 0; left: 0; right: 0;
+    left: 0; right: 0;
+    bottom: 19px;
     height: 6px;
     background: rgba(190,172,140,0.15);
     border-radius: 3px;
@@ -395,7 +543,7 @@
 
   .vip-mark {
     position: absolute;
-    bottom: -4px; left: 50%;
+    bottom: 15px; left: 50%;
     width: 2px; height: 14px;
     background: var(--gold);
     opacity: 0.6;
@@ -403,7 +551,7 @@
 
   .vip-mark-label {
     position: absolute;
-    bottom: -22px; left: 50%;
+    bottom: -6px; left: 50%;
     transform: translateX(-50%);
     font-family: 'Inter', sans-serif;
     font-size: 9px;
@@ -416,16 +564,22 @@
   }
 
   input[type=range] {
-    width: 100%; height: 6px;
+    width: 100%; height: 44px;
     -webkit-appearance: none; appearance: none;
     background: transparent;
     cursor: pointer;
     position: relative; z-index: 2;
   }
 
+  input[type=range]::-webkit-slider-runnable-track {
+    height: 6px;
+    background: transparent;
+  }
+
   input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none; appearance: none;
-    width: 24px; height: 24px;
+    width: 28px; height: 28px;
+    margin-top: -11px;
     border-radius: 50%;
     background: var(--gold);
     border: 3px solid var(--green-deep);
@@ -433,8 +587,13 @@
     cursor: pointer;
   }
 
+  input[type=range]::-moz-range-track {
+    height: 6px;
+    background: transparent;
+  }
+
   input[type=range]::-moz-range-thumb {
-    width: 24px; height: 24px;
+    width: 28px; height: 28px;
     border-radius: 50%;
     background: var(--gold);
     border: 3px solid var(--green-deep);
@@ -538,47 +697,66 @@
     letter-spacing: 0.5px;
   }
 
-  .per-case {
+  .refund-block {
+    background: rgba(95,169,126,0.06);
+    border: 1px solid rgba(95,169,126,0.35);
+    border-radius: 14px;
+    padding: 2vh 2vw;
+    margin-bottom: 1.6vh;
+  }
+
+  .refund-block .head {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 1.8vh 2.4vw;
-    background: rgba(95,169,126,0.08);
-    border: 1px solid rgba(95,169,126,0.4);
-    border-radius: 14px;
-    margin-bottom: 2.2vh;
+    align-items: baseline;
     gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 0.4vh;
   }
 
-  .per-case .l {
+  .refund-block .head .lab {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(11px, 2.6vw, 14px);
+    font-size: clamp(12px, 2.8vw, 15px);
     font-weight: 600;
-    color: var(--cream);
+    color: var(--green-ok);
     text-transform: uppercase;
-    letter-spacing: 1px;
-    line-height: 1.3;
+    letter-spacing: 0.6px;
   }
 
-  .per-case .l span {
-    display: block;
-    font-family: 'Inter', sans-serif;
-    font-size: 9.5px;
-    font-weight: 400;
-    opacity: 0.65;
-    letter-spacing: 0.3px;
-    text-transform: none;
-    margin-top: 3px;
-  }
-
-  .per-case .r {
+  .refund-block .head .val {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(24px, 7vw, 38px);
+    font-size: clamp(20px, 5.6vw, 32px);
     font-weight: 700;
     color: var(--green-ok);
-    letter-spacing: -0.02em;
     line-height: 1;
     white-space: nowrap;
+  }
+
+  .refund-month {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(10px, 2.3vw, 12px);
+    color: rgba(247,235,221,0.7);
+    margin-bottom: 1vh;
+  }
+
+  .refund-month b { color: var(--green-ok); font-weight: 600; }
+
+  .refund-block .desc {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(10.5px, 2.4vw, 12.5px);
+    color: rgba(247,235,221,0.72);
+    line-height: 1.5;
+    margin-bottom: 1vh;
+  }
+
+  .refund-block .footnote {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(9.5px, 2.2vw, 11px);
+    color: rgba(247,235,221,0.55);
+    font-style: italic;
+    line-height: 1.45;
+    border-left: 2px solid var(--green-ok);
+    padding-left: 10px;
   }
 
   .cashback {
@@ -613,7 +791,8 @@
     background: rgba(255,255,255,0.04);
     border: 1px solid var(--line);
     border-radius: 999px;
-    padding: 8px 14px;
+    padding: 12px 18px;
+    min-height: 48px;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: clamp(11px, 2.6vw, 13px);
@@ -883,30 +1062,70 @@
     margin-top: 2px;
   }
 
-  .vip-closing {
+  /* ПЛАШКА ТОП-ПАРТНЁРОВ */
+  .proof-plate {
+    width: 100%;
+    max-width: 760px;
+    background: linear-gradient(135deg, rgba(190,172,140,0.12), rgba(190,172,140,0.03));
+    border: 1px solid rgba(190,172,140,0.40);
+    border-radius: 16px;
+    padding: 2vh 2.4vw;
+    margin-top: 0.6vh;
+    text-align: left;
+  }
+
+  .proof-plate h5 {
     font-family: 'Myriad Pro', sans-serif;
-    font-size: clamp(12px, 2.8vw, 16px);
+    font-size: clamp(11px, 2.6vw, 13px);
     font-weight: 600;
     color: var(--gold);
     text-transform: uppercase;
     letter-spacing: 2px;
+    margin-bottom: 1.4vh;
     text-align: center;
   }
 
-  .vip-closing span { color: var(--cream); opacity: 0.85; }
+  .proof-rows {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+  }
 
-  .vip-tagline {
+  .proof-row {
+    background: rgba(0,0,0,0.22);
+    border: 1px solid rgba(190,172,140,0.20);
+    border-radius: 10px;
+    padding: 1.2vh 1.4vw;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .proof-row .num {
+    font-family: 'Myriad Pro', sans-serif;
+    font-size: clamp(18px, 4.6vw, 24px);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .proof-row .name {
     font-family: 'Inter', sans-serif;
     font-size: clamp(11px, 2.4vw, 13px);
-    font-weight: 500;
-    color: rgba(247,235,221,0.55);
-    letter-spacing: 0.5px;
-    text-align: center;
-    margin-top: 2vh;
-    font-style: italic;
+    font-weight: 600;
+    color: var(--cream);
+    line-height: 1.3;
   }
 
-  /* ЗАЯВКА */
+  .proof-row .co {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(9.5px, 2.2vw, 11px);
+    color: rgba(247,235,221,0.55);
+    line-height: 1.3;
+  }
+
+  /* ЗАЯВКА + КНОПКИ ДЕЙСТВИЯ */
   .cta-mantra {
     font-family: 'Myriad Pro', sans-serif;
     font-size: clamp(18px, 4.8vw, 28px);
@@ -938,25 +1157,58 @@
     margin-right: auto;
   }
 
-  .contact-signature {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(12px, 2.8vw, 14px);
-    line-height: 1.9;
-    color: rgba(247,235,221,0.85);
-    padding-top: 2.4vh;
-    border-top: 1px solid rgba(190,172,140,0.15);
-    margin-top: 1vh;
+  .contact-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
   }
 
-  .contact-signature b { color: var(--gold); font-weight: 600; }
-
-  .contact-signature a {
+  .ca-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--line);
     color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(13px, 3vw, 15px);
+    font-weight: 600;
     text-decoration: none;
-    border-bottom: 1px solid rgba(190,172,140,0.35);
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    min-height: 52px;
   }
 
-  .contact-signature a:hover { border-color: var(--gold); }
+  .ca-btn:hover {
+    background: rgba(190,172,140,0.10);
+    border-color: var(--gold);
+    transform: translateY(-1px);
+  }
+
+  .ca-btn svg {
+    width: 22px; height: 22px;
+    flex-shrink: 0;
+    color: var(--gold);
+  }
+
+  .ca-btn .lbl {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.2;
+  }
+
+  .ca-btn .lbl small {
+    font-size: 10.5px;
+    font-weight: 400;
+    opacity: 0.6;
+    letter-spacing: 0.3px;
+    margin-top: 2px;
+  }
 
   /* ГЛОБАЛЬНОЕ НИЖНЕЕ МЕНЮ */
   .bottom-menu {
@@ -964,7 +1216,7 @@
     bottom: 0; left: 0; right: 0;
     display: flex;
     gap: 10px;
-    padding: 14px 16px 18px;
+    padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px));
     background: rgba(15,31,28,0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -981,7 +1233,7 @@
 
   .bn-btn {
     flex: 1;
-    min-height: 46px;
+    min-height: 48px;
     padding: 12px 10px;
     border-radius: 12px;
     font-family: 'Inter', sans-serif;
@@ -1045,7 +1297,7 @@
   /* ТОЧКИ И ЛИНИЯ */
   .dots {
     position: fixed;
-    bottom: 86px;
+    bottom: calc(84px + env(safe-area-inset-bottom, 0px));
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -1074,11 +1326,20 @@
   }
 
   @media (max-width: 700px) {
+    .slide { padding: 8vh 4vw 15vh; }
     .vip-cards { grid-template-columns: 1fr; }
     .cb-result { grid-template-columns: 1fr; }
-    .per-case { flex-direction: column; align-items: flex-start; gap: 0.8vh; }
-    .per-case .r { align-self: flex-end; }
     .nav-arrow { display: none; }
+    .term-card { align-items: flex-start; flex-direction: column; gap: 6px; }
+    .proof-rows { grid-template-columns: 1fr; }
+    .chat { padding: 14px 12px; gap: 7px; }
+    .msg { max-width: 86%; padding: 9px 12px; }
+    .hero-facts { gap: 8px; }
+    .fact { padding: 7px 12px; white-space: normal; }
+    .calc-grid { gap: 10px; }
+    .proof-plate { padding: 16px 14px; }
+    .ca-btn { padding: 12px 14px; }
+    .sys-item, .refund-block, .cashback { padding: 16px 14px; }
   }
 </style>
 </head>
@@ -1103,56 +1364,76 @@
     <div class="hero-sub">за 12 месяцев работы с нами</div>
     <div class="hero-facts">
       <span class="fact"><b>4 000 ₽</b> за каждое дело</span>
-      <span class="fact fact--gold">+ cashback до <b>50%</b></span>
-      <span class="fact">без звёздочек</span>
+      <span class="fact fact--gold">выплата до <b>10 дней</b></span>
+      <span class="fact">+ cashback до <b>50%</b></span>
     </div>
-    <button class="btn btn--primary" id="heroNext">Посчитать свой доход</button>
+    <button class="btn btn--primary" id="heroNext">Подробнее</button>
   </section>
 
-  <!-- ЭКРАН 2 — ПРОБЛЕМЫ -->
+  <!-- ЭКРАН 2 — БОЛЬ -->
   <section class="slide slide--scroll" data-slide="1">
     <div class="kicker">АУ — область тьмы</div>
     <div class="slide-title">Знакомые <span class="hl">проблемы?</span></div>
 
-    <div class="ps-grid">
-      <div class="pain-card">
-        <div class="pn">01</div>
-        <div class="pain-h">Непонятно, как он работает</div>
-        <div class="pt">Не «чёрный ящик», а «область тьмы». Вы платите — и не понимаете, за что.</div>
+    <div class="chat" id="chatBox">
+      <div class="chat-head">
+        <div class="chat-avatar">АУ</div>
+        <div>
+          <div class="chat-name">Арбитражный управляющий</div>
+          <div class="chat-status">в сети</div>
+        </div>
       </div>
-      <div class="pain-card">
-        <div class="pn">02</div>
-        <div class="pain-h">Его нужно пинать для ответов и выплат</div>
-        <div class="pt">Позвонил — не ответил. Написал — тишина. Приходится дёргать, ждать и догадываться.</div>
-      </div>
-      <div class="pain-card">
-        <div class="pn">03</div>
-        <div class="pain-h">Затягивает сроки и нет контроля</div>
-        <div class="pt">Вы не видите, на каком этапе дело, и не можете на это повлиять.</div>
+
+      <div class="msg p" data-delay="150">Как там наши дела?<span class="msg-time">14:02</span></div>
+      <div class="msg a" data-delay="750">Всё под контролем.<span class="msg-time">14:03</span></div>
+      <div class="msg p" data-delay="1350">А что по деньгам?<span class="msg-time">14:03</span></div>
+      <div class="msg a" data-delay="1950">Сейчас узнаю.<span class="msg-time">14:04</span></div>
+      <div class="msg p" data-delay="2550">Когда завершение?<span class="msg-time">14:05</span></div>
+      <div class="msg a" data-delay="3150">Уточню.<span class="msg-time">14:05</span></div>
+      <div class="typing" data-delay="3750">
+        <span></span><span></span><span></span>
       </div>
     </div>
+
+    <div class="pain-headline">Вы собственник.<br>Но работаете диспетчером.</div>
   </section>
 
   <!-- ЭКРАН 3 — РЕШЕНИЯ -->
   <section class="slide slide--scroll" data-slide="2">
     <div class="kicker kicker--gold">Как решаем</div>
-    <div class="slide-title">Мы — <span class="hl">на стороне партнёра</span></div>
+    <div class="slide-title">Всё видно <span class="hl">без звонков</span></div>
 
-    <div class="ps-grid">
-      <div class="sol-card">
-        <div class="sn">01</div>
-        <div class="sol-h">Все под Вашим контролем</div>
-        <div class="st">Личный кабинет 24/7, персональный менеджер, онлайн-сверки, чаты, интеграции с Битрикс24.</div>
+    <div class="sys-list">
+      <div class="sys-item">
+        <div class="sys-head">
+          <span class="sys-num">01</span>
+          <h3>Дело</h3>
+        </div>
+        <p>Личный кабинет 24/7, персональный менеджер, онлайн-сверки, чаты, интеграции с Битрикс24.</p>
       </div>
-      <div class="sol-card">
-        <div class="sn">02</div>
-        <div class="sol-h">Прозрачные и понятные сроки</div>
-        <div class="st">ПМ должнику — в день поступления денег на счёт. Конвейерный и системный подход к делу: отделы отвечают за свою зону ответственности. Ничего не зависает.</div>
+      <div class="sys-item">
+        <div class="sys-head">
+          <span class="sys-num">02</span>
+          <h3>Процессы</h3>
+        </div>
+        <p>Отделы отвечают каждый за свою зону, поэтому ничего не зависает. ПМ должнику выплачиваем в день поступления денег на счёт.</p>
       </div>
-      <div class="sol-card">
-        <div class="sn">03</div>
-        <div class="sol-h">Берём сложное и не бросаем</div>
-        <div class="st">Ипотека, авто, доли, СВО, ООО, крипта, наследство, иностранцы. Разбираем до подачи, даём шаблоны.</div>
+      <div class="sys-item sys-item--gold">
+        <div class="sys-head">
+          <span class="sys-num">03</span>
+          <h3>Сложные кейсы</h3>
+        </div>
+        <p>Берём то, на чём другие отказываются. Разбираем риски до подачи, даём шаблоны.</p>
+        <div class="sys-tags">
+          <span>ипотека</span>
+          <span>авто</span>
+          <span>доли</span>
+          <span>СВО</span>
+          <span>ООО</span>
+          <span>крипта</span>
+          <span>наследство</span>
+          <span>иностранцы</span>
+        </div>
       </div>
     </div>
   </section>
@@ -1161,7 +1442,7 @@
   <section class="slide slide--scroll" data-slide="3">
     <div class="calc-wrap">
       <div class="calc-title">Ваша <span class="hl">цифра</span></div>
-      <div class="calc-subtitle">Двигайте ползунок — увидите выплату за месяц и за 12 месяцев</div>
+      <div class="calc-subtitle">Посчитайте на своём потоке дел</div>
 
       <div class="slider-head">
         <span class="lab">Дел в месяц</span>
@@ -1193,17 +1474,22 @@
       <div class="total-hero" id="totalHero">
         <div class="label">ИТОГО ЗА 12 МЕСЯЦЕВ</div>
         <div class="amount" id="totalYear">480 000 ₽</div>
-        <div class="note">гарантированно · без cashback</div>
+        <div class="note">только выплаты за дела, кэшбек и возврат отдельно</div>
       </div>
 
-      <div class="per-case">
-        <div class="l">С каждого дела<span>гарантированно получите</span></div>
-        <div class="r" id="effectiveRate">4 000 ₽</div>
+      <div class="refund-block">
+        <div class="head">
+          <div class="lab">+ Возврат депозита на расходы</div>
+          <div class="val" id="refundYear">480 000 ₽</div>
+        </div>
+        <div class="refund-month">за месяц: <b id="refundMonth">40 000 ₽</b>, в среднем 4 000 ₽ с каждого дела</div>
+        <div class="desc">В 2026 году в среднем возвращаем 4 000 ₽ с каждого переданного дела, независимо от наличия конкурсной массы. Цифра выше посчитана за 12 месяцев.</div>
+        <div class="footnote">КМ есть примерно в 30% дел. Возврат приходит после завершения процедуры, когда расходы возмещены из КМ.</div>
       </div>
 
       <div class="cashback">
         <div class="cashback-title">+ Cashback с реализации имущества</div>
-        <div class="cashback-sub">Cashback не входит в итог выше — он зависит от наличия имущества.</div>
+        <div class="cashback-sub">Кэшбек зависит от наличия имущества и не входит в итог выше.</div>
         <div class="cashback-buttons">
           <button class="cb-btn" data-asset="0">Нет</button>
           <button class="cb-btn active" data-asset="500000">500 тыс ₽</button>
@@ -1234,10 +1520,10 @@
         <span class="vip-plate-small">VIP · 50+ дел/мес</span>
         <h3>Вы перешли в VIP</h3>
         <ul class="vip-list">
-          <li><b>5 тестовых дел</b> — оплачиваются как обычные</li>
-          <li><b>50% cashback фиксированно</b> — независимо от суммы реализации</li>
-          <li><b>Приоритетное ведение</b> — Ваши дела вне общей очереди</li>
-          <li><b>Персональный менеджер</b> — ведёт только Ваши дела</li>
+          <li><b>5 тестовых дел</b> оплачиваются как обычные</li>
+          <li><b>50% cashback фиксированно,</b> независимо от суммы реализации</li>
+          <li><b>Приоритетное ведение:</b> Ваши дела вне общей очереди</li>
+          <li><b>Персональный менеджер</b> ведёт только Ваши дела</li>
         </ul>
       </div>
     </div>
@@ -1245,25 +1531,25 @@
 
   <!-- ЭКРАН 5 — УСЛОВИЯ -->
   <section class="slide slide--scroll" data-slide="4">
-    <div class="kicker kicker--gold">Без звёздочек</div>
+    <div class="kicker kicker--gold">Как в договоре</div>
     <div class="slide-title">Условия <span class="hl">работы</span></div>
 
     <div class="terms-grid">
       <div class="term-card">
         <div class="t-num">4 000 ₽</div>
-        <div class="t-text">за каждое дело. <b>Без исключений</b> — тестовые дела тоже оплачиваются.</div>
+        <div class="t-text">за каждое дело, <b>включая тестовые.</b></div>
       </div>
       <div class="term-card">
         <div class="t-num">5 дел</div>
-        <div class="t-text">тестовых у каждого партнёра. <b>Без оплаты расходов.</b></div>
+        <div class="t-text">тестовых у каждого партнёра, <b>без оплаты расходов.</b></div>
       </div>
       <div class="term-card">
         <div class="t-num">20–50%</div>
-        <div class="t-text">cashback с реализации имущества. <b>В VIP — фиксированно 50%.</b></div>
+        <div class="t-text">cashback с реализации имущества. В VIP фиксированно <b>50%.</b></div>
       </div>
       <div class="term-card">
         <div class="t-num">в день</div>
-        <div class="t-text">поступления денег на счёт — <b>ПМ должнику.</b></div>
+        <div class="t-text">поступления денег на счёт выплачиваем <b>ПМ должнику.</b></div>
       </div>
     </div>
   </section>
@@ -1272,27 +1558,27 @@
   <section class="slide slide--scroll" data-slide="5">
     <div class="vip-plate">VIP Партнёрам</div>
     <div class="vip-title">
-      Ваш объём — Ваш статус
-      <span class="cream">от 50 дел в месяц</span>
+      От 50 дел в месяц
+      <span class="cream">работаем по-другому</span>
     </div>
-    <div class="vip-sub">Вы — не один из. Мы работаем с Вами иначе.</div>
+    <div class="vip-sub">Обсудим ставку и порядок оплаты под Ваш поток.</div>
 
     <div class="vip-cards">
       <div class="vip-card">
         <h4>Персональный менеджер</h4>
-        <p>Ведёт только Вашу компанию и Ваши дела. Знает Вашу специфику.</p>
+        <p>Ведёт только Вашу компанию и Ваши дела.</p>
       </div>
       <div class="vip-card">
-        <h4>Индивидуальные условия</h4>
-        <p>Ставка, порядок и формат оплаты — под Ваш поток. Не по общему прайсу.</p>
+        <h4>Дела вне очереди</h4>
+        <p>Короче сроки и быстрее согласования.</p>
       </div>
       <div class="vip-card">
-        <h4>Ваши дела не ждут</h4>
-        <p>Вне общей очереди. Короче сроки. Быстрее согласования.</p>
+        <h4>Прямой контакт с руководством</h4>
+        <p>Вопросы решают те, кто отвечает за результат.</p>
       </div>
       <div class="vip-card">
-        <h4>Вы говорите с теми, кто решает</h4>
-        <p>Прямой контакт с руководством. Без посредников.</p>
+        <h4>Ставка под Ваш поток</h4>
+        <p>Порядок и формат оплаты обсуждаем индивидуально.</p>
       </div>
     </div>
 
@@ -1304,8 +1590,26 @@
       </div>
     </div>
 
-    <div class="vip-closing">Ваш поток — <span>наши приоритетные условия.</span></div>
-    <div class="vip-tagline">Для тех, кто с нами всерьёз.</div>
+    <div class="proof-plate">
+      <h5>Нам доверяют объём</h5>
+      <div class="proof-rows">
+        <div class="proof-row">
+          <div class="num">954 дела</div>
+          <div class="name">Александр Черкашов</div>
+          <div class="co">Law Business Group</div>
+        </div>
+        <div class="proof-row">
+          <div class="num">525 дел</div>
+          <div class="name">Даниил Русланов</div>
+          <div class="co">ЮК «Баланс»</div>
+        </div>
+        <div class="proof-row">
+          <div class="num">374 дела</div>
+          <div class="name">Олег Просолупов</div>
+          <div class="co">ЮК «Квинтагон»</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ЭКРАН 7 — ЗАЯВКА -->
@@ -1314,7 +1618,7 @@
     <div class="cta-mantra">АУ, который работает на МЕНЯ</div>
 
     <p class="cta-sub">
-      Личный кабинет, персональный менеджер по сопровождению, прозрачная сверка. Дальше решите сами.
+      Пять тестовых дел без депозита: 100 000 ₽ не вносите. Личный кабинет, менеджер и прозрачная сверка. Дальше решите сами.
     </p>
 
     <div class="cta-actions">
@@ -1326,11 +1630,19 @@
       </a>
     </div>
 
-    <div class="contact-signature">
-      <b>@moroz_viktor</b><br>
-      Виктор Мороз · Руководитель отдела продаж<br>
-      <a href="tel:+79995534474">+7 999 553-44-74</a><br>
-      <a href="mailto:mvgoz@yandex.ru">mvgoz@yandex.ru</a>
+    <div class="contact-actions">
+      <a class="ca-btn" href="https://t.me/moroz_viktor" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.54 7.26c-.11.52-.42.65-.85.41l-2.33-1.71-1.13 1.09c-.13.13-.23.23-.47.23l.17-2.39 4.34-3.92c.19-.17-.04-.26-.29-.09l-5.36 3.38-2.31-.72c-.5-.16-.51-.5.1-.74l9.04-3.49c.42-.15.79.1.63.69z"/></svg>
+        <span class="lbl">Telegram<small>@moroz_viktor</small></span>
+      </a>
+      <a class="ca-btn" href="tel:+79995534474">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="lbl">+7 999 553-44-74<small>Виктор Мороз</small></span>
+      </a>
+      <a class="ca-btn" href="mailto:mvgoz@yandex.ru">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span class="lbl">mvgoz@yandex.ru<small>Руководитель отдела продаж</small></span>
+      </a>
     </div>
   </section>
 
@@ -1403,6 +1715,8 @@
     slides[n].scrollTop = 0;
     current = n;
     updateUI();
+
+    if (n === 1) restartChat();
   }
 
   function nextSlide() { goTo(current + 1); }
@@ -1426,7 +1740,7 @@
     }
   });
 
-  // ИСПРАВЛЕННЫЙ СВАЙП (ползунок не листает)
+  // СВАЙП (ползунок не листает)
   let tx = 0, ty = 0;
   let isSliderTouch = false;
 
@@ -1452,6 +1766,30 @@
     }
   });
 
+  // АНИМАЦИЯ ЧАТА
+  let chatTimers = [];
+
+  function restartChat() {
+    const chatBox = document.getElementById('chatBox');
+    if (!chatBox) return;
+
+    chatTimers.forEach(t => clearTimeout(t));
+    chatTimers = [];
+
+    const items = chatBox.querySelectorAll('.msg, .typing');
+    items.forEach(el => el.classList.remove('show'));
+    chatBox.scrollTop = 0;
+
+    items.forEach(el => {
+      const delay = parseInt(el.dataset.delay || '0', 10);
+      chatTimers.push(setTimeout(() => {
+        el.classList.add('show');
+        el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }, delay));
+    });
+  }
+  restartChat();
+
   // КАЛЬКУЛЯТОР
   const slider = document.getElementById('volSlider');
   const volValue = document.getElementById('volValue');
@@ -1464,13 +1802,15 @@
   const monthlyNote = document.getElementById('monthlyNote');
   const ratePerCase = document.getElementById('ratePerCase');
   const totalYear = document.getElementById('totalYear');
-  const effectiveRate = document.getElementById('effectiveRate');
+  const refundMonth = document.getElementById('refundMonth');
+  const refundYear = document.getElementById('refundYear');
   const cbAsset = document.getElementById('cbAsset');
   const cbShare = document.getElementById('cbShare');
   const cbAmount = document.getElementById('cbAmount');
   const cbNote = document.getElementById('cbNote');
 
   const RATE = 4000;
+  const REFUND_AVG = 4000;
   let currentAsset = 500000;
 
   function rub(n) {
@@ -1490,7 +1830,11 @@
     monthlyNote.textContent = perMonth + ' × ' + rub(RATE);
     ratePerCase.textContent = rub(RATE);
     totalYear.textContent = rub(yearPay);
-    effectiveRate.textContent = rub(RATE);
+
+    const monthRefund = perMonth * REFUND_AVG;
+    const yearRefund = monthRefund * 12;
+    refundMonth.textContent = rub(monthRefund);
+    refundYear.textContent = rub(yearRefund);
 
     const pct = ((perMonth - 1) / 99) * 100;
     progressFill.style.width = pct + '%';
@@ -1507,7 +1851,7 @@
       cbAsset.textContent = '—';
       cbShare.textContent = '—';
       cbAmount.textContent = '0 ₽';
-      cbNote.textContent = 'Имущества нет — cashback не начисляется.';
+      cbNote.textContent = 'Имущества нет, cashback не начисляется.';
       return;
     }
     const reward = currentAsset * 0.07;
@@ -1562,10 +1906,10 @@
 .ap-modal-close{position:absolute;top:12px;right:18px;background:none;border:none;color:#F7EBDD;font-size:28px;cursor:pointer;opacity:.6}
 .ap-modal-close:hover{opacity:1}
 .ap-modal h3{font-family:'Myriad Pro',sans-serif;color:#BEAC8C;text-transform:uppercase;letter-spacing:1.5px;margin:0 0 24px;text-align:center;font-size:20px}
-.ap-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(190,172,140,0.3);border-radius:12px;padding:14px 16px;color:#F7EBDD;font-family:'Inter',sans-serif;font-size:15px;margin-bottom:14px;outline:none;box-sizing:border-box}
+.ap-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(190,172,140,0.3);border-radius:12px;padding:14px 16px;color:#F7EBDD;font-family:'Inter',sans-serif;font-size:16px;margin-bottom:14px;outline:none;box-sizing:border-box}
 .ap-input:focus{border-color:#BEAC8C}
 .ap-input::placeholder{color:rgba(247,235,221,0.5)}
-.ap-btn{width:100%;background:#BEAC8C;color:#0F1F1C;border:none;border-radius:14px;padding:16px;font-family:'Inter',sans-serif;font-weight:600;font-size:16px;cursor:pointer;transition:background .2s}
+.ap-btn{width:100%;min-height:52px;background:#BEAC8C;color:#0F1F1C;border:none;border-radius:14px;padding:16px;font-family:'Inter',sans-serif;font-weight:600;font-size:16px;cursor:pointer;transition:background .2s}
 .ap-btn:hover{background:#cdbb9a}
 .ap-btn:disabled{opacity:.6;cursor:not-allowed}
 .ap-msg{text-align:center;margin-top:14px;font-size:14px;font-family:'Inter',sans-serif;min-height:20px}
@@ -1622,14 +1966,6 @@ function apCloseModal() {
   document.getElementById('apMsg').textContent = '';
 }
 
-function formatPhoneForDisplay(phone) {
-  const clean = phone.replace(/\D/g, '');
-  if (clean.length === 11 && clean.startsWith('7')) {
-    return `+7 (${clean.substring(1, 4)}) ${clean.substring(4, 7)}-${clean.substring(7, 9)}-${clean.substring(9, 11)}`;
-  }
-  return '+' + clean;
-}
-
 async function apSubmit(e) {
   e.preventDefault();
   const btn = document.getElementById('apSubmitBtn');
@@ -1683,9 +2019,7 @@ async function apSubmit(e) {
   }
 }
 
-// Привязка к кнопкам на referral.html
 document.addEventListener('DOMContentLoaded', function() {
-  // Кнопка "Оставить заявку" на последнем экране
   const ctaBtn = document.querySelector('.cta-actions .btn--primary');
   if (ctaBtn) {
     ctaBtn.onclick = function(e) {
@@ -1694,7 +2028,6 @@ document.addEventListener('DOMContentLoaded', function() {
     };
   }
   
-  // Кнопка "Оставить заявку" в нижнем меню
   const bottomCtaBtn = document.getElementById('btnCta');
   if (bottomCtaBtn) {
     bottomCtaBtn.onclick = function(e) {
